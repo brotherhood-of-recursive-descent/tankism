@@ -23,47 +23,29 @@ __major__
 
 __general__
  ![general](https://raw.githubusercontent.com/co0p/tankism/master/docs/general.png)
-
+ 
  * min: 15 kills
  * three cannons !!!
  * 200hp
 
 ## pickups
 
- * mines 5x
- * armor 1 hit free
- * rockets 5x
- * nitro-fuel speed+1
- * repair +50 health
- * radar fov++
+ * ![ammo](https://raw.githubusercontent.com/co0p/tankism/master/docs/pickup_ammo.png) More damage per shot
+ * ![armor](https://raw.githubusercontent.com/co0p/tankism/master/docs/pickup_armor.png) Better armor protection
+ * ![repair](https://raw.githubusercontent.com/co0p/tankism/master/docs/pickup_repair.png) Get your hp back
 
-## Features
-
-* Different game modes:
-  * Deathmatch
-  * Capture the flag
-  * King of the hill
-  * Chicken defense
+## Modes
  
+ * Duel vs AI (one enemy at a time)
+ * Duel vs one human over network
+ * Deathmatch vs humans over network up to 16 players
+
+
+## Other Features
+
 * Fog of war
 * destructable environment
-* Tech tree
-  * 3 classes: scout, skirmisher, heavy
-  * upgrades: hp, line of sight, differnet ammo types, ..
-* placeable items:
-  * mines
-  * turrents
-  * sandbags
   
-## AI
-
-* 
-
-## Network
-
- * supports up to 16 players
- 
- 
  ## Nice to have
  
  * anti cheat system
