@@ -6,7 +6,7 @@ Target is linux pc platform leveraging sdl2. Written in XXX. Get the lastest nig
 
 ## tank classes
  
-You start as a recruit. After a few kills you become a major. If you are able to survive and kill even more enemies you are promoted to general.
+You start as a recruit. After a few kills you become a major. If you are able to survive and kill even more enemies you are promoted to general. 
 
 __recruit__
  ![recruit](https://raw.githubusercontent.com/co0p/tankism/master/docs/recruit.png)
@@ -26,7 +26,7 @@ __general__
  
  * min: 15 kills
  * three cannons !!!
- * 200hp
+ * 200hp 
 
 ## pickups
 
@@ -43,12 +43,19 @@ __general__
 
 ## Other Features
 
-* Fog of war
-* destructable environment
+* fog of war
+* random level generation
+
   
- ## Nice to have
+## Nice to have
  
+ * limmited field of view
+ * destructable environment 
  * anti cheat system
- * level generation
  * particle effects
  * shop / economy... buy skins but no features
+
+
+# Credits
+
+Thank you https://kenney.nl for the amazing sprites and tilesheets: https://kenney.nl/assets/topdown-tanks-redux
