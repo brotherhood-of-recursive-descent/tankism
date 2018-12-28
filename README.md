@@ -8,18 +8,21 @@ Target is linux pc platform leveraging sdl2. Written in XXX. Get the lastest nig
 ## Features
 
 * Different game modes:
- ** Deathmatch
- ** Capture the flag
- ** King of the hill
- ** Chicken defense
+  * Deathmatch
+  * Capture the flag
+  * King of the hill
+  * Chicken defense
  
 * Fog of war
 * destructable environment
 * Tech tree
- ** 3 classes: scout, skirmisher, heavy
- ** upgrades: hp, line of sight, differnet ammo types, ..
+  * 3 classes: scout, skirmisher, heavy
+  * upgrades: hp, line of sight, differnet ammo types, ..
 * placeable items:
-
+  * mines
+  * turrents
+  * sandbags
+  
 ## AI
 
 * 
