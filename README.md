@@ -59,3 +59,10 @@ __general__
 # Credits
 
 Thank you https://kenney.nl for the amazing sprites and tilesheets: https://kenney.nl/assets/topdown-tanks-redux
+
+
+# Resources
+
+ * http://gameprogrammingpatterns.com/ a nicely writting book explaining programming patterns and how to utilize them in game development
+ * https://www.youtube.com/channel/UCvcCbgIFwmjYaK3Zb_4Cgpw a youtube video series about game development in golang
+ * http://lazyfoo.net/tutorials/SDL/ sdl2 tutorials
