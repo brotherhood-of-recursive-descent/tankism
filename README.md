@@ -4,6 +4,13 @@ top down panzer game written in sdl2
 ## Tech Stack
 Target is linux pc platform leveraging sdl2. Written in XXX. Get the lastest nightly build from here: XXXX . 
 
+## development
+
+ * Please install the sdl2 libraries: https://www.libsdl.org/download-2.0.php. 
+ * install the golang bindings: ``` go get -v github.com/veandco/go-sdl2/{sdl,img,mix,ttf}```
+
+
+
 ## tank classes
  
 You start as a recruit. After a few kills you become a major. If you are able to survive and kill even more enemies you are promoted to general. 
