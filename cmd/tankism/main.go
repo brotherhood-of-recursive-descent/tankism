@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/veandco/go-sdl2/sdl"
 )
@@ -44,6 +45,9 @@ func main() {
 		renderer.SetDrawColor(255, 244, 233, 255)
 		renderer.Clear()
 		renderer.Present()
+
+		// make sure we don't use all cpu power
+		time.Sleep(20 * time.Millisecond)
 	}
 	sdl.Quit()
 }
