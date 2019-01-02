@@ -16,6 +16,7 @@ type FPSCounter struct {
 	intervalTime time.Time
 	font         *ttf.Font
 	fpsString    string
+	isVisible    bool
 }
 
 // NewFPSCounter create a new frame per second counter object
@@ -31,6 +32,7 @@ func NewFPSCounter() *FPSCounter {
 		intervalTime: time.Now(),
 		font:         font,
 		fpsString:    " ",
+		isVisible:    false,
 	}
 }
 
@@ -52,20 +54,28 @@ func (fpsc *FPSCounter) Draw(renderer *sdl.Renderer) {
 
 	// TODO: only create new texture when necessary
 
-	FPSsurface, err := fpsc.font.RenderUTF8Solid(fpsc.fpsString, sdl.Color{R: 0, G: 255, B: 0, A: 200})
-	if err != nil {
-		log.Fatal("render font surface: ", err)
+	if fpsc.isVisible {
+
+		FPSsurface, err := fpsc.font.RenderUTF8Solid(fpsc.fpsString, sdl.Color{R: 0, G: 255, B: 0, A: 200})
+		if err != nil {
+			log.Fatal("render font surface: ", err)
+		}
+
+		FPStexture, err := renderer.CreateTextureFromSurface(FPSsurface)
+		if err != nil {
+			log.Fatal("create texture: ", err)
+		}
+
+		renderer.Copy(FPStexture, &sdl.Rect{X: 0, Y: 0, W: 120, H: 26}, &sdl.Rect{X: 10, Y: 10, W: 120, H: 26})
+
+		defer FPSsurface.Free()
+		defer FPStexture.Destroy()
 	}
+}
 
-	FPStexture, err := renderer.CreateTextureFromSurface(FPSsurface)
-	if err != nil {
-		log.Fatal("create texture: ", err)
-	}
-
-	renderer.Copy(FPStexture, &sdl.Rect{X: 0, Y: 0, W: 120, H: 26}, &sdl.Rect{X: 10, Y: 10, W: 120, H: 26})
-
-	defer FPSsurface.Free()
-	defer FPStexture.Destroy()
+// Toggle the visibility of the FPS counter
+func (fpsc *FPSCounter) Toggle() {
+	fpsc.isVisible = !fpsc.isVisible
 }
 
 func main() {
@@ -96,6 +106,10 @@ func main() {
 				if e.Type == sdl.KEYDOWN && e.Keysym.Sym == sdl.K_f {
 					log.Println("toggle Fullscreen")
 					windowManager.ToogleFullscreen()
+				}
+				if e.Type == sdl.KEYDOWN && e.Keysym.Sym == sdl.K_p {
+					log.Println("toggle FPS Counter")
+					fpsCounter.Toggle()
 				}
 			case *sdl.QuitEvent:
 				log.Println("Quit")
