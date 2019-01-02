@@ -10,6 +10,7 @@ import (
 	"github.com/veandco/go-sdl2/ttf"
 )
 
+// FPSCounter represents game object that counts frames per second
 type FPSCounter struct {
 	currentCount int
 	intervalTime time.Time
@@ -17,6 +18,7 @@ type FPSCounter struct {
 	fpsString    string
 }
 
+// NewFPSCounter create a new frame per second counter object
 func NewFPSCounter() *FPSCounter {
 
 	font, err := ttf.OpenFont("assets/fonts/test.ttf", 24)
@@ -32,6 +34,8 @@ func NewFPSCounter() *FPSCounter {
 	}
 }
 
+// Update updates the FPS counter by counting the number of frames
+// per second and then resets the counter
 func (fpsc *FPSCounter) Update() {
 
 	fpsc.currentCount++
@@ -43,11 +47,12 @@ func (fpsc *FPSCounter) Update() {
 	}
 }
 
+// Draw function renders the FPS counter
 func (fpsc *FPSCounter) Draw(renderer *sdl.Renderer) {
 
 	// TODO: only create new texture when necessary
 
-	FPSsurface, err := fpsc.font.RenderUTF8Solid(fpsc.fpsString, sdl.Color{0, 255, 0, 200})
+	FPSsurface, err := fpsc.font.RenderUTF8Solid(fpsc.fpsString, sdl.Color{R: 0, G: 255, B: 0, A: 200})
 	if err != nil {
 		log.Fatal("render font surface: ", err)
 	}
