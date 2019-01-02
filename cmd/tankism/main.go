@@ -14,10 +14,13 @@ func main() {
 	window, err := windowManager.CreateWindow()
 	defer window.Destroy()
 
-	renderer, err := sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED)
+	assetManager, err := internal.NewAssetManager("assets")
 	if err != nil {
-		panic(err)
+		log.Fatal("asset manager: ", err)
 	}
+
+	renderer, err := windowManager.GetRenderer()
+	tankTexture := assetManager.GetTexture(renderer, "tank_dark.png")
 
 	running := true
 	for running {
@@ -39,6 +42,7 @@ func main() {
 		// drawing
 		renderer.SetDrawColor(255, 244, 233, 255)
 		renderer.Clear()
+		renderer.Copy(tankTexture, &sdl.Rect{X: 0, Y: 0, W: 42, H: 46}, &sdl.Rect{X: windowManager.GetWidth()/2 - 21, Y: windowManager.GetHeight()/2 - 23, W: 42, H: 46})
 		renderer.Present()
 
 		// make sure we don't use all cpu power
