@@ -60,7 +60,7 @@ func (fpsc *FPSCounter) Draw(renderer *sdl.Renderer) {
 	renderer.Copy(FPStexture, &sdl.Rect{X: 0, Y: 0, W: 120, H: 26}, &sdl.Rect{X: 10, Y: 10, W: 120, H: 26})
 
 	defer FPSsurface.Free()
-	//defer FPStexture.Destroy()
+	defer FPStexture.Destroy()
 }
 
 func main() {
