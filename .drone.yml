@@ -14,6 +14,3 @@ pipeline:
       - go test ./... -cover
       - go build cmd/tankism/main.go
       - go build cmd/sprite2png/main.go
-
-when:
-  branch: master
