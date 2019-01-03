@@ -6,7 +6,7 @@ pipeline:
   build:
     image: golang:alpine3.8
     commands:
-      - apk add --no-cache --update ca-certificates git pkgconfig sdl2
+      - apk add --no-cache --update ca-certificates git pkgconfig sdl2 sdl2-dev
       - go get github.com/veandco/go-sdl2/sdl
       - go get github.com/veandco/go-sdl2/img
       - go get github.com/veandco/go-sdl2/mix
