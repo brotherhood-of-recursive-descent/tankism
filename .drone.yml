@@ -6,7 +6,10 @@ pipeline:
   build:
     image: golang
     commands:
-      - go get -v github.com/veandco/go-sdl2/{sdl,img,mix,ttf}
+      - go get github.com/veandco/go-sdl2/sdl
+      - go get github.com/veandco/go-sdl2/img
+      - go get github.com/veandco/go-sdl2/mix
+      - go get github.com/veandco/go-sdl2/ttf
       - go test ./... -cover
       - go build cmd/tankism/main.go
       - go build cmd/sprite2png/main.go
