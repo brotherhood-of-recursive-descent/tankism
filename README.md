@@ -7,7 +7,7 @@ Target is linux pc platform leveraging sdl2. Written in XXX. Get the lastest nig
 ## development
 
  * Please install the sdl2 libraries: https://www.libsdl.org/download-2.0.php. 
- * install the golang bindings: ``` go get -v github.com/veandco/go-sdl2/{sdl,img,mix,ttf}```
+ * install the golang bindings: ```go get -v github.com/veandco/go-sdl2/{sdl,img,mix,ttf}```
 
 
 

@@ -1,0 +1,15 @@
+workspace:
+  base: /go
+  path: src/github.com/co0p/tankism
+
+pipeline:
+  build:
+    image: golang
+    commands:
+      - go get -v github.com/veandco/go-sdl2/{sdl,img,mix,ttf}
+      - go test ./... -cover
+      - go build cmd/tankism/main.go
+      - go build cmd/sprite2png/main.go
+
+  when:
+    branch: master

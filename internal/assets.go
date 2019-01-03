@@ -13,6 +13,7 @@ type AssetManager struct {
 	sprites  map[string]*sdl.Surface
 }
 
+// NewAssetManager returns a new initialized AssetManager with all assets loaded from assetDirectory; error otherwise
 func NewAssetManager(assetDirectory string) (*AssetManager, error) {
 
 	m := AssetManager{
@@ -34,6 +35,12 @@ func (am *AssetManager) loadSprites() error {
 	img, err := sdlImage.Load(path.Join(am.assetDir, "sprites", tankName))
 	am.sprites[tankName] = img
 	return err
+}
+
+// HasAsset returns true if the asset has been loaded; false otherwise
+func (am *AssetManager) HasAsset(name string) bool {
+	_, ok := am.sprites[name]
+	return ok
 }
 
 func (am *AssetManager) getSprite(name string) *sdl.Surface {
