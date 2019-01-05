@@ -41,7 +41,7 @@ func main() {
 	}
 
 	// load data into struct
-	fmt.Println("loading textureAtlas '%s'", filename)
+	fmt.Println("loading textureAtlas: ", filename)
 	xmlFile, err := os.Open(filename)
 	defer xmlFile.Close()
 
@@ -53,7 +53,7 @@ func main() {
 	b, _ := ioutil.ReadAll(xmlFile)
 	var textureAtlas TextureAtlas
 	xml.Unmarshal(b, &textureAtlas)
-	fmt.Println("found %d textures", len(textureAtlas.SubTextures))
+	fmt.Printf("found %d textures\n", len(textureAtlas.SubTextures))
 
 	// load spritesheet and extract sprites
 	basepath, _ := filepath.Abs(filepath.Dir(filename))
