@@ -9,5 +9,5 @@ pipeline:
     commands:
       - go get -v github.com/veandco/go-sdl2/sdl github.com/veandco/go-sdl2/img github.com/veandco/go-sdl2/mix github.com/veandco/go-sdl2/ttf
       - go test ./... -cover
-      - go build cmd/tankism/main.go
-      - go build cmd/sprite2png/main.go
+      - go build -o tankism cmd/tankism/main.go
+      - go build -o sprite2png cmd/sprite2png/main.go
