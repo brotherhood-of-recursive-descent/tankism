@@ -1,7 +1,3 @@
-workspace:
-  base: /go
-  path: src/github.com/co0p/tankism
-
 pipeline:
   build:
     image: co0p/tankism-test-env
