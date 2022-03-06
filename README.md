@@ -1,45 +1,19 @@
 # tankism
-top down panzer game written in sdl2
 
-## Tech Stack
-Target is linux pc platform leveraging sdl2. Written in XXX. Get the lastest nightly build from here: XXXX . 
+top down panzer game written in go
 
 ## development
 
- * Please install the sdl2 libraries: https://www.libsdl.org/download-2.0.php. 
- * install the golang bindings: ```go get -v github.com/veandco/go-sdl2/{sdl,img,mix,ttf}```
-
-
-
-## tank classes
+ * install dependencies ```go install```
+ * run tests ```go test ./...```
+ * run game ```go run cmd/tankism/main.go```
  
-You start as a recruit. After a few kills you become a major. If you are able to survive and kill even more enemies you are promoted to general. 
+## game design
 
-__recruit__
- ![recruit](https://raw.githubusercontent.com/co0p/tankism/master/docs/recruit.png)
+ * screens: [docs/screens.md](docs/screens.md)
+ * classes: [docs/classes.md](docs/classes.md)
+ * pickups: [docs/pickups.md](docs/pickups.md)
 
- * one cannon
- * 100hp 
-
-__major__
- ![major](https://raw.githubusercontent.com/co0p/tankism/master/docs/major.png)
-
- * min. 5 kills
- * two cannons
- * 130hp
-
-__general__
- ![general](https://raw.githubusercontent.com/co0p/tankism/master/docs/general.png)
- 
- * min: 15 kills
- * three cannons !!!
- * 200hp 
-
-## pickups
-
- * ![ammo](https://raw.githubusercontent.com/co0p/tankism/master/docs/pickup_ammo.png) More damage per shot
- * ![armor](https://raw.githubusercontent.com/co0p/tankism/master/docs/pickup_armor.png) Better armor protection
- * ![repair](https://raw.githubusercontent.com/co0p/tankism/master/docs/pickup_repair.png) Get your hp back
 
 ## Modes
  
@@ -56,11 +30,12 @@ __general__
   
 ## Nice to have
  
- * limmited field of view
- * destructable environment 
+ * limited field of view
+ * destructible environment 
  * anti cheat system
  * particle effects
  * shop / economy... buy skins but no features
+ * call in artillery strike
 
 
 # Credits
