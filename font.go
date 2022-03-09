@@ -8,7 +8,7 @@ import (
 	"golang.org/x/image/font/opentype"
 )
 
-//go:embed assets/fonts/test.ttf
+//go:embed assets/fonts/pixel-dead.ttf
 var gameFont []byte
 
 var (
