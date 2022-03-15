@@ -1,6 +1,8 @@
 package tankism
 
-import "github.com/hajimehoshi/ebiten/v2"
+import (
+	"github.com/hajimehoshi/ebiten/v2"
+)
 
 type Scene interface {
 	Init() error

@@ -8,6 +8,7 @@ import (
 )
 
 var colorYellow = color.RGBA{R: 0xfa, G: 0xfa, B: 0xd2, A: 0xff}
+var colorDarkYellow = color.RGBA{R: 0xf0, G: 0xf0, B: 0xd0, A: 0xff}
 
 // LoadingText is the loading text animation for the start screen.
 type LoadingText struct {
