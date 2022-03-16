@@ -2,9 +2,9 @@ package main
 
 import (
 	_ "embed"
-	"github.com/co0p/tankism"
-	"github.com/co0p/tankism/cmd/tankism/menu"
-	"github.com/co0p/tankism/cmd/tankism/start"
+	"github.com/co0p/tankism/app/tankism/menu"
+	"github.com/co0p/tankism/app/tankism/start"
+	"github.com/co0p/tankism/lib"
 	"github.com/hajimehoshi/ebiten/v2"
 	"log"
 )
@@ -12,14 +12,14 @@ import (
 type Client struct {
 	windowWidth  int
 	windowHeight int
-	startScene   tankism.Scene
-	menuScene    tankism.Scene
+	startScene   lib.Scene
+	menuScene    lib.Scene
 
-	sceneManager *tankism.SceneManager
+	sceneManager *lib.SceneManager
 
 	/* scenes scenes.Manager
 	audioMixer audio.Mixer
-	loader assets.Loader */
+	loader media.Loader */
 }
 
 func (t *Client) Draw(screen *ebiten.Image) {
@@ -40,7 +40,7 @@ func (t *Client) Layout(outsideWidth, outsideHeight int) (int, int) {
 }
 
 func NewClient() *Client {
-	sceneManager := &tankism.SceneManager{}
+	sceneManager := &lib.SceneManager{}
 
 	menuScene := menu.NewMenuScene(sceneManager)
 	startScene := start.NewStartScreen(sceneManager, menuScene)

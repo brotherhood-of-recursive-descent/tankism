@@ -1,9 +1,10 @@
-package tankism
+package objects
 
 import (
 	_ "embed"
+	"github.com/co0p/tankism/lib"
+	"github.com/co0p/tankism/media"
 	"github.com/hajimehoshi/ebiten/v2"
-	"image/color"
 )
 
 const (
@@ -11,19 +12,17 @@ const (
 	ALPHA_MAX  = 1
 )
 
-var colorBlack = color.Black
-
 // LoadingImage is the background image of the start screen
 type LoadingImage struct {
-	scene        Scene
+	scene        lib.Scene
 	image        *ebiten.Image
 	currentAlpha float64
 	count        int
 }
 
-func NewLoadingImage(scene Scene) *LoadingImage {
+func NewLoadingImage(scene lib.Scene) *LoadingImage {
 
-	img, _ := LoadImage(BackgroundImage)
+	img, _ := media.LoadImage(media.BackgroundImage)
 	sprite := ebiten.NewImageFromImage(img)
 
 	return &LoadingImage{
@@ -49,7 +48,7 @@ func (l *LoadingImage) Draw(screen *ebiten.Image) {
 	op.GeoM.Translate(x, y)
 	op.ColorM.ChangeHSV(1, 1, l.currentAlpha)
 
-	screen.Fill(colorBlack)
+	screen.Fill(lib.ColorBlack)
 	screen.DrawImage(l.image, op)
 }
 

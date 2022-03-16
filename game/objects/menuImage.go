@@ -1,19 +1,21 @@
-package tankism
+package objects
 
 import (
 	_ "embed"
+	"github.com/co0p/tankism/lib"
+	"github.com/co0p/tankism/media"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 // MenuImage is the background image of the menu screen
 type MenuImage struct {
-	scene Scene
+	scene lib.Scene
 	image *ebiten.Image
 }
 
-func NewMenuImage(scene Scene) *MenuImage {
+func NewMenuImage(scene lib.Scene) *MenuImage {
 
-	img, _ := LoadImage(BackgroundImage)
+	img, _ := media.LoadImage(media.BackgroundImage)
 	sprite := ebiten.NewImageFromImage(img)
 
 	return &MenuImage{
@@ -36,7 +38,7 @@ func (l *MenuImage) Draw(screen *ebiten.Image) {
 	op.GeoM.Scale(scaleX, scaleY)
 	op.GeoM.Translate(x, y)
 
-	screen.Fill(colorBlack)
+	screen.Fill(lib.ColorBlack)
 	screen.DrawImage(l.image, op)
 }
 

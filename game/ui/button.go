@@ -1,9 +1,10 @@
-package tankism
+package ui
 
 import (
+	"github.com/co0p/tankism/lib"
+	"github.com/co0p/tankism/media"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
-	"golang.org/x/image/colornames"
 	"golang.org/x/image/font"
 	"image/color"
 )
@@ -24,9 +25,9 @@ func NewButton(label string, posX int, posY int, action func()) *Button {
 
 	return &Button{
 		text:        label,
-		font:        FontHuge,
-		textColor:   colorYellow,
-		activeColor: colornames.Firebrick,
+		font:        media.FontHuge,
+		textColor:   lib.ColorYellow,
+		activeColor: lib.ColorRed,
 		posX:        posX,
 		posY:        posY,
 		Active:      false,

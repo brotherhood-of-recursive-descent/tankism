@@ -2,7 +2,8 @@ package start
 
 import (
 	"fmt"
-	"github.com/co0p/tankism"
+	"github.com/co0p/tankism/game/objects"
+	"github.com/co0p/tankism/lib"
 	"github.com/hajimehoshi/ebiten/v2"
 	"time"
 )
@@ -12,21 +13,21 @@ type StartScene struct {
 	WindowHeight int
 	startTime    time.Time
 
-	sceneManager *tankism.SceneManager
-	nextScene    tankism.Scene
+	sceneManager *lib.SceneManager
+	nextScene    lib.Scene
 
-	loadingImage *tankism.LoadingImage
-	loadingText  *tankism.LoadingText
+	loadingImage *objects.LoadingImage
+	loadingText  *objects.LoadingText
 }
 
-func NewStartScreen(sceneManager *tankism.SceneManager, nextScene tankism.Scene) *StartScene {
+func NewStartScreen(sceneManager *lib.SceneManager, nextScene lib.Scene) *StartScene {
 
 	scene := StartScene{}
 	scene.sceneManager = sceneManager
 	scene.nextScene = nextScene
 
-	scene.loadingImage = tankism.NewLoadingImage(&scene)
-	scene.loadingText = tankism.NewLoadingText(&scene)
+	scene.loadingImage = objects.NewLoadingImage(&scene)
+	scene.loadingText = objects.NewLoadingText(&scene)
 
 	return &scene
 }

@@ -2,7 +2,9 @@ package menu
 
 import (
 	"fmt"
-	"github.com/co0p/tankism"
+	"github.com/co0p/tankism/game/objects"
+	"github.com/co0p/tankism/game/ui"
+	"github.com/co0p/tankism/lib"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
@@ -12,13 +14,13 @@ type MenuScene struct {
 	WindowHeight int
 
 	currentIndex int
-	playButton   *tankism.Button
-	exitButton   *tankism.Button
+	playButton   *ui.Button
+	exitButton   *ui.Button
 
-	backgroundImage *tankism.MenuImage
+	backgroundImage *objects.MenuImage
 }
 
-func NewMenuScene(*tankism.SceneManager) *MenuScene {
+func NewMenuScene(*lib.SceneManager) *MenuScene {
 	scene := &MenuScene{}
 
 	playAction := func() {
@@ -29,9 +31,9 @@ func NewMenuScene(*tankism.SceneManager) *MenuScene {
 		fmt.Println("exit action called")
 	}
 
-	scene.backgroundImage = tankism.NewMenuImage(scene)
-	scene.playButton = tankism.NewButton("play", 300, 300, playAction)
-	scene.exitButton = tankism.NewButton("exit", 300, 500, exitAction)
+	scene.backgroundImage = objects.NewMenuImage(scene)
+	scene.playButton = ui.NewButton("play", 300, 300, playAction)
+	scene.exitButton = ui.NewButton("exit", 300, 500, exitAction)
 
 	return scene
 }

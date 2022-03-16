@@ -1,4 +1,4 @@
-package tankism
+package media
 
 import (
 	"bytes"

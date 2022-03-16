@@ -1,18 +1,17 @@
-package tankism
+package objects
 
 import (
+	"github.com/co0p/tankism/lib"
+	"github.com/co0p/tankism/media"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
 	"image/color"
 )
 
-var colorYellow = color.RGBA{R: 0xfa, G: 0xfa, B: 0xd2, A: 0xff}
-var colorDarkYellow = color.RGBA{R: 0xf0, G: 0xf0, B: 0xd0, A: 0xff}
-
 // LoadingText is the loading text animation for the start screen.
 type LoadingText struct {
-	scene          Scene
+	scene          lib.Scene
 	text           string
 	font           font.Face
 	primaryColor   color.Color
@@ -20,13 +19,13 @@ type LoadingText struct {
 	frameCount     int
 }
 
-func NewLoadingText(scene Scene) *LoadingText {
+func NewLoadingText(scene lib.Scene) *LoadingText {
 
 	return &LoadingText{
 		scene:          scene,
 		text:           "Loading ...",
-		font:           FontBig,
-		primaryColor:   colorYellow,
+		font:           media.FontBig,
+		primaryColor:   lib.ColorYellow,
 		secondaryColor: nil,
 		frameCount:     0,
 	}

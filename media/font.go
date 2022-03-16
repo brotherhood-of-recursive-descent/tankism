@@ -1,4 +1,4 @@
-package tankism
+package media
 
 import (
 	_ "embed"
@@ -8,7 +8,7 @@ import (
 	"golang.org/x/image/font/opentype"
 )
 
-//go:embed assets/fonts/pixel-dead.ttf
+//go:embed fonts/pixel-dead.ttf
 var gameFont []byte
 
 var (
