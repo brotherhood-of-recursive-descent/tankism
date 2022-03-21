@@ -2,6 +2,7 @@ package menu
 
 import (
 	"fmt"
+
 	"github.com/co0p/tankism/game/objects"
 	"github.com/co0p/tankism/game/ui"
 	"github.com/co0p/tankism/lib"
@@ -13,15 +14,16 @@ type MenuScene struct {
 	WindowWidth  int
 	WindowHeight int
 
-	currentIndex int
-	playButton   *ui.Button
-	exitButton   *ui.Button
-
+	currentIndex    int
+	playButton      *ui.Button
+	exitButton      *ui.Button
+	sceneManager    *lib.SceneManager
 	backgroundImage *objects.MenuImage
 }
 
-func NewMenuScene(*lib.SceneManager) *MenuScene {
+func NewMenuScene(sm *lib.SceneManager) *MenuScene {
 	scene := &MenuScene{}
+	scene.sceneManager = sm
 
 	playAction := func() {
 		fmt.Println("play action called")
@@ -29,6 +31,7 @@ func NewMenuScene(*lib.SceneManager) *MenuScene {
 
 	exitAction := func() {
 		fmt.Println("exit action called")
+		sm.ChangeScene("EXIT")
 	}
 
 	scene.backgroundImage = objects.NewMenuImage(scene)
@@ -70,6 +73,9 @@ func (m *MenuScene) Update() error {
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 		fmt.Println("execute action")
+		if m.currentIndex == 1 {
+			m.sceneManager.ChangeScene("EXIT")
+		}
 	}
 
 	switch m.currentIndex {

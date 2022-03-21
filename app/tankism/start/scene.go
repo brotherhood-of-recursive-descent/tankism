@@ -2,10 +2,11 @@ package start
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/co0p/tankism/game/objects"
 	"github.com/co0p/tankism/lib"
 	"github.com/hajimehoshi/ebiten/v2"
-	"time"
 )
 
 type StartScene struct {
@@ -14,17 +15,15 @@ type StartScene struct {
 	startTime    time.Time
 
 	sceneManager *lib.SceneManager
-	nextScene    lib.Scene
 
 	loadingImage *objects.LoadingImage
 	loadingText  *objects.LoadingText
 }
 
-func NewStartScreen(sceneManager *lib.SceneManager, nextScene lib.Scene) *StartScene {
+func NewStartScreen(sceneManager *lib.SceneManager) *StartScene {
 
 	scene := StartScene{}
 	scene.sceneManager = sceneManager
-	scene.nextScene = nextScene
 
 	scene.loadingImage = objects.NewLoadingImage(&scene)
 	scene.loadingText = objects.NewLoadingText(&scene)
@@ -48,7 +47,7 @@ func (s *StartScene) Update() error {
 
 	if s.loadingDone() {
 		fmt.Println("Loading done")
-		s.sceneManager.ChangeScene(s.nextScene)
+		s.sceneManager.ChangeScene("MENU")
 	}
 
 	return err

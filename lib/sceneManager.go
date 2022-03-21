@@ -7,9 +7,25 @@ import (
 type SceneManager struct {
 	currentScene Scene
 	nextScene    Scene
+	scenes       map[string]Scene
 }
 
-func (sm *SceneManager) ChangeScene(scene Scene) {
+func NewSceneManager() *SceneManager {
+	return &SceneManager{
+		scenes: make(map[string]Scene),
+	}
+}
+
+func (sm *SceneManager) RegisterScene(sceneKey string, scene Scene) {
+	sm.scenes[sceneKey] = scene
+}
+
+func (sm *SceneManager) ChangeScene(sceneKey string) {
+	scene, ok := sm.scenes[sceneKey]
+	if !ok {
+		panic("Invalid sceneKey " + sceneKey)
+	}
+
 	if sm.currentScene == nil {
 		sm.currentScene = scene
 		sm.currentScene.Init()
