@@ -27,6 +27,7 @@ func NewMenuScene(sm *lib.SceneManager) *MenuScene {
 
 	playAction := func() {
 		fmt.Println("play action called")
+		sm.ChangeScene("SINGLEPLAYER")
 	}
 
 	exitAction := func() {
@@ -42,7 +43,6 @@ func NewMenuScene(sm *lib.SceneManager) *MenuScene {
 }
 
 func (m *MenuScene) Init() error {
-	fmt.Println("menu scene init")
 	return nil
 }
 
@@ -64,7 +64,6 @@ func (m *MenuScene) Update() error {
 	}
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-		fmt.Println("UP")
 		m.currentIndex--
 		if m.currentIndex < 1 {
 			m.currentIndex = 0
@@ -73,6 +72,9 @@ func (m *MenuScene) Update() error {
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 		fmt.Println("execute action")
+		if m.currentIndex == 0 {
+			m.sceneManager.ChangeScene("SINGLEPLAYER")
+		}
 		if m.currentIndex == 1 {
 			m.sceneManager.ChangeScene("EXIT")
 		}

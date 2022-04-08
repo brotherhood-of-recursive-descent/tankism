@@ -6,6 +6,7 @@ import (
 
 	"github.com/co0p/tankism/app/tankism/exit"
 	"github.com/co0p/tankism/app/tankism/menu"
+	"github.com/co0p/tankism/app/tankism/singleplayer"
 	"github.com/co0p/tankism/app/tankism/start"
 	"github.com/co0p/tankism/lib"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -46,10 +47,12 @@ func NewClient() *Client {
 	menuScene := menu.NewMenuScene(sceneManager)
 	startScene := start.NewStartScreen(sceneManager)
 	exitScene := exit.NewExitScene(sceneManager)
+	singlePlayerScene := singleplayer.NewSinglePlayerScene(sceneManager)
 
 	sceneManager.RegisterScene("MENU", menuScene)
 	sceneManager.RegisterScene("START", startScene)
 	sceneManager.RegisterScene("EXIT", exitScene)
+	sceneManager.RegisterScene("SINGLEPLAYER", singlePlayerScene)
 
 	sceneManager.ChangeScene("START")
 
