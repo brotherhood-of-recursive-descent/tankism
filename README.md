@@ -2,6 +2,111 @@
 
 top down panzer game written in go
 
+
+## devlog
+
+
+### 04/2022 Drawing a tank using ECS
+
+> see 08892283bc67aabc710d610a02a6155b8704f25a
+
+Today we manages to implement a basic ECS system placing a tank entity on the world, drawing a sprite and make the tank shake. 
+
+The generic ecs part can be found at ```/lib/ecs/*``` and the actual systems and components of tankism at ```/game/ecs/*```.
+
+Instead of having each object being responsible for drawing itself and updating the game logic there are systems that responsible for the behavior. The data is stored in components. And the entities are a means of grouping components. 
+
+This is the simple sprite render system
+```go
+type SpriteRenderer struct {
+	EntityManager ecs.EntityManager
+}
+
+func (s *SpriteRenderer) Update() error { return nil }
+func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
+
+	entities := s.EntityManager.FindByComponents(components.SpriteType, components.TranslateType)
+	for _, e := range entities {
+
+		op := &ebiten.DrawImageOptions{}
+
+		translate := e.GetComponent(components.TranslateType).(*components.Translate)
+		x := translate.X
+		y := translate.Y
+		scale := translate.Scale
+
+		op.GeoM.Scale(scale, scale)
+		op.GeoM.Translate(x, y)
+
+		sprite := e.GetComponent(components.SpriteType).(*components.Sprite)
+		img := sprite.Image
+		screen.DrawImage(img, op)
+	}
+}
+```
+
+![empty window](https://raw.githubusercontent.com/co0p/tankism/master/docs/ecs.gif) 
+
+
+### 03/2022 Scene managment
+
+> see 360d4bac97ead6067e44a4f016ca182cae33db35
+
+Tankism is a big for-loop. In order to put some structure to the code, we decided to have individual scenes managing 
+certain aspects of the computer game. The **Start-Scene** is responsible for loading assets and the **Game-Scene** is responsible
+for managing the actual game.  
+
+Our initial thought is something along the lines:
+
+![scenes](https://user-images.githubusercontent.com/3327413/156920274-1e68ee0d-8453-43d9-86fe-5ba9b362e932.png) 
+
+
+### 03/2022 Folder structure
+
+> see 36813f5b94e36e06781b702731a05ff17800f7d1 
+
+Structuring go apps is a bit different than say java packages. We tried to follow Bil Kennedy's advice of 
+package-oriented design and came up with the following folder structure.
+
+The main goal was to make the dependencies visible in the code utilizing the folder structure. Dependencies point downwards.
+
+```
+app/
+├─ client/
+│  ├─ gamescene/...
+│  ├─ startscene/...
+│  ├─ main.go
+├─ server/
+│  ├─ main.go
+game/
+├─ objects/
+│  ├─ ...
+│  ├─ tank.go
+├─ ui/
+│  ├─ ...
+│  ├─ exitbutton.go
+├─ colors.go
+lib/
+├─ ecs/...
+├─ ui/...
+├─ gameobject.go
+media/
+├─ images/...
+├─ sounds/...
+```
+
+More about it at [packagestructure](https://raw.githubusercontent.com/co0p/tankism/master/docs/packagestructure.md) 
+
+
+### 03/2022 First image drawn
+
+> see 43bf36088d9817475df42d7d8e318ac6970776e8
+
+After more than 3 years of being dormant, we revived the idea of writing a tank-top-down shooter. This time
+using the ebiten library. In our first remote session we managed to create an empty window :-) 
+
+![empty window](https://raw.githubusercontent.com/co0p/tankism/master/docs/emptywindow.png) 
+
 ## development
 
  * install dependencies ```go install```
