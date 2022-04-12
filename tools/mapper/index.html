@@ -1,66 +1,122 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MAPPER</title>
-
-    <script src="jquery-3.6.0.min.js"></script>
-    <script src="mapper.js"></script>
-
-    <style>
-        html, body {
-            margin: 0;
-            height: 100vh;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            height: calc(100%);
-        }
-
-        .menu {
-            height: 100px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 1em;
-            padding-right: 1em;
-        }
-
-        .editor {
-            overflow: scroll;
-        }
-
-        .row {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .cell {
-            border: 1px solid lightblue;
-            width: 64px;
-            height: 64px;
-        }
-    </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
-<body id="container">
 
-<div class="container">
-    <div id="menu" class="menu">
-        <h3>Mapper</h3>
-        <p>click (optionally with CTRL) to cycle through the assets</p>
-        <button id="export">export</button>
+<body>
+
+    <div class="columns">
+
+        <div class="column">
+            <div class="hero is-fullheight">
+                <div class="hero-body">bla</div>
+            </div>
+        </div>
+
+
+        <div class="column is-3 section">
+            <div class="box">
+
+                <!--Header -->
+
+                <div>
+                    <h1 class="title is-3">Tankism <small class="title is-5">Mapper</small></h1>
+                    <hr>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <a class="button">
+                                New
+                            </a>
+                        </div>
+                        <div class="control">
+
+                            <a class="button">
+                                Load
+                            </a>
+                        </div>
+                        <div class="control">
+
+                            <a class="button">
+                                Export
+                            </a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <!-- -->
+                <div>
+                    <span class="title is-5">Layer</span>
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <label class="radio">
+                                <input checked="checked" type="radio" name="question">
+                                Tiles
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="question">
+                                Objects
+                            </label>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <!-- image selection -->
+                <div>
+                    <div class="title is-5">Element</div>
+
+                    <div class="has-text-centered p-2">
+                        <img class="image is-128x128 is-inline                            ">
+                    </div>
+                    <div class="field">
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select>
+                                    <option>Sand</option>
+                                    <option>Sand2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <!-- properties selection -->
+                <div>
+                    <div class="title is-5">Properties</div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" placeholder="property" class="input">
+                            <input type="text" placeholder="value" class="input">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" placeholder="property" class="input">
+                            <input type="text" placeholder="value" class="input">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <div class="control">
+                            <input type="text" placeholder="property" class="input">
+                            <input type="text" placeholder="value" class="input">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
     </div>
-    
-    <div id="editor" class="editor"></div>
-</div>
-
-<script>
-    Mapper.init();
-</script>
-
 </body>
+
 </html>
