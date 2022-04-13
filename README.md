@@ -1,22 +1,22 @@
 # tankism
 
-top down panzer game written in go
+A top down panzer game written in Go.
 
 
 ## devlog
 
 
-### 04/2022 Drawing a tank using ECS
+### 04/2022 Drawing a tank using Entity Component System(s) (ECS)
 
 > see 08892283bc67aabc710d610a02a6155b8704f25a
 
-Today we manages to implement a basic ECS system placing a tank entity on the world, drawing a sprite and make the tank shake. 
+Today we implemented a basic ECS system placing a tank entity on the world, drawing a sprite and making the tank shake. 
 
-The generic ecs part can be found at ```/lib/ecs/*``` and the actual systems and components of tankism at ```/game/ecs/*```.
+The generic ECS part can be found at ```/lib/ecs/*``` and the actual systems and components of tankism at ```/game/ecs/*```.
 
-Instead of having each object being responsible for drawing itself and updating the game logic there are systems that responsible for the behavior. The data is stored in components. And the entities are a means of grouping components. 
+Instead of having each game object being responsible for drawing itself and updating the game logic, there are systems that are responsible for the behavior. The data is stored in components. And the entities are a means of grouping components. This separation of concerns allows to decouple systems from other systems and entities from other entities. This is also an example of data-oriented design. 
 
-This is the simple sprite render system
+Below is the simple sprite render system:
 ```go
 type SpriteRenderer struct {
 	EntityManager ecs.EntityManager
@@ -65,7 +65,7 @@ Our initial thought is something along the lines:
 
 > see 36813f5b94e36e06781b702731a05ff17800f7d1 
 
-Structuring go apps is a bit different than say java packages. We tried to follow Bil Kennedy's advice of 
+Structuring go apps is a bit different than say Java packages. We tried to follow Bil Kennedy's advice of 
 package-oriented design and came up with the following folder structure.
 
 The main goal was to make the dependencies visible in the code utilizing the folder structure. Dependencies point downwards.
@@ -102,7 +102,7 @@ More about it at [packagestructure](https://raw.githubusercontent.com/co0p/tanki
 
 > see 43bf36088d9817475df42d7d8e318ac6970776e8
 
-After more than 3 years of being dormant, we revived the idea of writing a tank-top-down shooter. This time
+After more than 3 years of being dormant, we revived the idea of writing a top-down tank shooter. This time
 using the ebiten library. In our first remote session we managed to create an empty window :-) 
 
 ![empty window](https://raw.githubusercontent.com/co0p/tankism/master/docs/emptywindow.png) 
