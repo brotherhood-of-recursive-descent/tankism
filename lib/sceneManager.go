@@ -1,8 +1,6 @@
 package lib
 
 import (
-	"fmt"
-
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -45,7 +43,6 @@ func (sm *SceneManager) Draw(screen *ebiten.Image) {
 func (sm *SceneManager) Update() error {
 	if sm.nextScene != nil {
 		sm.currentScene = sm.nextScene
-		fmt.Printf("SM U width: %v\n", sm.ScreenWidth)
 		sm.currentScene.Init(sm)
 		sm.nextScene = nil
 	}

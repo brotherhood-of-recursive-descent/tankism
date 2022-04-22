@@ -64,6 +64,7 @@ func (s *SinglePlayerScene) Init(sm *lib.SceneManager) error {
 		Scale:    1,
 		Rotation: 0.10,
 	})
+	tank.AddComponent(&components.Shaking{})
 
 	fpsCounter := s.entityManager.NewEntity()
 	fpsCounter.AddComponent(&components.Text{Value: "0",

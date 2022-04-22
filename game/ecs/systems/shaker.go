@@ -16,7 +16,7 @@ func (s *Shaker) Draw(screen *ebiten.Image) {}
 
 func (s *Shaker) Update() error {
 
-	entities := s.EntityManager.FindByComponents(components.TranslateType)
+	entities := s.EntityManager.FindByComponents(components.ShakingType, components.TranslateType)
 
 	val := rand.Intn(2)
 	xOrY := rand.Intn(2)

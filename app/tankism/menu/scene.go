@@ -56,7 +56,6 @@ func (m *MenuScene) Draw(screen *ebiten.Image) {
 func (m *MenuScene) Update() error {
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
-		fmt.Println("DOWN")
 		m.currentIndex++
 		if m.currentIndex > 1 {
 			m.currentIndex = 0
