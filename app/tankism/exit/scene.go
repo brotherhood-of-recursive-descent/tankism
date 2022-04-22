@@ -31,7 +31,7 @@ func NewExitScene(sceneManager *lib.SceneManager) *ExitScene {
 	return &scene
 }
 
-func (s *ExitScene) Init() error {
+func (s *ExitScene) Init(*lib.SceneManager) error {
 	fmt.Println("Loaded exit scene...")
 	img, _ := media.LoadImage(media.BackgroundImage)
 	s.prevImage = ebiten.NewImageFromImage(img)
@@ -49,7 +49,6 @@ func (s *ExitScene) Draw(screen *ebiten.Image) {
 }
 
 func (s *ExitScene) Update() error {
-	fmt.Println(s.currentAlpha)
 	if s.currentAlpha > ALPHA_MIN {
 		s.currentAlpha -= ALPHA_STEP
 	}

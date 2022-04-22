@@ -2,6 +2,7 @@ package objects
 
 import (
 	_ "embed"
+
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/media"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -40,7 +41,7 @@ func (l *LoadingImage) Draw(screen *ebiten.Image) {
 	scaleX, scaleY := 0.75, 0.75
 	imageWidth, imageHeight := l.image.Size()
 
-	w, h := l.scene.WindowDimension()
+	w, h := screen.Size()
 	x := float64(w)*0.5 - (float64(imageWidth) * 0.5 * scaleX)
 	y := float64(h)*0.5 - (float64(imageHeight) * 0.5 * scaleY)
 

@@ -1,6 +1,8 @@
 package lib
 
 import (
+	"fmt"
+
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -8,6 +10,8 @@ type SceneManager struct {
 	currentScene Scene
 	nextScene    Scene
 	scenes       map[string]Scene
+	ScreenWidth  int
+	ScreenHeight int
 }
 
 func NewSceneManager() *SceneManager {
@@ -28,7 +32,7 @@ func (sm *SceneManager) ChangeScene(sceneKey string) {
 
 	if sm.currentScene == nil {
 		sm.currentScene = scene
-		sm.currentScene.Init()
+		sm.currentScene.Init(sm)
 	} else {
 		sm.nextScene = scene
 	}
@@ -41,16 +45,14 @@ func (sm *SceneManager) Draw(screen *ebiten.Image) {
 func (sm *SceneManager) Update() error {
 	if sm.nextScene != nil {
 		sm.currentScene = sm.nextScene
-		sm.currentScene.Init()
+		fmt.Printf("SM U width: %v\n", sm.ScreenWidth)
+		sm.currentScene.Init(sm)
 		sm.nextScene = nil
 	}
 	return sm.currentScene.Update()
 }
 
-func (sm *SceneManager) WindowDimension() (int, int) {
-	return sm.currentScene.WindowDimension()
-}
-
-func (sm *SceneManager) SetWindowDimension(i int, i2 int) {
-	sm.currentScene.SetWindowDimension(i, i2)
+func (sm *SceneManager) SetWindowDimension(w int, h int) {
+	sm.ScreenWidth = w
+	sm.ScreenHeight = h
 }

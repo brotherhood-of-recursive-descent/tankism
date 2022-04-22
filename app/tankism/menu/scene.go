@@ -42,7 +42,7 @@ func NewMenuScene(sm *lib.SceneManager) *MenuScene {
 	return scene
 }
 
-func (m *MenuScene) Init() error {
+func (m *MenuScene) Init(*lib.SceneManager) error {
 	return nil
 }
 

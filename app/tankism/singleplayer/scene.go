@@ -15,22 +15,47 @@ type SinglePlayerScene struct {
 
 	sceneManager *lib.SceneManager
 
-	entityManager ecs.EntityManager
+	entityManager *ecs.EntityManager
 	systems       []ecs.System
 }
 
 func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 
+	entityManager := ecs.EntityManager{}
+
 	// empty scene
 	scene := SinglePlayerScene{}
+
+	var s []ecs.System
+	s = append(s,
+		&systems.SpriteRenderer{
+			EntityManager: &entityManager,
+		},
+		&systems.Shaker{
+			EntityManager: &entityManager,
+		},
+		&systems.TextRenderer{
+			EntityManager: &entityManager,
+		},
+		&systems.PerformanceMonitor{
+			EntityManager: &entityManager,
+		},
+	)
+
+	scene.entityManager = &entityManager
+	scene.systems = s
+
+	return &scene
+}
+
+func (s *SinglePlayerScene) Init(sm *lib.SceneManager) error {
 
 	// load media
 	img, _ := media.LoadImage(media.TankImage)
 	sprite := ebiten.NewImageFromImage(img)
 
 	// build the tank
-	entityManager := ecs.EntityManager{}
-	tank := entityManager.NewEntity()
+	tank := s.entityManager.NewEntity()
 
 	tank.AddComponent(&components.Sprite{Image: sprite})
 	tank.AddComponent(&components.Translate{
@@ -40,42 +65,17 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 		Rotation: 0.10,
 	})
 
-	fpsCounter := entityManager.NewEntity()
+	fpsCounter := s.entityManager.NewEntity()
 	fpsCounter.AddComponent(&components.Text{Value: "0",
 		Font:  media.FontMedium,
 		Color: lib.ColorGreen})
 	fpsCounter.AddComponent(&components.Translate{
-		X:        50.0, // TODO float64(scene.WindowWidth - 120),
+		X:        float64(sm.ScreenWidth - 120),
 		Y:        50.0,
 		Scale:    1,
 		Rotation: 0.0,
 	})
 	fpsCounter.AddComponent(&components.FPS{})
-
-	var s []ecs.System
-	s = append(s,
-		&systems.SpriteRenderer{
-			EntityManager: entityManager,
-		},
-		&systems.Shaker{
-			EntityManager: entityManager,
-		},
-		&systems.TextRenderer{
-			EntityManager: entityManager,
-		},
-		&systems.PerformanceMonitor{
-			EntityManager: entityManager,
-		},
-	)
-
-	scene.entityManager = entityManager
-	scene.systems = s
-
-	return &scene
-}
-
-func (s *SinglePlayerScene) Init() error {
-	// load tank image
 
 	return nil
 }

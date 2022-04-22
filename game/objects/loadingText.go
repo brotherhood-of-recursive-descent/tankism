@@ -1,12 +1,13 @@
 package objects
 
 import (
+	"image/color"
+
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/media"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
-	"image/color"
 )
 
 // LoadingText is the loading text animation for the start screen.
@@ -32,7 +33,7 @@ func NewLoadingText(scene lib.Scene) *LoadingText {
 }
 
 func (l *LoadingText) Draw(screen *ebiten.Image) {
-	w, h := l.scene.WindowDimension()
+	w, h := screen.Size()
 	text.Draw(screen, l.text, l.font, w-300, h-100, l.primaryColor)
 }
 

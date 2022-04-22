@@ -9,7 +9,7 @@ import (
 )
 
 type Shaker struct {
-	EntityManager ecs.EntityManager
+	EntityManager *ecs.EntityManager
 }
 
 func (s *Shaker) Draw(screen *ebiten.Image) {}

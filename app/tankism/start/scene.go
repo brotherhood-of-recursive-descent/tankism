@@ -1,7 +1,6 @@
 package start
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/co0p/tankism/game/objects"
@@ -31,7 +30,7 @@ func NewStartScreen(sceneManager *lib.SceneManager) *StartScene {
 	return &scene
 }
 
-func (s *StartScene) Init() error {
+func (s *StartScene) Init(*lib.SceneManager) error {
 	s.startTime = time.Now()
 	return nil
 }
@@ -46,7 +45,6 @@ func (s *StartScene) Update() error {
 	err = s.loadingText.Update()
 
 	if s.loadingDone() {
-		fmt.Println("Loading done")
 		s.sceneManager.ChangeScene("MENU")
 	}
 

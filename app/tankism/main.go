@@ -58,6 +58,7 @@ func NewClient() *Client {
 
 	client := &Client{}
 	client.sceneManager = sceneManager
+	client.sceneManager.SetWindowDimension(client.windowWidth, client.windowHeight)
 
 	return client
 }

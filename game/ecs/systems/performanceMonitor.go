@@ -9,7 +9,7 @@ import (
 )
 
 type PerformanceMonitor struct {
-	EntityManager ecs.EntityManager
+	EntityManager *ecs.EntityManager
 }
 
 func (s *PerformanceMonitor) Draw(screen *ebiten.Image) {}

@@ -8,7 +8,7 @@ import (
 )
 
 type TextRenderer struct {
-	EntityManager ecs.EntityManager
+	EntityManager *ecs.EntityManager
 }
 
 func (s *TextRenderer) Update() error {

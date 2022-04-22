@@ -7,7 +7,7 @@ import (
 )
 
 type SpriteRenderer struct {
-	EntityManager ecs.EntityManager
+	EntityManager *ecs.EntityManager
 }
 
 func (s *SpriteRenderer) Update() error { return nil }

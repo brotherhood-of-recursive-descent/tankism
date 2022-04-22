@@ -5,9 +5,7 @@ import (
 )
 
 type Scene interface {
-	Init() error
+	Init(*SceneManager) error
 	Draw(image *ebiten.Image)
 	Update() error
-	WindowDimension() (int, int)
-	SetWindowDimension(int, int)
 }
