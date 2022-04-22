@@ -21,6 +21,9 @@ type SinglePlayerScene struct {
 
 func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 
+	// empty scene
+	scene := SinglePlayerScene{}
+
 	// load media
 	img, _ := media.LoadImage(media.TankImage)
 	sprite := ebiten.NewImageFromImage(img)
@@ -37,6 +40,18 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 		Rotation: 0.10,
 	})
 
+	fpsCounter := entityManager.NewEntity()
+	fpsCounter.AddComponent(&components.Text{Value: "0",
+		Font:  media.FontMedium,
+		Color: lib.ColorGreen})
+	fpsCounter.AddComponent(&components.Translate{
+		X:        50.0, // TODO float64(scene.WindowWidth - 120),
+		Y:        50.0,
+		Scale:    1,
+		Rotation: 0.0,
+	})
+	fpsCounter.AddComponent(&components.FPS{})
+
 	var s []ecs.System
 	s = append(s,
 		&systems.SpriteRenderer{
@@ -45,12 +60,16 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 		&systems.Shaker{
 			EntityManager: entityManager,
 		},
+		&systems.TextRenderer{
+			EntityManager: entityManager,
+		},
+		&systems.PerformanceMonitor{
+			EntityManager: entityManager,
+		},
 	)
 
-	scene := SinglePlayerScene{
-		entityManager: entityManager,
-		systems:       s,
-	}
+	scene.entityManager = entityManager
+	scene.systems = s
 
 	return &scene
 }
