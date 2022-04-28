@@ -5,6 +5,14 @@ A top down panzer game written in Go.
 
 ## devlog
 
+### 04/2022 Making the tank move Asteroids style
+
+> see 4ef22abd3572bcd0eacb827181e0e58b160c6699
+
+Finally some action on the screen. The tank is now keyboard controllable and moves across the screen.
+
+![empty window](https://raw.githubusercontent.com/co0p/tankism/master/docs/tank_move.gif) 
+
 
 ### 04/2022 Drawing a tank using Entity Component System(s) (ECS)
 
