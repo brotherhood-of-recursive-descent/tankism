@@ -14,6 +14,13 @@ func (e *Entity) AddComponent(c Component) {
 	e.components[c.Type()] = c
 }
 
+func (e *Entity) AddComponents(cs ...Component) {
+
+	for _, c := range cs {
+		e.components[c.Type()] = c
+	}
+}
+
 func (e *Entity) RemoveComponent(c ComponentType) {
 	delete(e.components, c)
 }

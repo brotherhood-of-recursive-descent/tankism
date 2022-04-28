@@ -18,17 +18,21 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 	// todo, sort by z-index to maintain right order of rendering
 	for _, e := range entities {
 
-		op := &ebiten.DrawImageOptions{}
-
+		sprite := e.GetComponent(components.SpriteType).(*components.Sprite)
 		translate := e.GetComponent(components.TranslateType).(*components.Translate)
+		rect := sprite.Image.Bounds()
+
 		x := translate.X
 		y := translate.Y
+		rotation := translate.Rotation
 		scale := translate.Scale
 
+		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Scale(scale, scale)
+		op.GeoM.Translate(-float64(rect.Dx())/2, -float64(rect.Dy())/2)
+		op.GeoM.Rotate(rotation)
 		op.GeoM.Translate(x, y)
 
-		sprite := e.GetComponent(components.SpriteType).(*components.Sprite)
 		img := sprite.Image
 		screen.DrawImage(img, op)
 	}

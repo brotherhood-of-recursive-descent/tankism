@@ -1,11 +1,9 @@
 package singleplayer
 
 import (
-	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
-	"github.com/co0p/tankism/media"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -40,6 +38,9 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 		&systems.PerformanceMonitor{
 			EntityManager: &entityManager,
 		},
+		&systems.Controller{
+			EntityManager: &entityManager,
+		},
 	)
 
 	scene.entityManager = &entityManager
@@ -50,33 +51,11 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 
 func (s *SinglePlayerScene) Init(sm *lib.SceneManager) error {
 
-	// load media
-	img, _ := media.LoadImage(media.TankImage)
-	sprite := ebiten.NewImageFromImage(img)
-
-	// build the tank
 	tank := s.entityManager.NewEntity()
-
-	tank.AddComponent(&components.Sprite{Image: sprite})
-	tank.AddComponent(&components.Translate{
-		X:        200.0,
-		Y:        200.0,
-		Scale:    1,
-		Rotation: 0.10,
-	})
-	tank.AddComponent(&components.Shaking{})
+	configureTank(tank)
 
 	fpsCounter := s.entityManager.NewEntity()
-	fpsCounter.AddComponent(&components.Text{Value: "0",
-		Font:  media.FontMedium,
-		Color: lib.ColorGreen})
-	fpsCounter.AddComponent(&components.Translate{
-		X:        float64(sm.ScreenWidth - 120),
-		Y:        50.0,
-		Scale:    1,
-		Rotation: 0.0,
-	})
-	fpsCounter.AddComponent(&components.FPS{})
+	configureFpsCounter(fpsCounter, sm.ScreenWidth)
 
 	return nil
 }
