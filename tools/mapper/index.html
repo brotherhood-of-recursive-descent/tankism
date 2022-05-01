@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="has-navbar-fixed-top">
 
 <head>
     <meta charset="utf-8">
@@ -9,6 +9,61 @@
 </head>
 
 <body>
+    <nav class="navbar is-fixed-top">
+        <div class="navbar-brand">
+            <span class="navbar-item">
+                <img src="../../media/tanks/tank_green.png">
+            </span>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Tankism-Mapper
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <span class="navbar-item has-text-weight-medium	">
+                            New Map
+                        </span>
+
+                        <a class="navbar-item">
+                            Small
+                        </a>
+                        <a class="navbar-item">
+                            Medium
+                        </a>
+                        <a class="navbar-item">
+                            Huge
+                        </a>
+                        </span>
+                        <hr class="navbar-divider">
+                        <a class="navbar-item">
+                            Export
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <span class="has-text-weight-medium">Active Layer:</span>
+                </div>
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-active">
+                            Tiles
+                        </a>
+                        <a class="button">
+                            Objects
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </nav>
 
     <div class="columns">
 
@@ -19,102 +74,32 @@
         </div>
 
 
-        <div class="column is-3 section">
+        <div class="column is-2 section">
             <div class="box">
 
-                <!--Header -->
-
-                <div>
-                    <h1 class="title is-3">Tankism <small class="title is-5">Mapper</small></h1>
-                    <hr>
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <a class="button">
-                                New
-                            </a>
-                        </div>
-                        <div class="control">
-
-                            <a class="button">
-                                Load
-                            </a>
-                        </div>
-                        <div class="control">
-
-                            <a class="button">
-                                Export
-                            </a>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-
-                <!-- -->
-                <div>
-                    <span class="title is-5">Layer</span>
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <label class="radio">
-                                <input checked="checked" type="radio" name="question">
-                                Tiles
-                            </label>
-                            <label class="radio">
-                                <input type="radio" name="question">
-                                Objects
-                            </label>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-
                 <!-- image selection -->
-                <div>
+                <div class="">
                     <div class="title is-5">Element</div>
 
                     <div class="has-text-centered p-2">
-                        <img class="image is-128x128 is-inline                            ">
+                        <img class="image is-128x128 is-inline">
                     </div>
-                    <div class="field">
-                        <div class="control">
-                            <div class="select is-fullwidth">
-                                <select>
-                                    <option>Sand</option>
-                                    <option>Sand2</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
                 </div>
 
-                <!-- properties selection -->
-                <div>
-                    <div class="title is-5">Properties</div>
-
-                    <div class="field">
-                        <div class="control">
-                            <input type="text" placeholder="property" class="input">
-                            <input type="text" placeholder="value" class="input">
-                        </div>
+                 <!-- tiles selection -->
+                 <div>
+                    <div class="is-flex is-flex-wrap-wrap">
+                        <img class="image is-64x64 p-1">
+                        <img class="image is-64x64  p-1">
+                        <img class="image is-64x64  p-1">
+                        <img class="image is-64x64  p-1">
+                        <img class="image is-64x64  p-1">
+                        <img class="image is-64x64  p-1">
+                        <img class="image is-64x64  p-1">
                     </div>
-
-                    <div class="field">
-                        <div class="control">
-                            <input type="text" placeholder="property" class="input">
-                            <input type="text" placeholder="value" class="input">
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <div class="control">
-                            <input type="text" placeholder="property" class="input">
-                            <input type="text" placeholder="value" class="input">
-                        </div>
-                    </div>
-
                 </div>
-
             </div>
+
         </div>
     </div>
 </body>

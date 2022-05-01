@@ -43,3 +43,43 @@ func configureFpsCounter(fps *ecs.Entity, width int) {
 	})
 	fps.AddComponent(&components.FPS{})
 }
+
+func configureLight(e *ecs.Entity, mode ebiten.CompositeMode, X, Y float64) {
+
+	sprite, _ := media.LoadImage(media.LightCircle)
+
+	e.AddComponent(&components.Light{
+		Image:         ebiten.NewImageFromImage(sprite),
+		CompositeMode: mode,
+		Scale:         1,
+	})
+	e.AddComponent(&components.Translate{
+		X: X,
+		Y: Y,
+	})
+}
+
+func configureBigTank(e *ecs.Entity) {
+
+	t, _ := media.LoadImage(media.BigTankImage)
+	s := ebiten.NewImageFromImage(t)
+
+	l, _ := media.LoadImage(media.LightCircle)
+	lightSprite := ebiten.NewImageFromImage(l)
+
+	sprite := &components.Sprite{Image: s}
+	shaking := &components.Shaking{}
+	translate := &components.Translate{
+		X:     700.0,
+		Y:     700.0,
+		Scale: 1,
+	}
+
+	light := &components.Light{
+		Image:         ebiten.NewImageFromImage(lightSprite),
+		CompositeMode: ebiten.CompositeModeDestinationIn,
+		Scale:         1,
+	}
+
+	e.AddComponents(sprite, translate, shaking, light)
+}
