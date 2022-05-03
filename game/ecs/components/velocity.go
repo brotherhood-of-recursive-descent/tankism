@@ -7,9 +7,13 @@ const VelocityType = "velocity"
 const increaseFactor = 0.05
 
 type Velocity struct {
+	X float64
+	Y float64
+
+	Rotation float64
+
 	IntertiaMax float64
 	Intertia    float64
-	Rotation    float64
 }
 
 func (v *Velocity) IncreaseInertia() {

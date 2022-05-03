@@ -32,7 +32,7 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 		&systems.LightingSystem{
 			EntityManager: &entityManager,
 		},
-		&systems.Shaker{
+		&systems.AISystem{
 			EntityManager: &entityManager,
 		},
 		&systems.TextRenderer{
@@ -42,6 +42,9 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 			EntityManager: &entityManager,
 		},
 		&systems.Controller{
+			EntityManager: &entityManager,
+		},
+		&systems.AISystem{
 			EntityManager: &entityManager,
 		},
 	)
@@ -60,26 +63,8 @@ func (s *SinglePlayerScene) Init(sm *lib.SceneManager) error {
 	fpsCounter := s.entityManager.NewEntity()
 	configureFpsCounter(fpsCounter, sm.ScreenWidth)
 
-	l1 := s.entityManager.NewEntity()
-	configureLight(l1, ebiten.CompositeModeSourceOver, 100, 500)
-
-	l2 := s.entityManager.NewEntity()
-	configureLight(l2, ebiten.CompositeModeClear, 300, 500)
-
-	l3 := s.entityManager.NewEntity()
-	configureLight(l3, ebiten.CompositeModeDestination, 500, 500)
-
-	l4 := s.entityManager.NewEntity()
-	configureLight(l4, ebiten.CompositeModeDestinationOver, 700, 500)
-
-	l5 := s.entityManager.NewEntity()
-	configureLight(l5, ebiten.CompositeModeSourceIn, 900, 500)
-
-	l6 := s.entityManager.NewEntity()
-	configureLight(l6, ebiten.CompositeModeDestinationIn, 1100, 500)
-
 	bigTank := s.entityManager.NewEntity()
-	configureBigTank(bigTank)
+	configureAITank(bigTank)
 
 	return nil
 }

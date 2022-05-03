@@ -24,17 +24,21 @@ func configureTank(tank *ecs.Entity) {
 		X:        200.0,
 		Y:        200.0,
 		Scale:    1,
-		Rotation: 0.05,
+		Rotation: 0,
+	}
+	target := &components.Target{
+		GroupId: 1,
 	}
 
-	tank.AddComponents(sprite, translate, velocity, shaking, controller)
+	tank.AddComponents(controller, sprite, translate, velocity, shaking, target)
 }
 
 func configureFpsCounter(fps *ecs.Entity, width int) {
 	fps.AddComponent(&components.Text{
 		Value: "0",
 		Font:  media.FontMedium,
-		Color: lib.ColorGreen})
+		Color: lib.ColorGreen,
+	})
 	fps.AddComponent(&components.Translate{
 		X:        float64(width - 120),
 		Y:        50.0,
@@ -44,42 +48,20 @@ func configureFpsCounter(fps *ecs.Entity, width int) {
 	fps.AddComponent(&components.FPS{})
 }
 
-func configureLight(e *ecs.Entity, mode ebiten.CompositeMode, X, Y float64) {
-
-	sprite, _ := media.LoadImage(media.LightCircle)
-
-	e.AddComponent(&components.Light{
-		Image:         ebiten.NewImageFromImage(sprite),
-		CompositeMode: mode,
-		Scale:         1,
-	})
-	e.AddComponent(&components.Translate{
-		X: X,
-		Y: Y,
-	})
-}
-
-func configureBigTank(e *ecs.Entity) {
+func configureAITank(e *ecs.Entity) {
 
 	t, _ := media.LoadImage(media.BigTankImage)
 	s := ebiten.NewImageFromImage(t)
 
-	l, _ := media.LoadImage(media.LightCircle)
-	lightSprite := ebiten.NewImageFromImage(l)
-
 	sprite := &components.Sprite{Image: s}
-	shaking := &components.Shaking{}
 	translate := &components.Translate{
 		X:     700.0,
 		Y:     700.0,
 		Scale: 1,
 	}
-
-	light := &components.Light{
-		Image:         ebiten.NewImageFromImage(lightSprite),
-		CompositeMode: ebiten.CompositeModeDestinationIn,
-		Scale:         1,
+	ai := &components.AI{
+		TargetGroup: 1,
 	}
 
-	e.AddComponents(sprite, translate, shaking, light)
+	e.AddComponents(sprite, translate, ai)
 }
