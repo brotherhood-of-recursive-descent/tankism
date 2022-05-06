@@ -29,12 +29,11 @@ func (s *AISystem) Update() error {
 
 			if ai.TargetGroup == target.GroupId {
 
-				// MAGIC HAPPENS
-
 				dx := aiTranslate.X - targetTranslate.X
 				dy := aiTranslate.Y - targetTranslate.Y
 
-				targetRad := math.Atan2(dy, dx) / math.Pi * 2
+				// -dy because y increases 'downwards'
+				targetRad := math.Atan2(dx, -dy)
 				aiTranslate.Rotation = targetRad
 			}
 		}
