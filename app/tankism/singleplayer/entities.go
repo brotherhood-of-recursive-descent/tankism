@@ -1,6 +1,8 @@
 package singleplayer
 
 import (
+	"image/color"
+
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
@@ -13,7 +15,7 @@ func configureTank(tank *ecs.Entity) {
 	img, _ := media.LoadImage(media.TankImage)
 	s := ebiten.NewImageFromImage(img)
 
-	sprite := &components.Sprite{Image: s}
+	sprite := &components.Sprite{Image: s, ZIndex: 1}
 	velocity := &components.Velocity{
 		IntertiaMax: 2,
 		Rotation:    0.05,
@@ -64,4 +66,13 @@ func configureAITank(e *ecs.Entity) {
 	}
 
 	e.AddComponents(sprite, translate, ai)
+}
+
+func configureAmbientLight(e *ecs.Entity) {
+
+	ambientLight := &components.AmbientLight{
+		CompositeMode: ebiten.CompositeModeSourceOver,
+		Color:         color.RGBA{R: 10, G: 10, B: 0, A: 160},
+	}
+	e.AddComponents(ambientLight)
 }

@@ -9,6 +9,8 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
+var Alpha uint8 = 0
+
 type Controller struct {
 	EntityManager *ecs.EntityManager
 }

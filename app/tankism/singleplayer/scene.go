@@ -29,9 +29,7 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 		&systems.SpriteRenderer{
 			EntityManager: &entityManager,
 		},
-		&systems.LightingSystem{
-			EntityManager: &entityManager,
-		},
+		systems.NewLightingSystem(&entityManager),
 		&systems.AISystem{
 			EntityManager: &entityManager,
 		},
@@ -56,6 +54,9 @@ func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
 }
 
 func (s *SinglePlayerScene) Init(sm *lib.SceneManager) error {
+
+	ambientLight := s.entityManager.NewEntity()
+	configureAmbientLight(ambientLight)
 
 	tank := s.entityManager.NewEntity()
 	configureTank(tank)

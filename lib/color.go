@@ -1,6 +1,8 @@
 package lib
 
-import "image/color"
+import (
+	"image/color"
+)
 
 var ColorBlack = color.Black
 var ColorYellow = color.RGBA{R: 0xfa, G: 0xfa, B: 0xd2, A: 0xff}

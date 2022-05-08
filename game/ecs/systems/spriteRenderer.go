@@ -1,6 +1,8 @@
 package systems
 
 import (
+	"sort"
+
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -15,7 +17,14 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 
 	entities := s.EntityManager.FindByComponents(components.SpriteType, components.TranslateType)
 
-	// todo, sort by z-index to maintain right order of rendering
+	// we sort the slice by z-index
+	sort.Slice(entities, func(a, b int) bool {
+		spriteA := entities[a].GetComponent(components.SpriteType).(*components.Sprite)
+		spriteB := entities[b].GetComponent(components.SpriteType).(*components.Sprite)
+		return spriteA.ZIndex < spriteB.ZIndex
+	})
+
+	// now draw them
 	for _, e := range entities {
 
 		sprite := e.GetComponent(components.SpriteType).(*components.Sprite)
