@@ -34,13 +34,15 @@ func (s *LightingSystem) Draw(screen *ebiten.Image) {
 	ambientLightEntity := s.entityManager.FindByComponents(components.AmbientLightType)
 	if len(ambientLightEntity) > 0 {
 		ambientLight := ambientLightEntity[0].GetComponent(components.AmbientLightType).(*components.AmbientLight)
-		r, g, b, a := ambientLight.Color.RGBA()
-		ambientColor := shaders.Vec4(r, g, b, a)
-		w, h := screen.Size()
-		op := &ebiten.DrawRectShaderOptions{}
-		op.CompositeMode = ambientLight.CompositeMode
-		op.Uniforms = map[string]interface{}{"AmbientColor": ambientColor}
-		screen.DrawRectShader(w, h, s.ambientShader, op)
+		if ambientLight.Active {
+			r, g, b, a := ambientLight.Color.RGBA()
+			ambientColor := shaders.Vec4(r, g, b, a)
+			w, h := screen.Size()
+			op := &ebiten.DrawRectShaderOptions{}
+			op.CompositeMode = ambientLight.CompositeMode
+			op.Uniforms = map[string]interface{}{"AmbientColor": ambientColor}
+			screen.DrawRectShader(w, h, s.ambientShader, op)
+		}
 	}
 
 	/*

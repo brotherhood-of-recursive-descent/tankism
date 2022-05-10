@@ -50,5 +50,13 @@ func (s *Controller) Update() error {
 
 	}
 
+	if inpututil.IsKeyJustPressed(ebiten.KeyL) {
+		entities := s.EntityManager.FindByComponents(components.AmbientLightType)
+		if len(entities) == 1 {
+			ambientLight := entities[0].GetComponent(components.AmbientLightType).(*components.AmbientLight)
+			ambientLight.Active = !ambientLight.Active
+		}
+	}
+
 	return nil
 }
