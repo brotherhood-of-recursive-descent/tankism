@@ -67,6 +67,9 @@ func (s *SinglePlayerScene) Init(sm *lib.SceneManager) error {
 	bigTank := s.entityManager.NewEntity()
 	configureAITank(bigTank)
 
+	tilemap := s.entityManager.NewEntity()
+	configureMap(tilemap, Tilemap{}, sm.ScreenWidth, sm.ScreenHeight)
+
 	return nil
 }
 

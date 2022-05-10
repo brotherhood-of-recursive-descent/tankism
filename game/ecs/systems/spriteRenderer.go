@@ -34,12 +34,13 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 		x := translate.X
 		y := translate.Y
 		rotation := translate.Rotation
-		scale := translate.Scale
+		//scale := translate.Scale
 
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Scale(scale, scale)
+		//op.GeoM.Scale(scale, scale)
 		op.GeoM.Translate(-float64(rect.Dx())/2, -float64(rect.Dy())/2)
 		op.GeoM.Rotate(rotation)
+		op.GeoM.Translate(float64(rect.Dx())/2, float64(rect.Dy())/2)
 		op.GeoM.Translate(x, y)
 
 		img := sprite.Image
