@@ -7,12 +7,10 @@ A top down panzer game written in Go.
 
 ### 07/2022 Ambient Lighting + LightingTexture
 
-> see 
+> see 5836834a79dc1b6507f941bedf472cae370f60b2
 
 We finaly have some color dynamics in the game. Basically we draw every lighting source into a texture
 and then use a shader to merge everything. 
-
-We Are using CompositeMultiply and add the ambientColor.
 
 ```go
 package main
@@ -24,6 +22,12 @@ func Fragment(position vec4, texCoord vec2, color vec4) vec4 {
 	return (imageSrc0UnsafeAt(texCoord) + AmbientColor) * (color)
 }
 ```
+
+In the there are 3 lights in the scene. Pointlights on top of the barrel and the crate. In the right bottom corner
+there is a circle light which is bigger and more diffuse. To demonstrate the different effects you can achieve 
+with different ambient light colors, we cycle through some color variations ...  
+
+![cycling through ambient lights](https://raw.githubusercontent.com/co0p/tankism/master/docs/tank_lighting.gif) 
 
 
 ### 05/2022 Adding first AI behaviour, the "observer"
