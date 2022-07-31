@@ -5,6 +5,27 @@ A top down panzer game written in Go.
 
 ## devlog
 
+### 07/2022 Ambient Lighting + LightingTexture
+
+> see 
+
+We finaly have some color dynamics in the game. Basically we draw every lighting source into a texture
+and then use a shader to merge everything. 
+
+We Are using CompositeMultiply and add the ambientColor.
+
+```go
+package main
+
+var AmbientColor vec4
+
+func Fragment(position vec4, texCoord vec2, color vec4) vec4 {
+	// ( color of lightingmap + ambient color ) * destination color
+	return (imageSrc0UnsafeAt(texCoord) + AmbientColor) * (color)
+}
+```
+
+
 ### 05/2022 Adding first AI behaviour, the "observer"
 
 > see de790ae4dd2528046a20e21b7da82968f84523cd

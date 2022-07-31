@@ -1,6 +1,7 @@
 package singleplayer
 
 import (
+	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/systems"
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
@@ -62,13 +63,13 @@ func (s *SinglePlayerScene) Init(sm *lib.SceneManager) error {
 	configureTank(tank)
 
 	fpsCounter := s.entityManager.NewEntity()
-	configureFpsCounter(fpsCounter, sm.ScreenWidth)
+	game.FPSCounter(fpsCounter, sm.ScreenWidth)
 
 	bigTank := s.entityManager.NewEntity()
 	configureAITank(bigTank)
 
 	tilemap := s.entityManager.NewEntity()
-	configureMap(tilemap, Tilemap{}, sm.ScreenWidth, sm.ScreenHeight)
+	game.NewMap(tilemap, game.Tilemap{}, sm.ScreenWidth, sm.ScreenHeight)
 
 	return nil
 }

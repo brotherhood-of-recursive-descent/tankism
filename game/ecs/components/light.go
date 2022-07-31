@@ -10,11 +10,8 @@ import (
 const LightType = "light"
 
 type Light struct {
-	Image         *ebiten.Image
-	CompositeMode ebiten.CompositeMode
-	Color         color.Color
-	Scale         float64
-	Rotation      float64
+	Image *ebiten.Image
+	Color color.Color
 }
 
 func (s Light) Type() ecs.ComponentType {

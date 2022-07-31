@@ -29,7 +29,8 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 
 		sprite := e.GetComponent(components.SpriteType).(*components.Sprite)
 		translate := e.GetComponent(components.TranslateType).(*components.Translate)
-		rect := sprite.Image.Bounds()
+		img := sprite.Image
+		rect := img.Bounds()
 
 		x := translate.X
 		y := translate.Y
@@ -43,8 +44,6 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 		op.GeoM.Translate(float64(rect.Dx())/2, float64(rect.Dy())/2)
 		op.GeoM.Translate(x, y)
 
-		img := sprite.Image
 		screen.DrawImage(img, op)
 	}
-
 }
