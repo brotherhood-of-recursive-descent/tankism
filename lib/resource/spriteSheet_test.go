@@ -26,6 +26,24 @@ func Test_NewSpriteSheet_OneSpriteSheetOneImage(t *testing.T) {
 	}
 }
 
+func Test_NewSpriteSheet_OneSpriteSheet4Images(t *testing.T) {
+
+	// given
+	data := test.ValidImage64x64
+
+	// when
+	ss, err := resource.NewSpriteSheet(data, 32, 32)
+
+	// then
+	if err != nil {
+		t.Errorf("expected err to be nil, got %s", err)
+	}
+
+	if len(ss) != 4 {
+		t.Errorf("expected spritesheet to have length 4, got %d", len(ss))
+	}
+}
+
 func Test_NewSpriteSheet_EmptyFileProvided(t *testing.T) {
 
 	// given
