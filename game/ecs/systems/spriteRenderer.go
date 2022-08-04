@@ -26,12 +26,14 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 
 	// now draw them
 	for _, e := range entities {
-
 		sprite := e.GetComponent(components.SpriteType).(*components.Sprite)
-		translate := e.GetComponent(components.TranslateType).(*components.Translate)
 		img := sprite.Image
+		if img == nil {
+			continue
+		}
 		rect := img.Bounds()
 
+		translate := e.GetComponent(components.TranslateType).(*components.Translate)
 		x := translate.X
 		y := translate.Y
 		rotation := translate.Rotation

@@ -15,5 +15,8 @@ dist: clean test build
 demo-lighting: 
 	go run app/lighting/main.go
 
+demo-animation: 
+	go run app/animation/main.go
+
 clean:
 	rm -rf dist/*
