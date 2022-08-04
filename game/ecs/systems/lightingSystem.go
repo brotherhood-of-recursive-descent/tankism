@@ -5,6 +5,7 @@ import (
 
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/shaders"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -49,9 +50,9 @@ func (s *LightingSystem) Draw(screen *ebiten.Image) {
 	// draw each light
 	lights := s.entityManager.FindByComponents(components.LightType, components.TranslateType)
 	for _, l := range lights {
-		tex := l.GetComponent(components.LightType).(*components.Light)
+		light := l.GetComponent(components.LightType).(*components.Light)
 		translate := l.GetComponent(components.TranslateType).(*components.Translate)
-		img := tex.Image
+		img := light.Image
 		rect := img.Bounds()
 
 		x := translate.X
@@ -61,7 +62,11 @@ func (s *LightingSystem) Draw(screen *ebiten.Image) {
 		op := &ebiten.DrawImageOptions{}
 		op.GeoM.Translate(-float64(rect.Dx())/2, -float64(rect.Dy())/2)
 		op.GeoM.Scale(scale, scale)
+		op.GeoM.Translate(float64(rect.Dx())/2, float64(rect.Dy())/2)
 		op.GeoM.Translate(x, y)
+
+		r, g, b, a := lib.GetRGBA64(light.Color)
+		op.ColorM.Scale(r, g, b, a)
 		s.lightingTexture.DrawImage(img, op)
 	}
 

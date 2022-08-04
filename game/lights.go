@@ -9,11 +9,14 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-var DEFAULT_COLOR = color.RGBA{255, 255, 255, 255} // white
+var (
+	DEFAULT_COLOR = color.RGBA{255, 255, 255, 255} // white
+	MUTED_COLOR   = color.RGBA{128, 128, 128, 128} // gray
+)
 
 func NewAmbientLight(e *ecs.Entity) {
 	c := &components.AmbientLight{
-		Color: color.RGBA{128, 128, 128, 255},
+		Color: MUTED_COLOR,
 	}
 	e.AddComponent(c)
 }
@@ -37,17 +40,21 @@ func NewPointLight(e *ecs.Entity, x, y float64) {
 }
 
 func NewCircleLight(e *ecs.Entity, x, y float64) {
+	NewCircleLightWithColor(e, x, y, color.White)
+}
+
+func NewCircleLightWithColor(e *ecs.Entity, x, y float64, clr color.Color) {
 	i, err := media.LoadImage(media.LightCircle)
 	img := ebiten.NewImageFromImage(i)
 	if err != nil {
 		panic("expected LightPoint media to exist")
 	}
 
-	light := &components.Light{Image: img, Color: DEFAULT_COLOR}
+	light := &components.Light{Image: img, Color: clr}
 	translate := &components.Translate{
 		X:        x,
 		Y:        y,
-		Scale:    3,
+		Scale:    1,
 		Rotation: 0,
 	}
 

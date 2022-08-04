@@ -37,7 +37,6 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 		x := translate.X
 		y := translate.Y
 		rotation := translate.Rotation
-		//scale := translate.Scale
 
 		op := &ebiten.DrawImageOptions{}
 		//op.GeoM.Scale(scale, scale)
@@ -45,6 +44,10 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 		op.GeoM.Rotate(rotation)
 		op.GeoM.Translate(float64(rect.Dx())/2, float64(rect.Dy())/2)
 		op.GeoM.Translate(x, y)
+
+		// scale
+		// rotate
+		// translate
 
 		screen.DrawImage(img, op)
 	}

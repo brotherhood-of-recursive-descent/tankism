@@ -31,3 +31,18 @@ func (em *EntityManager) FindByComponents(components ...ComponentType) []*Entity
 
 	return candidates
 }
+
+func (em *EntityManager) RemoveEntity(e *Entity) {
+
+	idx := -1
+	for i, entity := range em.entities {
+		if entity == e {
+			idx = i
+			break
+		}
+	}
+
+	if idx != -1 {
+		em.entities = append(em.entities[:idx], em.entities[idx+1:]...)
+	}
+}

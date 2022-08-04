@@ -32,6 +32,7 @@ func NewAnimationDemo() *AnimationDemo {
 		&systems.PerformanceMonitor{EntityManager: scene.entityManager},
 		&systems.TextRenderer{EntityManager: scene.entityManager},
 		&systems.SpriteAnimator{EntityManager: scene.entityManager},
+		systems.NewLightingSystem(scene.entityManager),
 	)
 
 	return &scene
@@ -45,6 +46,7 @@ func (s *AnimationDemo) Init() error {
 	tilemap := s.entityManager.NewEntity()
 	game.NewMap(tilemap, game.Tilemap{}, 1024, 1024)
 
+	// BOOM
 	spriteSheet, err := resource.NewSpriteSheetFromConfig(media.AllSprites, media.AllSpritesConfig)
 	if err != nil {
 		panic("failed to load sprite sheet and or config")
@@ -69,7 +71,7 @@ func (s *AnimationDemo) Update() error {
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		e := s.entityManager.NewEntity()
 		x, y := ebiten.CursorPosition()
-		game.NewExplosion(e, *s.spriteSheet, x, y)
+		game.NewExplosion(e, *s.spriteSheet, x-60, y-60)
 	}
 
 	return err

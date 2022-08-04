@@ -45,7 +45,6 @@ func (s *SpriteAnimator) Update() error {
 			spriteAnimation.LastUpdate = nextUpdate
 			spriteAnimation.Idx++
 		}
-
 	}
 
 	return nil

@@ -11,13 +11,6 @@ import (
 
 func NewExplosion(e *ecs.Entity, s resource.SpriteSheet, x, y int) *ecs.Entity {
 
-	translate := components.Translate{
-		X:        float64(x),
-		Y:        float64(y),
-		Scale:    1,
-		Rotation: 0,
-	}
-
 	spriteAnimation := components.SpriteAnimation{
 		Images: []*ebiten.Image{
 			s.ByName("explosion1.png"),
@@ -33,6 +26,13 @@ func NewExplosion(e *ecs.Entity, s resource.SpriteSheet, x, y int) *ecs.Entity {
 	sprite := components.Sprite{
 		Image:  nil,
 		ZIndex: 100,
+	}
+
+	translate := components.Translate{
+		X:        float64(x),
+		Y:        float64(y),
+		Scale:    1,
+		Rotation: 0,
 	}
 
 	e.AddComponents(&translate, &sprite, &spriteAnimation)

@@ -7,6 +7,7 @@ import (
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
@@ -68,6 +69,15 @@ func (s *LightingDemo) Init() error {
 	// add different PointLight component to tanks
 	circleLight := s.entityManager.NewEntity()
 	game.NewCircleLight(circleLight, 500, 500)
+
+	circleLightGreen := s.entityManager.NewEntity()
+	game.NewCircleLightWithColor(circleLightGreen, 750, 750, lib.ColorGreen)
+
+	circleLightRed := s.entityManager.NewEntity()
+	game.NewCircleLightWithColor(circleLightRed, 600, 700, lib.ColorRed)
+
+	circleLightBlue := s.entityManager.NewEntity()
+	game.NewCircleLightWithColor(circleLightBlue, 650, 650, lib.ColorBlue)
 
 	tank := s.entityManager.NewEntity()
 	game.NewTank(tank)
