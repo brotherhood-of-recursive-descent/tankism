@@ -5,6 +5,14 @@ A top down panzer game written in Go.
 
 ## devlog
 
+### 08/2022 SpriteAnimations making boom
+> see e1a38829ba41fd49d4c6c1dfdd1aefb79291aea4
+
+The first action has landed. Loading sprites and rendering a list of images.
+
+![cycling through sprites](https://raw.githubusercontent.com/co0p/tankism/master/docs/tank_boom.gif) 
+
+
 ### 07/2022 Ambient Lighting + LightingTexture
 
 > see 5836834a79dc1b6507f941bedf472cae370f60b2
