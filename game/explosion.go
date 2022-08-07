@@ -4,12 +4,21 @@ import (
 	"time"
 
 	"github.com/co0p/tankism/game/ecs/components"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/lib/resource"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-func NewExplosion(e *ecs.Entity, s resource.SpriteSheet, x, y int) *ecs.Entity {
+func NewExplosion(e *ecs.Entity, s resource.SpriteSheet, l resource.SpriteSheet, x, y int) *ecs.Entity {
+	created := time.Now()
+	duration := time.Millisecond * 67
+	removeAction := func(e *ecs.Entity, em *ecs.EntityManager) {
+		if time.Now().After(created.Add(duration * 4)) {
+			e.AddComponent(&components.Cleanup{})
+		}
+	}
+	trigger := components.Trigger{Action: removeAction}
 
 	spriteAnimation := components.SpriteAnimation{
 		Images: []*ebiten.Image{
@@ -20,7 +29,12 @@ func NewExplosion(e *ecs.Entity, s resource.SpriteSheet, x, y int) *ecs.Entity {
 			s.ByName("explosion5.png"),
 		},
 		Idx:      0,
-		Duration: time.Millisecond * 76,
+		Duration: duration,
+	}
+
+	light := components.Light{
+		Image: l.ByName("0"),
+		Color: lib.ColorRed,
 	}
 
 	sprite := components.Sprite{
@@ -35,6 +49,6 @@ func NewExplosion(e *ecs.Entity, s resource.SpriteSheet, x, y int) *ecs.Entity {
 		Rotation: 0,
 	}
 
-	e.AddComponents(&translate, &sprite, &spriteAnimation)
+	e.AddComponents(&translate, &sprite, &spriteAnimation, &trigger, &light)
 	return e
 }

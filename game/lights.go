@@ -5,6 +5,7 @@ import (
 
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
+	"github.com/co0p/tankism/lib/resource"
 	"github.com/co0p/tankism/media"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -59,4 +60,13 @@ func NewCircleLightWithColor(e *ecs.Entity, x, y float64, clr color.Color) {
 	}
 
 	e.AddComponents(light, translate)
+}
+
+func NewLightSpritesheet() resource.SpriteSheet {
+	spritesheet, err := resource.NewSpriteSheet(media.Lights, 128, 128)
+	if err != nil {
+		panic("failed to load light spritesheet: " + err.Error())
+	}
+
+	return spritesheet
 }

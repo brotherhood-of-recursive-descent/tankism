@@ -15,9 +15,10 @@ import (
 type AnimationDemo struct {
 	WindowWidth, WindowHeight int
 
-	entityManager *ecs.EntityManager
-	systems       []ecs.System
-	spriteSheet   *resource.SpriteSheet
+	entityManager    *ecs.EntityManager
+	systems          []ecs.System
+	explosionSprites *resource.SpriteSheet
+	lights           *resource.SpriteSheet
 }
 
 func NewAnimationDemo() *AnimationDemo {
@@ -28,11 +29,13 @@ func NewAnimationDemo() *AnimationDemo {
 	}
 
 	scene.systems = append(scene.systems,
+		&systems.CleanupSystem{EntityManager: scene.entityManager},
 		&systems.SpriteRenderer{EntityManager: scene.entityManager},
 		&systems.PerformanceMonitor{EntityManager: scene.entityManager},
 		&systems.TextRenderer{EntityManager: scene.entityManager},
 		&systems.SpriteAnimator{EntityManager: scene.entityManager},
 		systems.NewLightingSystem(scene.entityManager),
+		&systems.TriggerSystem{EntityManager: scene.entityManager},
 	)
 
 	return &scene
@@ -42,16 +45,24 @@ func (s *AnimationDemo) Init() error {
 	fps := s.entityManager.NewEntity()
 	game.FPSCounter(fps, 1024)
 
+	// ambient light
+	ambient := s.entityManager.NewEntity()
+	game.NewAmbientLight(ambient)
+
 	// background map
 	tilemap := s.entityManager.NewEntity()
 	game.NewMap(tilemap, game.Tilemap{}, 1024, 1024)
 
+	// lights
+	lights := game.NewLightSpritesheet()
+	s.lights = &lights
+
 	// BOOM
-	spriteSheet, err := resource.NewSpriteSheetFromConfig(media.AllSprites, media.AllSpritesConfig)
+	explosionSprites, err := resource.NewSpriteSheetFromConfig(media.AllSprites, media.AllSpritesConfig)
 	if err != nil {
 		panic("failed to load sprite sheet and or config")
 	}
-	s.spriteSheet = &spriteSheet
+	s.explosionSprites = &explosionSprites
 
 	return nil
 }
@@ -71,7 +82,7 @@ func (s *AnimationDemo) Update() error {
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		e := s.entityManager.NewEntity()
 		x, y := ebiten.CursorPosition()
-		game.NewExplosion(e, *s.spriteSheet, x-60, y-60)
+		game.NewExplosion(e, *s.explosionSprites, *s.lights, x-60, y-60)
 	}
 
 	return err

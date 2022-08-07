@@ -10,6 +10,10 @@ func (em *EntityManager) NewEntity() *Entity {
 	return e
 }
 
+func (em *EntityManager) Size() int {
+	return len(em.entities)
+}
+
 func (em *EntityManager) FindByComponents(components ...ComponentType) []*Entity {
 	candidates := []*Entity{}
 
