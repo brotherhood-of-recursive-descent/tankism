@@ -16,7 +16,20 @@ And now systems pick up on those and
 - render the visual representation at the given position
 - transfer the health to the other colliding body 
 
-In order to get an overview on identify what things actually consist of the following table might help
+In order to get an overview on identify what things actually consist of the following random list of thoughts might help
 
-Object type | behaviour | components
---------------loo
+Objects in the game are
+- Pickups (barrel)
+- Tanks (human controllable, AI controllable)
+- Ground (grass, sand, ...)
+- Bullets
+- Explosions
+- Lights
+
+Bahaviours are:
+- movement
+- Targeting AI
+- PathFinding AI
+- Input Controlling
+
+
