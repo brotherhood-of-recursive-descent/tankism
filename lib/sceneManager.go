@@ -20,6 +20,10 @@ func NewSceneManager() *SceneManager {
 
 func (sm *SceneManager) RegisterScene(sceneKey string, scene Scene) {
 	sm.scenes[sceneKey] = scene
+
+	if len(sm.scenes) == 1 {
+		sm.ChangeScene(sceneKey)
+	}
 }
 
 func (sm *SceneManager) ChangeScene(sceneKey string) {
@@ -52,4 +56,8 @@ func (sm *SceneManager) Update() error {
 func (sm *SceneManager) SetWindowDimension(w int, h int) {
 	sm.ScreenWidth = w
 	sm.ScreenHeight = h
+}
+
+func (sm *SceneManager) CurrentScene() Scene {
+	return sm.currentScene
 }
