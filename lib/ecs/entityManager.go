@@ -4,6 +4,20 @@ type EntityManager struct {
 	entities []*Entity
 }
 
+func NewEntityManager(entities []Entity) *EntityManager {
+	em := &EntityManager{}
+
+	for _, v := range entities {
+		e := em.NewEntity()
+
+		for _, c := range v.components {
+			e.AddComponent(c)
+		}
+	}
+
+	return em
+}
+
 func (em *EntityManager) NewEntity() *Entity {
 	e := newEntity()
 	em.entities = append(em.entities, e)

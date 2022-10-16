@@ -5,8 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type EmptyScene struct {
-}
+type EmptyScene struct{}
 
 func (s EmptyScene) Init(sm *lib.SceneManager) error {
 	return nil

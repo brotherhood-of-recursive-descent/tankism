@@ -16,15 +16,6 @@ import (
 
 type SpriteSheet []SpriteSheetEntry
 
-func (s SpriteSheet) ByName(name string) *ebiten.Image {
-	for _, v := range s {
-		if v.Name == name {
-			return v.ImageRef
-		}
-	}
-	panic("could not find subimage with name:" + name)
-}
-
 type SpriteSheetEntry struct {
 	ImageRef *ebiten.Image
 	Name     string
@@ -133,4 +124,13 @@ func NewSpriteSheetFromConfig(data []byte, configData []byte) (SpriteSheet, erro
 	}
 
 	return res, nil
+}
+
+func (s SpriteSheet) ByName(name string) *ebiten.Image {
+	for _, v := range s {
+		if v.Name == name {
+			return v.ImageRef
+		}
+	}
+	panic("could not find subimage with name:" + name)
 }

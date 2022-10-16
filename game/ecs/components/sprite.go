@@ -8,8 +8,9 @@ import (
 const SpriteType = "sprite"
 
 type Sprite struct {
-	Image  *ebiten.Image
-	ZIndex int
+	Image     *ebiten.Image `json:"-"`
+	ImageName string
+	ZIndex    int
 }
 
 func (s Sprite) Type() ecs.ComponentType {

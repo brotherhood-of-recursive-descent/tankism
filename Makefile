@@ -18,5 +18,8 @@ demo-lighting:
 demo-animation: 
 	go run app/animation/main.go
 
+demo-loading: 
+	go run app/loading/main.go
+
 clean:
 	rm -rf dist/*

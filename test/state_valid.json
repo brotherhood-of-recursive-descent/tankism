@@ -1,0 +1,18 @@
+{
+    "Name": "hello",
+    "ModifiedAt": "2018-09-22T12:42:31Z",
+    "Entities": [
+        {
+            "Translate": {
+                "X": 1.1,
+                "Y": 2.2,
+                "Scale": 1,
+                "Rotation": 0.1
+            },
+            "Sprite" : {
+                "ZIndex": 100,
+                "ImageName": "tankBody_bigRed_outline.png"
+            }
+        }
+    ]
+} 

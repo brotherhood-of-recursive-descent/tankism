@@ -16,3 +16,6 @@ var Texture64x64 []byte
 
 //go:embed texture4x32.xml
 var Texture4x32 []byte
+
+//go:embed state_valid.json
+var GameState_Valid []byte

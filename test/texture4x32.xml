@@ -1,6 +1,6 @@
 <TextureAtlas>
 	<SubTexture name="demo.png" x="0" y="0" width="32" height="32"/> <!-- top left -->
-	<SubTexture name="demo.png" x="32" y="0" width="32" height="32"/> <!-- top right -->
-	<SubTexture name="demo.png" x="0" y="32" width="32" height="32"/> <!-- bottom left -->
-	<SubTexture name="demo.png" x="32" y="32" width="32" height="32"/> <!-- bottom right -->
+	<SubTexture name="demo1.png" x="32" y="0" width="32" height="32"/> <!-- top right -->
+	<SubTexture name="demo2.png" x="0" y="32" width="32" height="32"/> <!-- bottom left -->
+	<SubTexture name="demo3.png" x="32" y="32" width="32" height="32"/> <!-- bottom right -->
 </TextureAtlas>
