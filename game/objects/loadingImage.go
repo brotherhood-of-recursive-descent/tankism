@@ -4,7 +4,7 @@ import (
 	_ "embed"
 
 	"github.com/co0p/tankism/lib"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -23,7 +23,7 @@ type LoadingImage struct {
 
 func NewLoadingImage(scene lib.Scene) *LoadingImage {
 
-	img, _ := media.LoadImage(media.BackgroundImage)
+	img, _ := resources.LoadImage(resources.BackgroundImage)
 	sprite := ebiten.NewImageFromImage(img)
 
 	return &LoadingImage{

@@ -7,7 +7,7 @@ import (
 	"github.com/co0p/tankism/game/ecs/systems"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/lib/resource"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
@@ -58,7 +58,7 @@ func (s *AnimationDemo) Init() error {
 	s.lights = &lights
 
 	// BOOM
-	explosionSprites, err := resource.NewSpriteSheetFromConfig(media.AllSprites, media.AllSpritesConfig)
+	explosionSprites, err := resource.NewSpriteSheetFromConfig(resources.AllSprites, resources.AllSpritesConfig)
 	if err != nil {
 		panic("failed to load sprite sheet and or config")
 	}

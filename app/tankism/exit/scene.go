@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/co0p/tankism/lib"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -33,7 +33,7 @@ func NewExitScene(sceneManager *lib.SceneManager) *ExitScene {
 
 func (s *ExitScene) Init(*lib.SceneManager) error {
 	fmt.Println("Loaded exit scene...")
-	img, _ := media.LoadImage(media.BackgroundImage)
+	img, _ := resources.LoadImage(resources.BackgroundImage)
 	s.prevImage = ebiten.NewImageFromImage(img)
 
 	return nil

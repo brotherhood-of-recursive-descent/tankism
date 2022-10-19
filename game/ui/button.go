@@ -1,12 +1,13 @@
 package ui
 
 import (
+	"image/color"
+
 	"github.com/co0p/tankism/lib"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
-	"image/color"
 )
 
 type Button struct {
@@ -25,7 +26,7 @@ func NewButton(label string, posX int, posY int, action func()) *Button {
 
 	return &Button{
 		text:        label,
-		font:        media.FontHuge,
+		font:        resources.FontHuge,
 		textColor:   lib.ColorYellow,
 		activeColor: lib.ColorRed,
 		posX:        posX,

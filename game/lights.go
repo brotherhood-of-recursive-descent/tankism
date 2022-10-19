@@ -6,7 +6,7 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/lib/resource"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -23,7 +23,7 @@ func NewAmbientLight(e *ecs.Entity) {
 }
 
 func NewPointLight(e *ecs.Entity, x, y float64) {
-	i, err := media.LoadImage(media.LightPoint)
+	i, err := resources.LoadImage(resources.LightPoint)
 	img := ebiten.NewImageFromImage(i)
 	if err != nil {
 		panic("expected LightPoint media to exist")
@@ -45,7 +45,7 @@ func NewCircleLight(e *ecs.Entity, x, y float64) {
 }
 
 func NewCircleLightWithColor(e *ecs.Entity, x, y float64, clr color.Color) {
-	i, err := media.LoadImage(media.LightCircle)
+	i, err := resources.LoadImage(resources.LightCircle)
 	img := ebiten.NewImageFromImage(i)
 	if err != nil {
 		panic("expected LightPoint media to exist")
@@ -63,7 +63,7 @@ func NewCircleLightWithColor(e *ecs.Entity, x, y float64, clr color.Color) {
 }
 
 func NewLightSpritesheet() resource.SpriteSheet {
-	spritesheet, err := resource.NewSpriteSheet(media.Lights, 128, 128)
+	spritesheet, err := resource.NewSpriteSheet(resources.Lights, 128, 128)
 	if err != nil {
 		panic("failed to load light spritesheet: " + err.Error())
 	}

@@ -4,7 +4,7 @@ import (
 	_ "embed"
 
 	"github.com/co0p/tankism/lib"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -16,7 +16,7 @@ type MenuImage struct {
 
 func NewMenuImage(scene lib.Scene) *MenuImage {
 
-	img, _ := media.LoadImage(media.BackgroundImage)
+	img, _ := resources.LoadImage(resources.BackgroundImage)
 	sprite := ebiten.NewImageFromImage(img)
 
 	return &MenuImage{

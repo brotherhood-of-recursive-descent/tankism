@@ -21,5 +21,8 @@ demo-animation:
 demo-loading: 
 	go run app/loading/main.go
 
+demo-scenes: 
+	go run app/scenes/main.go
+
 clean:
 	rm -rf dist/*

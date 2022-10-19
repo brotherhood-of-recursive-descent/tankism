@@ -4,7 +4,7 @@ import (
 	"image/color"
 
 	"github.com/co0p/tankism/lib"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
 	"golang.org/x/image/font"
@@ -25,7 +25,7 @@ func NewLoadingText(scene lib.Scene) *LoadingText {
 	return &LoadingText{
 		scene:          scene,
 		text:           "Loading ...",
-		font:           media.FontBig,
+		font:           resources.FontBig,
 		primaryColor:   lib.ColorYellow,
 		secondaryColor: nil,
 		frameCount:     0,

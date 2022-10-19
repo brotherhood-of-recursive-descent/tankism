@@ -3,13 +3,13 @@ package game
 import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func NewDrum(e *ecs.Entity, x, y float64) {
 
-	img, _ := media.LoadImage(media.BarrelGray)
+	img, _ := resources.LoadImage(resources.BarrelGray)
 	s := ebiten.NewImageFromImage(img)
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
@@ -25,7 +25,7 @@ func NewDrum(e *ecs.Entity, x, y float64) {
 
 func NewCrate(e *ecs.Entity, x, y float64) {
 
-	img, _ := media.LoadImage(media.CrateWood)
+	img, _ := resources.LoadImage(resources.CrateWood)
 	s := ebiten.NewImageFromImage(img)
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}

@@ -5,13 +5,13 @@ import (
 
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
-	"github.com/co0p/tankism/media"
+	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 func configureTank(tank *ecs.Entity) {
 
-	img, _ := media.LoadImage(media.TankImage)
+	img, _ := resources.LoadImage(resources.TankImage)
 	s := ebiten.NewImageFromImage(img)
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
@@ -36,7 +36,7 @@ func configureTank(tank *ecs.Entity) {
 
 func configureAITank(e *ecs.Entity) {
 
-	t, _ := media.LoadImage(media.BigTankImage)
+	t, _ := resources.LoadImage(resources.BigTankImage)
 	s := ebiten.NewImageFromImage(t)
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}

@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	emptyScene := game.EmptyScene{}
+	emptyScene := &game.Scene{}
 
 	client := game.NewGame()
 	client.AddScene("EMPTY", emptyScene)

@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"github.com/co0p/tankism/lib/sound"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -10,6 +11,8 @@ type SceneManager struct {
 	scenes       map[string]Scene
 	ScreenWidth  int
 	ScreenHeight int
+
+	SoundManager sound.SoundManager
 }
 
 func NewSceneManager() *SceneManager {
