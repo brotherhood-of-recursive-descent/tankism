@@ -5,7 +5,7 @@ import (
 
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/systems"
-	"github.com/co0p/tankism/lib/ecs"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/resource"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -13,44 +13,33 @@ import (
 )
 
 type AnimationDemo struct {
-	WindowWidth, WindowHeight int
+	game.Scene
 
-	entityManager    *ecs.EntityManager
-	systems          []ecs.System
 	explosionSprites *resource.SpriteSheet
 	lights           *resource.SpriteSheet
 }
 
-func NewAnimationDemo() *AnimationDemo {
+func (s *AnimationDemo) Init(sm *lib.SceneManager) error {
 
-	scene := AnimationDemo{
-		systems:       []ecs.System{},
-		entityManager: &ecs.EntityManager{},
-	}
-
-	scene.systems = append(scene.systems,
-		&systems.CleanupSystem{EntityManager: scene.entityManager},
-		&systems.SpriteRenderer{EntityManager: scene.entityManager},
-		&systems.PerformanceMonitor{EntityManager: scene.entityManager},
-		&systems.TextRenderer{EntityManager: scene.entityManager},
-		&systems.SpriteAnimator{EntityManager: scene.entityManager},
-		systems.NewLightingSystem(scene.entityManager),
-		&systems.TriggerSystem{EntityManager: scene.entityManager},
+	s.Systems = append(s.Systems,
+		&systems.CleanupSystem{EntityManager: &s.EntityManager},
+		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
+		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
+		&systems.TextRenderer{EntityManager: &s.EntityManager},
+		&systems.SpriteAnimator{EntityManager: &s.EntityManager},
+		&systems.TriggerSystem{EntityManager: &s.EntityManager},
+		systems.NewLightingSystem(&s.EntityManager),
 	)
 
-	return &scene
-}
-
-func (s *AnimationDemo) Init() error {
-	fps := s.entityManager.NewEntity()
+	fps := s.EntityManager.NewEntity()
 	game.FPSCounter(fps, 1024)
 
 	// ambient light
-	ambient := s.entityManager.NewEntity()
+	ambient := s.EntityManager.NewEntity()
 	game.NewAmbientLight(ambient)
 
 	// background map
-	tilemap := s.entityManager.NewEntity()
+	tilemap := s.EntityManager.NewEntity()
 	game.NewMap(tilemap, game.Tilemap{}, 1024, 1024)
 
 	// lights
@@ -67,38 +56,22 @@ func (s *AnimationDemo) Init() error {
 	return nil
 }
 
-func (s *AnimationDemo) Draw(screen *ebiten.Image) {
-	for _, v := range s.systems {
-		v.Draw(screen)
-	}
-}
-
 func (s *AnimationDemo) Update() error {
-	var err error
-	for _, v := range s.systems {
-		err = v.Update()
-	}
-
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
-		e := s.entityManager.NewEntity()
+		e := s.EntityManager.NewEntity()
 		x, y := ebiten.CursorPosition()
 		game.NewExplosion(e, *s.explosionSprites, *s.lights, x-60, y-60)
 	}
-
-	return err
-}
-
-func (s *AnimationDemo) Layout(outsideWidth, outsideHeight int) (int, int) {
-	s.WindowWidth = outsideWidth
-	s.WindowHeight = outsideHeight
-	return outsideWidth, outsideHeight
+	return s.Scene.Update()
 }
 
 func main() {
 
+	client := game.NewGame()
+	demo := AnimationDemo{}
+	client.AddScene("AnimationDemo", &demo)
+
 	ebiten.SetFullscreen(true)
-	client := NewAnimationDemo()
-	client.Init()
 
 	if err := ebiten.RunGame(client); err != nil {
 		log.Fatalf("failed to start game: %s", err)

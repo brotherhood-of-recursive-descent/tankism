@@ -12,11 +12,12 @@ import (
 )
 
 type LoadingScene struct {
+	lib.Scene
 	entityManager *ecs.EntityManager
 	systems       []ecs.System
 }
 
-func (s LoadingScene) Init(sm *lib.SceneManager) error {
+func (s *LoadingScene) Init(sm *lib.SceneManager) error {
 
 	state, _ := game.NewState(test.GameState_Valid)
 	s.entityManager = ecs.NewEntityManager(state.Entities)
@@ -27,25 +28,11 @@ func (s LoadingScene) Init(sm *lib.SceneManager) error {
 	return nil
 }
 
-func (s LoadingScene) Update() error {
-	var err error
-	for _, v := range s.systems {
-		err = v.Update()
-	}
-	return err
-}
-
-func (s LoadingScene) Draw(screen *ebiten.Image) {
-	for _, v := range s.systems {
-		v.Draw(screen)
-	}
-}
-
 func main() {
 	emptyScene := LoadingScene{}
 
 	client := game.NewGame()
-	client.AddScene("Loading", emptyScene)
+	client.AddScene("Loading", &emptyScene)
 
 	ebiten.SetFullscreen(true)
 	if err := ebiten.RunGame(client); err != nil {
