@@ -3,96 +3,47 @@ package singleplayer
 import (
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/systems"
-	"github.com/co0p/tankism/lib"
-	"github.com/co0p/tankism/lib/ecs"
-	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type SinglePlayerScene struct {
-	WindowWidth  int
-	WindowHeight int
+	game.GameScene
 
-	sceneManager *lib.SceneManager
-
-	entityManager *ecs.EntityManager
-	systems       []ecs.System
+	game *game.Game
 }
 
-func NewSinglePlayerScene(sceneManager *lib.SceneManager) *SinglePlayerScene {
+func NewSinglePlayerScene(game *game.Game) *SinglePlayerScene {
+	return &SinglePlayerScene{
+		game: game,
+	}
+}
 
-	entityManager := ecs.EntityManager{}
+func (s *SinglePlayerScene) Init() error {
 
-	// empty scene
-	scene := SinglePlayerScene{}
-
-	var s []ecs.System
-	s = append(s,
-		&systems.SpriteRenderer{
-			EntityManager: &entityManager,
-		},
-		systems.NewLightingSystem(&entityManager),
-		&systems.AISystem{
-			EntityManager: &entityManager,
-		},
-		&systems.TextRenderer{
-			EntityManager: &entityManager,
-		},
-		&systems.PerformanceMonitor{
-			EntityManager: &entityManager,
-		},
-		&systems.Controller{
-			EntityManager: &entityManager,
-		},
-		&systems.AISystem{
-			EntityManager: &entityManager,
-		},
+	s.Systems = append(s.Systems,
+		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
+		systems.NewLightingSystem(&s.EntityManager),
+		&systems.AISystem{EntityManager: &s.EntityManager},
+		&systems.TextRenderer{EntityManager: &s.EntityManager},
+		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
+		&systems.Controller{EntityManager: &s.EntityManager},
+		&systems.AISystem{EntityManager: &s.EntityManager},
 	)
 
-	scene.entityManager = &entityManager
-	scene.systems = s
-
-	return &scene
-}
-
-func (s *SinglePlayerScene) Init(sm *lib.SceneManager) error {
-
-	ambientLight := s.entityManager.NewEntity()
+	ambientLight := s.EntityManager.NewEntity()
 	configureAmbientLight(ambientLight)
 
-	tank := s.entityManager.NewEntity()
+	tank := s.EntityManager.NewEntity()
 	configureTank(tank)
 
-	fpsCounter := s.entityManager.NewEntity()
-	game.FPSCounter(fpsCounter, sm.ScreenWidth)
-
-	bigTank := s.entityManager.NewEntity()
+	bigTank := s.EntityManager.NewEntity()
 	configureAITank(bigTank)
 
-	tilemap := s.entityManager.NewEntity()
-	game.NewMap(tilemap, game.Tilemap{}, sm.ScreenWidth, sm.ScreenHeight)
+	w, h := s.game.WindowSize()
 
+	fpsCounter := s.EntityManager.NewEntity()
+	game.FPSCounter(fpsCounter, w)
+
+	tilemap := s.EntityManager.NewEntity()
+	game.NewMap(tilemap, game.Tilemap{}, w, h)
 	return nil
-}
-
-func (s *SinglePlayerScene) Draw(screen *ebiten.Image) {
-	for _, v := range s.systems {
-		v.Draw(screen)
-	}
-}
-
-func (s *SinglePlayerScene) Update() error {
-	var err error
-	for _, v := range s.systems {
-		err = v.Update()
-	}
-	return err
-}
-
-func (s *SinglePlayerScene) WindowDimension() (int, int) {
-	return s.WindowWidth, s.WindowHeight
-}
-
-func (s *SinglePlayerScene) SetWindowDimension(w, h int) {
-	s.WindowWidth = w
-	s.WindowHeight = h
 }

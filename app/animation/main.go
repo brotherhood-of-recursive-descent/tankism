@@ -5,7 +5,6 @@ import (
 
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/systems"
-	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/resource"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -13,13 +12,13 @@ import (
 )
 
 type AnimationDemo struct {
-	game.Scene
+	game.GameScene
 
 	explosionSprites *resource.SpriteSheet
 	lights           *resource.SpriteSheet
 }
 
-func (s *AnimationDemo) Init(sm *lib.SceneManager) error {
+func (s *AnimationDemo) Init() error {
 
 	s.Systems = append(s.Systems,
 		&systems.CleanupSystem{EntityManager: &s.EntityManager},
@@ -48,32 +47,30 @@ func (s *AnimationDemo) Init(sm *lib.SceneManager) error {
 
 	// BOOM
 	explosionSprites, err := resource.NewSpriteSheetFromConfig(resources.AllSprites, resources.AllSpritesConfig)
-	if err != nil {
-		panic("failed to load sprite sheet and or config")
-	}
 	s.explosionSprites = &explosionSprites
 
-	return nil
+	return err
 }
 
-func (s *AnimationDemo) Update() error {
+func (s *AnimationDemo) HandleInput() {
 	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
 		e := s.EntityManager.NewEntity()
 		x, y := ebiten.CursorPosition()
 		game.NewExplosion(e, *s.explosionSprites, *s.lights, x-60, y-60)
 	}
-	return s.Scene.Update()
 }
 
 func main() {
 
-	client := game.NewGame()
+	game := game.NewGame()
 	demo := AnimationDemo{}
-	client.AddScene("AnimationDemo", &demo)
+
+	game.AddScene("AnimationDemo", &demo)
+	game.SetScene("AnimationDemo")
 
 	ebiten.SetFullscreen(true)
 
-	if err := ebiten.RunGame(client); err != nil {
+	if err := ebiten.RunGame(game); err != nil {
 		log.Fatalf("failed to start game: %s", err)
 	}
 }

@@ -3,36 +3,27 @@ package start
 import (
 	"time"
 
+	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/objects"
-	"github.com/co0p/tankism/lib"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
 type StartScene struct {
-	WindowWidth  int
-	WindowHeight int
-	startTime    time.Time
+	game.GameScene
 
-	sceneManager *lib.SceneManager
+	game      *game.Game
+	startTime time.Time
 
 	loadingImage *objects.LoadingImage
 	loadingText  *objects.LoadingText
 }
 
-func NewStartScreen(sceneManager *lib.SceneManager) *StartScene {
-
-	scene := StartScene{}
-	scene.sceneManager = sceneManager
-
-	scene.loadingImage = objects.NewLoadingImage(&scene)
-	scene.loadingText = objects.NewLoadingText(&scene)
-
-	return &scene
-}
-
-func (s *StartScene) Init(*lib.SceneManager) error {
-	s.startTime = time.Now()
-	return nil
+func NewStartScreen(game *game.Game) *StartScene {
+	return &StartScene{
+		game:         game,
+		loadingImage: objects.NewLoadingImage(),
+		loadingText:  objects.NewLoadingText(),
+	}
 }
 
 func (s *StartScene) Draw(screen *ebiten.Image) {
@@ -41,24 +32,21 @@ func (s *StartScene) Draw(screen *ebiten.Image) {
 }
 
 func (s *StartScene) Update() error {
-	err := s.loadingImage.Update()
-	err = s.loadingText.Update()
 
-	if s.loadingDone() {
-		s.sceneManager.ChangeScene("MENU")
+	if s.startTime.IsZero() {
+		s.startTime = time.Now()
 	}
 
-	return err
+	s.loadingImage.Update()
+	s.loadingText.Update()
+
+	if s.loadingDone() {
+		s.game.SetScene("MENU")
+	}
+	return nil
 }
 
-func (s *StartScene) WindowDimension() (int, int) {
-	return s.WindowWidth, s.WindowHeight
-}
-
-func (s *StartScene) SetWindowDimension(w, h int) {
-	s.WindowWidth = w
-	s.WindowHeight = h
-}
+func HandleInput() {}
 
 func (s *StartScene) loadingDone() bool {
 	startPlus5 := s.startTime.Add(time.Second * 5)

@@ -3,47 +3,41 @@ package menu
 import (
 	"fmt"
 
+	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/objects"
 	"github.com/co0p/tankism/game/ui"
-	"github.com/co0p/tankism/lib"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type MenuScene struct {
-	WindowWidth  int
-	WindowHeight int
+	game.GameScene
+
+	game *game.Game
 
 	currentIndex    int
 	playButton      *ui.Button
 	exitButton      *ui.Button
-	sceneManager    *lib.SceneManager
 	backgroundImage *objects.MenuImage
 }
 
-func NewMenuScene(sm *lib.SceneManager) *MenuScene {
-	scene := &MenuScene{}
-	scene.sceneManager = sm
+func NewMenuScene(game *game.Game) *MenuScene {
 
 	playAction := func() {
 		fmt.Println("play action called")
-		sm.ChangeScene("SINGLEPLAYER")
+		game.SetScene("SINGLEPLAYER")
 	}
-
 	exitAction := func() {
 		fmt.Println("exit action called")
-		sm.ChangeScene("EXIT")
+		game.SetScene("EXIT")
 	}
 
-	scene.backgroundImage = objects.NewMenuImage(scene)
-	scene.playButton = ui.NewButton("play", 300, 300, playAction)
-	scene.exitButton = ui.NewButton("exit", 300, 500, exitAction)
-
-	return scene
-}
-
-func (m *MenuScene) Init(*lib.SceneManager) error {
-	return nil
+	return &MenuScene{
+		game:            game,
+		backgroundImage: objects.NewMenuImage(),
+		playButton:      ui.NewButton("play", 300, 300, playAction),
+		exitButton:      ui.NewButton("exit", 300, 500, exitAction),
+	}
 }
 
 func (m *MenuScene) Draw(screen *ebiten.Image) {
@@ -53,7 +47,7 @@ func (m *MenuScene) Draw(screen *ebiten.Image) {
 	m.exitButton.Draw(screen)
 }
 
-func (m *MenuScene) Update() error {
+func (m *MenuScene) HandleInput() {
 
 	if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
 		m.currentIndex++
@@ -72,10 +66,10 @@ func (m *MenuScene) Update() error {
 	if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 		fmt.Println("execute action")
 		if m.currentIndex == 0 {
-			m.sceneManager.ChangeScene("SINGLEPLAYER")
+			m.game.SetScene("SINGLEPLAYER")
 		}
 		if m.currentIndex == 1 {
-			m.sceneManager.ChangeScene("EXIT")
+			m.game.SetScene("EXIT")
 		}
 	}
 
@@ -93,15 +87,4 @@ func (m *MenuScene) Update() error {
 			break
 		}
 	}
-
-	return nil
-}
-
-func (m *MenuScene) WindowDimension() (int, int) {
-	return m.WindowWidth, m.WindowHeight
-}
-
-func (m *MenuScene) SetWindowDimension(w, h int) {
-	m.WindowWidth = w
-	m.WindowHeight = h
 }

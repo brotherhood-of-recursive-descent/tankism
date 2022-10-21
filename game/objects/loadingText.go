@@ -12,7 +12,6 @@ import (
 
 // LoadingText is the loading text animation for the start screen.
 type LoadingText struct {
-	scene          lib.Scene
 	text           string
 	font           font.Face
 	primaryColor   color.Color
@@ -20,10 +19,9 @@ type LoadingText struct {
 	frameCount     int
 }
 
-func NewLoadingText(scene lib.Scene) *LoadingText {
+func NewLoadingText() *LoadingText {
 
 	return &LoadingText{
-		scene:          scene,
 		text:           "Loading ...",
 		font:           resources.FontBig,
 		primaryColor:   lib.ColorYellow,

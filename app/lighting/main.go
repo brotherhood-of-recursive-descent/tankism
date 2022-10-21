@@ -8,28 +8,25 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
 	"github.com/co0p/tankism/lib"
-	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 type LightingDemo struct {
-	WindowWidth, WindowHeight int
+	game.GameScene
 
-	entityManager *ecs.EntityManager
-	systems       []ecs.System
 	ambientColors []color.Color
 	colorIdx      int
 }
 
-func NewLightingDemo() *LightingDemo {
+func (demo *LightingDemo) Init() error {
 
-	scene := LightingDemo{
-		systems:       []ecs.System{},
-		entityManager: &ecs.EntityManager{},
-		colorIdx:      0,
-	}
-	scene.ambientColors = append(scene.ambientColors,
+	demo.ambientColors = append(demo.ambientColors,
+		color.RGBA{60, 76, 128, 10},
+		color.RGBA{60, 76, 128, 50},
+		color.RGBA{60, 76, 128, 10},
+		color.RGBA{60, 76, 128, 150},
+		color.RGBA{60, 76, 128, 200},
 		color.RGBA{255, 255, 255, 255},
 		color.RGBA{100, 100, 100, 100},
 		color.RGBA{150, 100, 100, 100},
@@ -38,69 +35,65 @@ func NewLightingDemo() *LightingDemo {
 		color.RGBA{200, 200, 200, 200},
 	)
 
-	scene.systems = append(scene.systems,
-		&systems.SpriteRenderer{EntityManager: scene.entityManager},
-		&systems.PerformanceMonitor{EntityManager: scene.entityManager},
-		&systems.TextRenderer{EntityManager: scene.entityManager},
-		&systems.Controller{EntityManager: scene.entityManager},
-		systems.NewLightingSystem(scene.entityManager),
+	demo.Systems = append(demo.Systems,
+		&systems.SpriteRenderer{EntityManager: &demo.EntityManager},
+		&systems.PerformanceMonitor{EntityManager: &demo.EntityManager},
+		&systems.TextRenderer{EntityManager: &demo.EntityManager},
+		&systems.Controller{EntityManager: &demo.EntityManager},
+		systems.NewLightingSystem(&demo.EntityManager),
 	)
 
-	return &scene
-}
-
-func (s *LightingDemo) Init() error {
-	fps := s.entityManager.NewEntity()
+	fps := demo.EntityManager.NewEntity()
 	game.FPSCounter(fps, 1024)
 
 	// background map
-	tilemap := s.entityManager.NewEntity()
+	tilemap := demo.EntityManager.NewEntity()
 	game.NewMap(tilemap, game.Tilemap{}, 1024, 1024)
 
 	// add some items
-	barrel := s.entityManager.NewEntity()
+	barrel := demo.EntityManager.NewEntity()
 	game.NewDrum(barrel, 300, 300)
-	game.NewPointLight(s.entityManager.NewEntity(), 325, 325)
+	game.NewPointLight(demo.EntityManager.NewEntity(), 325, 325)
 
-	crate := s.entityManager.NewEntity()
+	crate := demo.EntityManager.NewEntity()
 	game.NewCrate(crate, 100, 300)
-	game.NewPointLight(s.entityManager.NewEntity(), 125, 330)
+	game.NewPointLight(demo.EntityManager.NewEntity(), 125, 330)
 
 	// add different PointLight component to tanks
-	circleLight := s.entityManager.NewEntity()
+	circleLight := demo.EntityManager.NewEntity()
 	game.NewCircleLight(circleLight, 500, 500)
 
-	circleLightGreen := s.entityManager.NewEntity()
+	circleLightGreen := demo.EntityManager.NewEntity()
 	game.NewCircleLightWithColor(circleLightGreen, 750, 750, lib.ColorGreen)
 
-	circleLightRed := s.entityManager.NewEntity()
+	circleLightRed := demo.EntityManager.NewEntity()
 	game.NewCircleLightWithColor(circleLightRed, 600, 700, lib.ColorRed)
 
-	circleLightBlue := s.entityManager.NewEntity()
+	circleLightBlue := demo.EntityManager.NewEntity()
 	game.NewCircleLightWithColor(circleLightBlue, 650, 650, lib.ColorBlue)
 
-	tank := s.entityManager.NewEntity()
+	tank := demo.EntityManager.NewEntity()
 	game.NewTank(tank)
 
 	// add ambient light entity
-	ambientLight := s.entityManager.NewEntity()
+	ambientLight := demo.EntityManager.NewEntity()
 	game.NewAmbientLight(ambientLight)
 
 	return nil
 }
 
-func (s *LightingDemo) Draw(screen *ebiten.Image) {
-	for _, v := range s.systems {
-		v.Draw(screen)
+func (s *LightingDemo) Update() error {
+
+	ambientLightEntity := s.EntityManager.FindByComponents(components.AmbientLightType)
+	if len(ambientLightEntity) == 1 {
+		ambientLight := ambientLightEntity[0].GetComponent(components.AmbientLightType).(*components.AmbientLight)
+		ambientLight.Color = s.ambientColors[s.colorIdx]
 	}
+
+	return s.GameScene.Update()
 }
 
-func (s *LightingDemo) Update() error {
-	var err error
-	for _, v := range s.systems {
-		err = v.Update()
-	}
-
+func (s *LightingDemo) HandleInput() {
 	if inpututil.IsKeyJustPressed(ebiten.KeyPageDown) {
 		s.colorIdx++
 		s.colorIdx %= len(s.ambientColors)
@@ -109,29 +102,17 @@ func (s *LightingDemo) Update() error {
 		s.colorIdx += len(s.ambientColors) - 1
 		s.colorIdx %= len(s.ambientColors)
 	}
-
-	ambientLightEntity := s.entityManager.FindByComponents(components.AmbientLightType)
-	if len(ambientLightEntity) == 1 {
-		ambientLight := ambientLightEntity[0].GetComponent(components.AmbientLightType).(*components.AmbientLight)
-		ambientLight.Color = s.ambientColors[s.colorIdx]
-	}
-
-	return err
-}
-
-func (s *LightingDemo) Layout(outsideWidth, outsideHeight int) (int, int) {
-	s.WindowWidth = outsideWidth
-	s.WindowHeight = outsideHeight
-	return outsideWidth, outsideHeight
 }
 
 func main() {
 
-	ebiten.SetFullscreen(true)
-	client := NewLightingDemo()
-	client.Init()
+	demo := LightingDemo{}
+	game := game.NewGame()
+	game.AddScene("LightDemo", &demo)
+	game.SetScene("LightDemo")
 
-	if err := ebiten.RunGame(client); err != nil {
+	ebiten.SetFullscreen(true)
+	if err := ebiten.RunGame(game); err != nil {
 		log.Fatalf("failed to start game: %s", err)
 	}
 }

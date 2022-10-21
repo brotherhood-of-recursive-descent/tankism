@@ -10,19 +10,15 @@ import (
 
 // MenuImage is the background image of the menu screen
 type MenuImage struct {
-	scene lib.Scene
 	image *ebiten.Image
 }
 
-func NewMenuImage(scene lib.Scene) *MenuImage {
+func NewMenuImage() *MenuImage {
 
 	img, _ := resources.LoadImage(resources.BackgroundImage)
 	sprite := ebiten.NewImageFromImage(img)
 
-	return &MenuImage{
-		scene: scene,
-		image: sprite,
-	}
+	return &MenuImage{image: sprite}
 }
 
 func (l *MenuImage) Draw(screen *ebiten.Image) {

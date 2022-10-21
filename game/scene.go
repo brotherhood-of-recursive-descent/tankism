@@ -1,27 +1,33 @@
 package game
 
 import (
-	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type Scene struct {
+type Scene interface {
+	Init() error
+	Draw(image *ebiten.Image)
+	HandleInput()
+	Update() error
+}
+
+type GameScene struct {
 	Systems       []ecs.System
 	EntityManager ecs.EntityManager
 }
 
-func (s *Scene) Init(sm *lib.SceneManager) error {
+func (s *GameScene) Init() error {
 	return nil
 }
 
-func (s *Scene) Draw(screen *ebiten.Image) {
+func (s *GameScene) Draw(screen *ebiten.Image) {
 	for _, v := range s.Systems {
 		v.Draw(screen)
 	}
 }
 
-func (s *Scene) Update() error {
+func (s *GameScene) Update() error {
 	var err error
 	for _, v := range s.Systems {
 		err = v.Update()
@@ -29,4 +35,4 @@ func (s *Scene) Update() error {
 	return err
 }
 
-func (s *Scene) HandleInput() {}
+func (s *GameScene) HandleInput() {}

@@ -5,37 +5,36 @@ import (
 
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/systems"
-	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/test"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type LoadingScene struct {
-	lib.Scene
-	entityManager *ecs.EntityManager
-	systems       []ecs.System
+type LoadingDemo struct {
+	game.GameScene
 }
 
-func (s *LoadingScene) Init(sm *lib.SceneManager) error {
+func NewLoadingDemo() *LoadingDemo {
+	demo := LoadingDemo{}
 
 	state, _ := game.NewState(test.GameState_Valid)
-	s.entityManager = ecs.NewEntityManager(state.Entities)
+	demo.EntityManager = *ecs.NewEntityManager(state.Entities)
 
-	s.systems = append(s.systems,
-		&systems.SpriteRenderer{EntityManager: s.entityManager},
+	demo.Systems = append(demo.Systems,
+		&systems.SpriteRenderer{EntityManager: &demo.EntityManager},
 	)
 	return nil
 }
 
 func main() {
-	emptyScene := LoadingScene{}
+	demo := LoadingDemo{}
 
-	client := game.NewGame()
-	client.AddScene("Loading", &emptyScene)
+	game := game.NewGame()
+	game.AddScene("Loading", &demo)
+	game.SetScene("Loading")
 
 	ebiten.SetFullscreen(true)
-	if err := ebiten.RunGame(client); err != nil {
+	if err := ebiten.RunGame(game); err != nil {
 		log.Fatalf("failed to start game: %s", err)
 	}
 }

@@ -15,19 +15,17 @@ const (
 
 // LoadingImage is the background image of the start screen
 type LoadingImage struct {
-	scene        lib.Scene
 	image        *ebiten.Image
 	currentAlpha float64
 	count        int
 }
 
-func NewLoadingImage(scene lib.Scene) *LoadingImage {
+func NewLoadingImage() *LoadingImage {
 
 	img, _ := resources.LoadImage(resources.BackgroundImage)
 	sprite := ebiten.NewImageFromImage(img)
 
 	return &LoadingImage{
-		scene:        scene,
 		image:        sprite,
 		currentAlpha: 0,
 		count:        0,

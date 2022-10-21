@@ -1,3 +1,3 @@
 package sound
 
-type SoundManager struct{}
+type Mixer struct{}

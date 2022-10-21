@@ -8,13 +8,14 @@ import (
 )
 
 func main() {
-	emptyScene := &game.Scene{}
+	noopGameScene := game.GameScene{}
 
-	client := game.NewGame()
-	client.AddScene("EMPTY", emptyScene)
+	game := game.NewGame()
+	game.AddScene("EMPTY", &noopGameScene)
+	game.SetScene("EMPTY")
 
 	ebiten.SetFullscreen(true)
-	if err := ebiten.RunGame(client); err != nil {
+	if err := ebiten.RunGame(game); err != nil {
 		log.Fatalf("failed to start game: %s", err)
 	}
 }

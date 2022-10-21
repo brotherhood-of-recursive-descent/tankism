@@ -1,10 +1,7 @@
 package exit
 
 import (
-	"fmt"
-	"os"
-
-	"github.com/co0p/tankism/lib"
+	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -15,28 +12,21 @@ const (
 )
 
 type ExitScene struct {
-	WindowWidth  int
-	WindowHeight int
+	game.GameScene
 
-	sceneManager *lib.SceneManager
+	game         *game.Game
 	currentAlpha float64
 	prevImage    *ebiten.Image
 }
 
-func NewExitScene(sceneManager *lib.SceneManager) *ExitScene {
-
-	scene := ExitScene{}
-	scene.sceneManager = sceneManager
-	scene.currentAlpha = 1
-	return &scene
-}
-
-func (s *ExitScene) Init(*lib.SceneManager) error {
-	fmt.Println("Loaded exit scene...")
+func NewExitScene(game *game.Game) *ExitScene {
 	img, _ := resources.LoadImage(resources.BackgroundImage)
-	s.prevImage = ebiten.NewImageFromImage(img)
 
-	return nil
+	return &ExitScene{
+		game:         game,
+		prevImage:    ebiten.NewImageFromImage(img),
+		currentAlpha: 1,
+	}
 }
 
 func (s *ExitScene) Draw(screen *ebiten.Image) {
@@ -53,16 +43,7 @@ func (s *ExitScene) Update() error {
 		s.currentAlpha -= ALPHA_STEP
 	}
 	if s.currentAlpha <= ALPHA_MIN {
-		os.Exit(0)
+		s.game.Exit()
 	}
 	return nil
-}
-
-func (s *ExitScene) WindowDimension() (int, int) {
-	return s.WindowWidth, s.WindowHeight
-}
-
-func (s *ExitScene) SetWindowDimension(w, h int) {
-	s.WindowWidth = w
-	s.WindowHeight = h
 }

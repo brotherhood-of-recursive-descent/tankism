@@ -56,7 +56,7 @@ func configureAmbientLight(e *ecs.Entity) {
 
 	ambientLight := &components.AmbientLight{
 		CompositeMode: ebiten.CompositeModeSourceOver,
-		Color:         color.RGBA{R: 10, G: 10, B: 0, A: 160},
+		Color:         color.RGBA{R: 60, G: 76, B: 128, A: 10},
 	}
 	e.AddComponents(ambientLight)
 }
