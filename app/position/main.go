@@ -14,8 +14,6 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-/* TODO: WIP make transform relational to parent. ... earth light should be relative to earth */
-
 //go:embed earth.png
 var assetEarth []byte
 
@@ -28,6 +26,12 @@ var assetSun []byte
 //go:embed stars.png
 var assetStars []byte
 
+// PositionDemo demonstrates the relative positioning of elements using planets
+// sun isParentOf( earth isParentOf( moon ) )
+// once #36 is implemented, then the moon will have a light attached as well :-)
+//
+// press 'd' to display debug overlay
+//
 type PositionDemo struct {
 	game.GameScene
 
@@ -42,8 +46,11 @@ func (s *PositionDemo) Init() error {
 
 func (s *PositionDemo) entities() {
 	w, h := s.game.WindowSize()
-	centerW := w / 2
-	centerH := h / 2
+	centerW := float64(w / 2)
+	centerH := float64(h / 2)
+
+	lightImage, _ := resources.LoadImage(resources.LightCircle)
+	lightSprite := ebiten.NewImageFromImage(lightImage)
 
 	// background
 	backgroundImg, _ := resources.LoadImage(assetStars)
@@ -51,14 +58,14 @@ func (s *PositionDemo) entities() {
 
 	background := s.EntityManager.NewEntity()
 	background.AddComponents(
-		&components.Transform{X: 0, Y: 0},
+		&components.Transform{},
 		&components.Sprite{Image: backgroundSprite, ZIndex: 1},
 	)
 
 	ambientLight := s.EntityManager.NewEntity()
 	ambientLight.AddComponent(&components.AmbientLight{
 		CompositeMode: ebiten.CompositeModeSourceOver,
-		Color:         color.RGBA{R: 60, G: 76, B: 128, A: 10},
+		Color:         color.RGBA{R: 30, G: 30, B: 30, A: 100},
 	})
 
 	// sun
@@ -67,15 +74,18 @@ func (s *PositionDemo) entities() {
 	sunWidth, sunHeight := sunSprite.Size()
 
 	sun := s.EntityManager.NewEntity()
+	sunTransform := components.Transform{X: centerW - float64(sunWidth/2), Y: centerH - float64(sunHeight/2)}
 	sun.AddComponents(
-		&components.Transform{X: float64(centerW - sunWidth/2), Y: float64(centerH - sunHeight/2)},
+		&sunTransform,
 		&components.Sprite{Image: sunSprite, ZIndex: 2},
-		&components.Debug{Color: lib.ColorYellow},
+		&components.Debug{},
 	)
 
 	sunLight := s.EntityManager.NewEntity()
-	game.NewCircleLightWithColor(sunLight, float64(centerW-128), float64(centerH-128), lib.ColorYellow)
-	sunLight.AddComponent(&components.Debug{Color: lib.ColorYellow})
+	sunLightSprite := &components.Light{Image: lightSprite, Color: lib.ColorYellow}
+	sunLightTransform := &components.Transform{Scale: 2, OffsetX: float64(sunWidth/2) - 128, OffsetY: float64(sunHeight/2) - 128}
+	sunLightTransform.AddParent(&sunTransform)
+	sunLight.AddComponents(sunLightSprite, sunLightTransform, &components.Debug{})
 
 	// earth
 	earthImg, _ := resources.LoadImage(assetEarth)
@@ -83,37 +93,45 @@ func (s *PositionDemo) entities() {
 	earthWidth, earthHeight := sunSprite.Size()
 
 	earth := s.EntityManager.NewEntity()
+	earthTransform := components.Transform{OffsetX: 300, OffsetY: 0}
+	earthTransform.AddParent(&sunTransform)
 	earth.AddComponents(
-		&components.Transform{X: float64(centerW - earthWidth/2 + 300), Y: float64(h/2 - earthHeight/2)},
+		&earthTransform,
 		&components.Sprite{Image: earthSprite, ZIndex: 2},
-		&components.Debug{Color: lib.ColorGreen},
+		&components.Debug{},
 	)
+
 	earthLight := s.EntityManager.NewEntity()
-	game.NewCircleLightWithColor(earthLight, float64(centerW+300-128), float64(centerH-128), lib.ColorGreen)
-	earthLight.AddComponent(&components.Debug{Color: lib.ColorYellow})
+	earthLightSprite := &components.Light{Image: lightSprite, Color: lib.ColorBlue}
+	earthLightTransform := &components.Transform{Scale: 2, OffsetX: float64(earthWidth/2) - 128, OffsetY: float64(earthHeight/2) - 128}
+	earthLightTransform.AddParent(&earthTransform)
+	earthLight.AddComponents(earthLightSprite, earthLightTransform, &components.Debug{})
 
 	// moon
 	moonImg, _ := resources.LoadImage(assetMoon)
 	moonSprite := ebiten.NewImageFromImage(moonImg)
-
+	moonWidth, moonHeight := moonSprite.Size()
 	moon := s.EntityManager.NewEntity()
+	moonTransform := components.Transform{OffsetX: 150, OffsetY: 150}
+	moonTransform.AddParent(&earthTransform)
 	moon.AddComponents(
-		&components.Transform{X: float64(centerW + 450), Y: float64(centerH) + 100},
+		&moonTransform,
 		&components.Sprite{Image: moonSprite, ZIndex: 2},
-		&components.Debug{Color: lib.ColorBlue},
+		&components.Debug{},
 	)
 	moonLight := s.EntityManager.NewEntity()
-	game.NewCircleLightWithColor(moonLight, float64(centerW+450), float64(centerH+100), lib.ColorBlue)
-	moonLight.AddComponent(&components.Debug{Color: lib.ColorRed})
+	moonLightSprite := &components.Light{Image: lightSprite, Color: lib.ColorWhite}
+	moonLightTransform := &components.Transform{Scale: 2, OffsetX: float64(moonWidth/2) - 128, OffsetY: float64(moonHeight/2) - 128}
+	moonLightTransform.AddParent(&moonTransform)
+	moonLight.AddComponents(moonLightSprite, moonLightTransform, &components.Debug{})
 }
 
 func (s *PositionDemo) systems() {
 
 	s.Systems = append(s.Systems,
 		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
-		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
-		&systems.TextRenderer{EntityManager: &s.EntityManager},
 		&systems.MovementSystem{EntityManager: &s.EntityManager},
+		&systems.PositioningSysystem{EntityManager: &s.EntityManager},
 		systems.NewLightingSystem(&s.EntityManager),
 		&systems.DebugRenderer{EntityManager: &s.EntityManager},
 	)
