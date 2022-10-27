@@ -30,7 +30,7 @@ func NewPointLight(e *ecs.Entity, x, y float64) {
 	}
 
 	light := &components.Light{Image: img, Color: DEFAULT_COLOR}
-	translate := &components.Translate{
+	translate := &components.Transform{
 		X:        x,
 		Y:        y,
 		Scale:    2,
@@ -52,10 +52,10 @@ func NewCircleLightWithColor(e *ecs.Entity, x, y float64, clr color.Color) {
 	}
 
 	light := &components.Light{Image: img, Color: clr}
-	translate := &components.Translate{
+	translate := &components.Transform{
 		X:        x,
 		Y:        y,
-		Scale:    1,
+		Scale:    2,
 		Rotation: 0,
 	}
 

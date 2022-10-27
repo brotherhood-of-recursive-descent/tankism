@@ -21,11 +21,11 @@ func (s *AISystem) Update() error {
 
 	for _, aie := range aiEntities {
 		ai := aie.GetComponent(components.AIType).(*components.AI)
-		aiTranslate := aie.GetComponent(components.TranslateType).(*components.Translate)
+		aiTranslate := aie.GetComponent(components.TranslateType).(*components.Transform)
 
 		for _, e := range targetEntities {
 			target := e.GetComponent(components.TargetType).(*components.Target)
-			targetTranslate := e.GetComponent(components.TranslateType).(*components.Translate)
+			targetTranslate := e.GetComponent(components.TranslateType).(*components.Transform)
 
 			if ai.TargetGroup == target.GroupId {
 

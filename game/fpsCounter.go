@@ -13,7 +13,7 @@ func FPSCounter(fps *ecs.Entity, width int) {
 		Font:  resources.FontMedium,
 		Color: lib.ColorGreen,
 	})
-	fps.AddComponent(&components.Translate{
+	fps.AddComponent(&components.Transform{
 		X:        float64(width - 120),
 		Y:        50.0,
 		Scale:    1,

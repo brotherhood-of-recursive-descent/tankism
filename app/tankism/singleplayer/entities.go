@@ -21,7 +21,7 @@ func configureTank(tank *ecs.Entity) {
 	}
 	shaking := &components.Shaking{}
 	controller := &components.Controller{}
-	translate := &components.Translate{
+	translate := &components.Transform{
 		X:        200.0,
 		Y:        200.0,
 		Scale:    1,
@@ -40,7 +40,7 @@ func configureAITank(e *ecs.Entity) {
 	s := ebiten.NewImageFromImage(t)
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
-	translate := &components.Translate{
+	translate := &components.Transform{
 		X:     700.0,
 		Y:     700.0,
 		Scale: 1,

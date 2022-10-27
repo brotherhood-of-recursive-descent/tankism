@@ -23,7 +23,7 @@ func (s *TextRenderer) Draw(screen *ebiten.Image) {
 
 		op := &ebiten.DrawImageOptions{}
 
-		translate := e.GetComponent(components.TranslateType).(*components.Translate)
+		translate := e.GetComponent(components.TranslateType).(*components.Transform)
 		x := translate.X
 		y := translate.Y
 		scale := translate.Scale

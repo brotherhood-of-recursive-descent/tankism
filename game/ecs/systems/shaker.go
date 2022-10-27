@@ -24,7 +24,7 @@ func (s *Shaker) Update() error {
 	dir := 0
 
 	for _, e := range entities {
-		translate := e.GetComponent(components.TranslateType).(*components.Translate)
+		translate := e.GetComponent(components.TranslateType).(*components.Transform)
 		if minus == 0 {
 			dir = 1
 		} else {

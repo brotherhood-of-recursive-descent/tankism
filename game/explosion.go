@@ -42,7 +42,7 @@ func NewExplosion(e *ecs.Entity, s resource.SpriteSheet, l resource.SpriteSheet,
 		ZIndex: 100,
 	}
 
-	translate := components.Translate{
+	translate := components.Transform{
 		X:        float64(x),
 		Y:        float64(y),
 		Scale:    1,

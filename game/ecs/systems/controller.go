@@ -23,7 +23,7 @@ func (s *Controller) Update() error {
 
 	for _, e := range entities {
 
-		translate := e.GetComponent(components.TranslateType).(*components.Translate)
+		translate := e.GetComponent(components.TranslateType).(*components.Transform)
 		velocity := e.GetComponent(components.VelocityType).(*components.Velocity)
 		newRotation := translate.Rotation
 

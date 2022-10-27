@@ -13,7 +13,7 @@ func NewDrum(e *ecs.Entity, x, y float64) {
 	s := ebiten.NewImageFromImage(img)
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
-	translate := &components.Translate{
+	translate := &components.Transform{
 		X:        x,
 		Y:        y,
 		Scale:    1,
@@ -29,7 +29,7 @@ func NewCrate(e *ecs.Entity, x, y float64) {
 	s := ebiten.NewImageFromImage(img)
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
-	translate := &components.Translate{
+	translate := &components.Transform{
 		X:        x,
 		Y:        y,
 		Scale:    1,

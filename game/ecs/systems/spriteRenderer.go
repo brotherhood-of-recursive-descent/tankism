@@ -33,7 +33,7 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 		}
 		rect := img.Bounds()
 
-		translate := e.GetComponent(components.TranslateType).(*components.Translate)
+		translate := e.GetComponent(components.TranslateType).(*components.Transform)
 		x := translate.X
 		y := translate.Y
 		rotation := translate.Rotation

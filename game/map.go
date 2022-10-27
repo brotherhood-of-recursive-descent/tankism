@@ -32,7 +32,7 @@ func NewMap(e *ecs.Entity, tilemap Tilemap, w int, h int) {
 	}
 
 	sprite := &components.Sprite{Image: mapImage, ZIndex: 0}
-	translate := &components.Translate{
+	translate := &components.Transform{
 		Scale: 1,
 	}
 

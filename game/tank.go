@@ -19,7 +19,7 @@ func NewTank(tank *ecs.Entity) {
 	}
 	shaking := &components.Shaking{}
 	controller := &components.Controller{}
-	translate := &components.Translate{
+	translate := &components.Transform{
 		X:        200.0,
 		Y:        200.0,
 		Scale:    1,
