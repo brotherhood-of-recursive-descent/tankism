@@ -31,7 +31,6 @@ var assetStars []byte
 // once #36 is implemented, then the moon will have a light attached as well :-)
 //
 // press 'd' to display debug overlay
-//
 type PositionDemo struct {
 	game.GameScene
 
@@ -78,6 +77,8 @@ func (s *PositionDemo) entities() {
 	sun.AddComponents(
 		&sunTransform,
 		&components.Sprite{Image: sunSprite, ZIndex: 2},
+		&components.Controller{},
+		&components.Velocity{},
 		&components.Debug{},
 	)
 
@@ -133,6 +134,7 @@ func (s *PositionDemo) systems() {
 		&systems.MovementSystem{EntityManager: &s.EntityManager},
 		&systems.PositioningSysystem{EntityManager: &s.EntityManager},
 		systems.NewLightingSystem(&s.EntityManager),
+		&systems.Controller{EntityManager: &s.EntityManager},
 		&systems.DebugRenderer{EntityManager: &s.EntityManager},
 	)
 }
