@@ -12,10 +12,11 @@ type Transform struct {
 	Scale    float64
 	Rotation float64
 
-	Parent   *Transform
+	Parent  *Transform
+	OffsetX float64
+	OffsetY float64
+
 	Children []*Transform
-	OffsetX  float64
-	OffsetY  float64
 }
 
 func (t *Transform) AddParent(p *Transform) {
