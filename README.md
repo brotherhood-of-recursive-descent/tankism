@@ -5,6 +5,36 @@ A top down panzer game written in Go.
 
 ## devlog
 
+
+### 10/2022 Relative Positioning
+> see 37193f42f3c4e66f7140bc9ea7614b6e01a35808
+
+We implemented relative positioning of entities this evening. It is basically building a tree of transform components. 
+With each entity only having max one transform and one transform only having one parent you get a scene graph.
+
+As a bonus each planet as an emitting light attached to it.
+
+```go
+// see app/position/main.go
+//...
+sun := s.EntityManager.NewEntity()
+sunTransform := components.Transform{}
+sun.AddComponents(&sunTransform, ... )
+
+earth := s.EntityManager.NewEntity()
+earthTransform := components.Transform{OffsetX: 300, OffsetY: 0}
+earthTransform.AddParent(&sunTransform)
+
+moon := s.EntityManager.NewEntity()
+moonTransform := components.Transform{OffsetX: 150, OffsetY: 150}
+moonTransform.AddParent(&earthTransform)
+
+```
+
+![planets with lights, relative positioned](https://raw.githubusercontent.com/co0p/tankism/master/docs/relativePositioning.png) 
+
+
+
 ### 08/2022 SpriteAnimations making boom
 > see e1a38829ba41fd49d4c6c1dfdd1aefb79291aea4
 
