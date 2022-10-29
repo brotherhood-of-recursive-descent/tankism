@@ -16,16 +16,16 @@ func (s *AISystem) Draw(screen *ebiten.Image) {}
 
 func (s *AISystem) Update() error {
 
-	aiEntities := s.EntityManager.FindByComponents(components.AIType, components.TranslateType)
-	targetEntities := s.EntityManager.FindByComponents(components.TargetType, components.TranslateType)
+	aiEntities := s.EntityManager.FindByComponents(components.AIType, components.TransformType)
+	targetEntities := s.EntityManager.FindByComponents(components.TargetType, components.TransformType)
 
 	for _, aie := range aiEntities {
 		ai := aie.GetComponent(components.AIType).(*components.AI)
-		aiTranslate := aie.GetComponent(components.TranslateType).(*components.Transform)
+		aiTranslate := aie.GetComponent(components.TransformType).(*components.Transform)
 
 		for _, e := range targetEntities {
 			target := e.GetComponent(components.TargetType).(*components.Target)
-			targetTranslate := e.GetComponent(components.TranslateType).(*components.Transform)
+			targetTranslate := e.GetComponent(components.TransformType).(*components.Transform)
 
 			if ai.TargetGroup == target.GroupId {
 

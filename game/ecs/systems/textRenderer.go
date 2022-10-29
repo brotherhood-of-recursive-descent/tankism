@@ -17,13 +17,13 @@ func (s *TextRenderer) Update() error {
 
 func (s *TextRenderer) Draw(screen *ebiten.Image) {
 
-	entities := s.EntityManager.FindByComponents(components.TextType, components.TranslateType)
+	entities := s.EntityManager.FindByComponents(components.TextType, components.TransformType)
 
 	for _, e := range entities {
 
 		op := &ebiten.DrawImageOptions{}
 
-		translate := e.GetComponent(components.TranslateType).(*components.Transform)
+		translate := e.GetComponent(components.TransformType).(*components.Transform)
 		x := translate.X
 		y := translate.Y
 		scale := translate.Scale

@@ -11,11 +11,11 @@ type MovementSystem struct {
 }
 
 func (s *MovementSystem) Update() error {
-	entities := s.EntityManager.FindByComponents(components.VelocityType, components.TranslateType)
+	entities := s.EntityManager.FindByComponents(components.VelocityType, components.TransformType)
 
 	for _, e := range entities {
 		velocity := e.GetComponent(components.VelocityType).(*components.Velocity)
-		translate := e.GetComponent(components.TranslateType).(*components.Transform)
+		translate := e.GetComponent(components.TransformType).(*components.Transform)
 		translate.X = translate.X + velocity.X
 		translate.Y = translate.Y + velocity.Y
 		translate.Rotation = translate.Rotation + velocity.Rotation

@@ -19,11 +19,11 @@ func (s *Controller) Draw(screen *ebiten.Image) {}
 
 func (s *Controller) Update() error {
 
-	entities := s.EntityManager.FindByComponents(components.ControllerType, components.TranslateType, components.VelocityType)
+	entities := s.EntityManager.FindByComponents(components.ControllerType, components.TransformType, components.VelocityType)
 
 	for _, e := range entities {
 
-		translate := e.GetComponent(components.TranslateType).(*components.Transform)
+		translate := e.GetComponent(components.TransformType).(*components.Transform)
 		velocity := e.GetComponent(components.VelocityType).(*components.Velocity)
 		newRotation := translate.Rotation
 

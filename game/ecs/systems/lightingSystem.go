@@ -48,10 +48,10 @@ func (s *LightingSystem) Draw(screen *ebiten.Image) {
 	}
 
 	// draw each light
-	lights := s.entityManager.FindByComponents(components.LightType, components.TranslateType)
+	lights := s.entityManager.FindByComponents(components.LightType, components.TransformType)
 	for _, l := range lights {
 		light := l.GetComponent(components.LightType).(*components.Light)
-		translate := l.GetComponent(components.TranslateType).(*components.Transform)
+		translate := l.GetComponent(components.TransformType).(*components.Transform)
 		img := light.Image
 		rect := img.Bounds()
 

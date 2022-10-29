@@ -21,7 +21,7 @@ func (s *PerformanceMonitor) Update() error {
 
 	for _, e := range entities {
 		text := e.GetComponent(components.TextType).(*components.Text)
-		text.Value = fmt.Sprintf("fps: %6.2f (%d)", ebiten.CurrentFPS(), entityCount)
+		text.Value = fmt.Sprintf("fps: %6.2f\ntps: %6.2f\nentities: %d", ebiten.ActualFPS(), ebiten.ActualTPS(), entityCount)
 	}
 
 	return nil

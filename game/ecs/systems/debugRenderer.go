@@ -6,10 +6,12 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
 var LightColor = color.RGBA{100, 100, 200, 160}
+var EmitterColor = color.RGBA{100, 200, 100, 160}
 var SpriteColor = color.RGBA{200, 100, 100, 160}
 
 // DebugRenderer renders transparent overlays for debug purposes
@@ -32,7 +34,7 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		return
 	}
 
-	entities := s.EntityManager.FindByComponents(components.DebugType, components.SpriteType, components.TranslateType)
+	entities := s.EntityManager.FindByComponents(components.DebugType, components.SpriteType, components.TransformType)
 	for _, e := range entities {
 
 		sprite := e.GetComponent(components.SpriteType).(*components.Sprite)
@@ -44,7 +46,7 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		img := ebiten.NewImage(w, h)
 		img.Fill(SpriteColor)
 
-		transform := e.GetComponent(components.TranslateType).(*components.Transform)
+		transform := e.GetComponent(components.TransformType).(*components.Transform)
 		x := transform.X
 		y := transform.Y
 		rotation := transform.Rotation
@@ -58,7 +60,7 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		screen.DrawImage(img, op)
 	}
 
-	lightEntities := s.EntityManager.FindByComponents(components.DebugType, components.LightType, components.TranslateType)
+	lightEntities := s.EntityManager.FindByComponents(components.DebugType, components.LightType, components.TransformType)
 	for _, e := range lightEntities {
 
 		light := e.GetComponent(components.LightType).(*components.Light)
@@ -70,7 +72,7 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		img := ebiten.NewImage(w, h)
 		img.Fill(LightColor)
 
-		transform := e.GetComponent(components.TranslateType).(*components.Transform)
+		transform := e.GetComponent(components.TransformType).(*components.Transform)
 		x := transform.X
 		y := transform.Y
 		rotation := transform.Rotation
@@ -82,5 +84,11 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		op.GeoM.Translate(x, y)
 
 		screen.DrawImage(img, op)
+	}
+
+	emitter := s.EntityManager.FindByComponents(components.DebugType, components.ParticleEmitterType, components.TransformType)
+	for _, e := range emitter {
+		transform := e.GetComponent(components.TransformType).(*components.Transform)
+		ebitenutil.DrawCircle(screen, transform.X, transform.Y, 25.0, EmitterColor)
 	}
 }

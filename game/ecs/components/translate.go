@@ -2,7 +2,7 @@ package components
 
 import "github.com/co0p/tankism/lib/ecs"
 
-const TranslateType = "transform"
+const TransformType = "transform"
 
 // Transform holds all information needed to position the entity in the world
 type Transform struct {
@@ -29,5 +29,6 @@ func (t *Transform) addChild(c *Transform) {
 }
 
 func (t Transform) Type() ecs.ComponentType {
-	return TranslateType
+	return TransformType
+
 }

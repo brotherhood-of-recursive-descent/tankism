@@ -2,8 +2,10 @@ package systems
 
 import (
 	"image/color"
+	"math"
+	"math/rand"
 
-	"github.com/co0p/tankism/lib"
+	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -17,63 +19,58 @@ type Particle struct {
 }
 
 type ParticleSystem struct {
-	particles     []*Particle
+	particles     []Particle
+	MaxParticles  int
 	EntityManager *ecs.EntityManager
 }
 
-func NewParticleSystem(em *ecs.EntityManager, particleCount int) *ParticleSystem {
-
-	s := &ParticleSystem{
-		EntityManager: em,
-	}
-
-	s.particles = append(s.particles,
-		&Particle{
-			x:        100,
-			y:        100,
-			vx:       0.2,
-			vy:       0.3,
-			lifetime: 1000,
-			color:    lib.ColorRed,
-		},
-		&Particle{
-			x:        130,
-			y:        130,
-			vx:       0.2,
-			vy:       -0.3,
-			lifetime: 2000,
-			color:    lib.ColorBlue,
-		},
-		&Particle{
-			x:        120,
-			y:        100,
-			vx:       -0.2,
-			vy:       0.3,
-			lifetime: 100,
-			color:    lib.ColorYellow,
-		})
-
-	return s
-}
-
 func (s *ParticleSystem) Update() error {
-	//entities := s.EntityManager.FindByComponents(components.ParticleEmitterType, components.TranslateType)
+	entities := s.EntityManager.FindByComponents(components.ParticleEmitterType, components.TransformType)
 
 	// position all emitters and let them emit particles
-	/*for _, e := range entities {
+	for _, e := range entities {
 
-		translate := e.GetComponent(components.TranslateType).(*components.Transform)
+		transform := e.GetComponent(components.TransformType).(*components.Transform)
 		emitter := e.GetComponent(components.ParticleEmitterType).(*components.ParticleEmitter)
 
-		fmt.Printf("placed emitter at (%v,%v) with %v\n", translate.X, translate.Y, emitter)
-	}*/
+		// maybe change to a ringbuffer
+		if len(s.particles) < s.MaxParticles {
 
-	// update position and lifetime of all particles
+			vx := float64(emitter.Direction_min+rand.Intn(emitter.Direction_max-emitter.Direction_min)) * math.Pi / 180
+			vy := float64(emitter.Direction_min+rand.Intn(emitter.Direction_max-emitter.Direction_min)) * math.Pi / 180
+			velX := math.Cos(vx)
+			velY := math.Sin(vy)
+			//velX := emitter.Velocity_min + rand.Float64()*(emitter.Velocity_max-emitter.Velocity_min)
+			//velY := emitter.Velocity_min + rand.Float64()*(emitter.Velocity_max-emitter.Velocity_min)
+
+			lifetime := rand.Float64()*(float64(emitter.Lifetime_max)-float64(emitter.Lifetime_min)) + float64(emitter.Lifetime_min)
+
+			p := Particle{
+				color:    emitter.Color,
+				x:        transform.X,
+				y:        transform.Y,
+				vx:       velX,
+				vy:       velY,
+				lifetime: lifetime,
+			}
+
+			s.particles = append(s.particles, p)
+		}
+	}
+
+	ps := s.particles[:0]
 	for _, p := range s.particles {
+
 		p.x = p.x + p.vx
 		p.y = p.y + p.vy
-		//particle.lifetime--
+		p.lifetime--
+
+		if p.lifetime > 0 {
+			ps = append(ps, p)
+		}
 	}
+	s.particles = ps
+
 	return nil
 }
 
@@ -81,7 +78,6 @@ func (s *ParticleSystem) Update() error {
 func (s *ParticleSystem) Draw(screen *ebiten.Image) {
 
 	for _, particle := range s.particles {
-		ebitenutil.DrawCircle(screen, particle.x, particle.x, 5.0, particle.color)
+		ebitenutil.DrawCircle(screen, particle.x, particle.y, 5.0, particle.color)
 	}
-
 }

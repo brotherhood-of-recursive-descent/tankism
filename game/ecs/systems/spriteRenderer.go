@@ -15,7 +15,7 @@ type SpriteRenderer struct {
 func (s *SpriteRenderer) Update() error { return nil }
 func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 
-	entities := s.EntityManager.FindByComponents(components.SpriteType, components.TranslateType)
+	entities := s.EntityManager.FindByComponents(components.SpriteType, components.TransformType)
 
 	// we sort the slice by z-index
 	sort.Slice(entities, func(a, b int) bool {
@@ -33,7 +33,7 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 		}
 		rect := img.Bounds()
 
-		translate := e.GetComponent(components.TranslateType).(*components.Transform)
+		translate := e.GetComponent(components.TransformType).(*components.Transform)
 		x := translate.X
 		y := translate.Y
 		rotation := translate.Rotation

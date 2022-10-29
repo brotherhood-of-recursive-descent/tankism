@@ -18,6 +18,10 @@ type ParticleEmitter struct {
 	Lifetime_min int
 	Lifetime_max int
 	Spawnrate    int
+
+	Velocity      float64
+	Direction_min int
+	Direction_max int
 }
 
 func (t ParticleEmitter) Type() ecs.ComponentType {

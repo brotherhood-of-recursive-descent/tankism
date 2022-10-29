@@ -11,10 +11,10 @@ type PositioningSysystem struct {
 }
 
 func (s *PositioningSysystem) Update() error {
-	entities := s.EntityManager.FindByComponents(components.TranslateType)
+	entities := s.EntityManager.FindByComponents(components.TransformType)
 
 	for _, e := range entities {
-		node := e.GetComponent(components.TranslateType).(*components.Transform)
+		node := e.GetComponent(components.TransformType).(*components.Transform)
 
 		// always start at the root
 		if isRoot(node) {
