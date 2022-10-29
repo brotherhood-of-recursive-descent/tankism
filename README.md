@@ -39,10 +39,9 @@ redEmitter.AddComponent(&components.Transform{X: ... })
 ### 10/2022 Relative Positioning
 > see 37193f42f3c4e66f7140bc9ea7614b6e01a35808
 
-We implemented relative positioning of entities this evening. It is basically building a tree of transform components. 
-With each entity only having max one transform and one transform only having one parent you get a scene graph.
+We implemented relative positioning of entities this evening. It is basically building a tree of transform components. With each entity only having max one transform and one transform only having one parent you get a scene graph.
 
-As a bonus each planet as an emitting light attached to it.
+To demonstrate relative positioning we decided to build a planet demo. As a bonus each planet as an emitting light attached to it.
 
 ```go
 // see app/position/main.go
