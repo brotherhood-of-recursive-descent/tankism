@@ -6,6 +6,36 @@ A top down panzer game written in Go.
 ## devlog
 
 
+### 10/2022 first visual effect - particles
+> see a5bc3050ed29510dca9ceca1f3b589e18385e414
+
+Yeah, we got some particles on the screen!
+
+To create an emitter entity attach the emitter components
+
+```go
+// see app/particles/main.go
+redEmitter := p.EntityManager.NewEntity()
+redEmitter.AddComponent(&components.ParticleEmitter{
+	Color:        lib.ColorRed,
+
+	Lifetime_min: 10,
+	Lifetime_max: 100,
+
+	Velocity_min:  1,
+	Velocity_max:  1,
+
+	Direction_min: 0,
+	Direction_max: 90,
+})
+redEmitter.AddComponent(&components.Transform{X: ... })
+
+```
+
+![particles!](https://raw.githubusercontent.com/co0p/tankism/master/docs/particles.gif) 
+
+
+
 ### 10/2022 Relative Positioning
 > see 37193f42f3c4e66f7140bc9ea7614b6e01a35808
 
