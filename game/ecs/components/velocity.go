@@ -1,6 +1,8 @@
 package components
 
-import "github.com/co0p/tankism/lib/ecs"
+import (
+	"github.com/co0p/tankism/lib/ecs"
+)
 
 const VelocityType = "velocity"
 
