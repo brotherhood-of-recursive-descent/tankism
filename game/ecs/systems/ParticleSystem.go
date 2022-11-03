@@ -4,6 +4,7 @@ import (
 	"image/color"
 	"math"
 	"math/rand"
+	"time"
 
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
@@ -33,28 +34,35 @@ func (s *ParticleSystem) Update() error {
 		transform := e.GetComponent(components.TransformType).(*components.Transform)
 		emitter := e.GetComponent(components.ParticleEmitterType).(*components.ParticleEmitter)
 
-		// maybe change to a ringbuffer
-		if len(s.particles) < s.MaxParticles {
+		now := time.Now()
+		elapsed := now.Sub(emitter.Last_emitted)
 
-			vx := float64(emitter.Direction_min+rand.Intn(emitter.Direction_max-emitter.Direction_min)) * math.Pi / 180
-			vy := float64(emitter.Direction_min+rand.Intn(emitter.Direction_max-emitter.Direction_min)) * math.Pi / 180
-			velX := math.Cos(vx)
-			velY := math.Sin(vy)
-			//velX := emitter.Velocity_min + rand.Float64()*(emitter.Velocity_max-emitter.Velocity_min)
-			//velY := emitter.Velocity_min + rand.Float64()*(emitter.Velocity_max-emitter.Velocity_min)
+		if elapsed > emitter.Spawn_interval {
 
-			lifetime := rand.Float64()*(float64(emitter.Lifetime_max)-float64(emitter.Lifetime_min)) + float64(emitter.Lifetime_min)
+			// maybe change to a ringbuffer
+			if len(s.particles) < s.MaxParticles {
 
-			p := Particle{
-				color:    emitter.Color,
-				x:        transform.X,
-				y:        transform.Y,
-				vx:       velX,
-				vy:       velY,
-				lifetime: lifetime,
+				vx := float64(emitter.Direction_min+rand.Intn(emitter.Direction_max-emitter.Direction_min)) * math.Pi / 180
+				vy := float64(emitter.Direction_min+rand.Intn(emitter.Direction_max-emitter.Direction_min)) * math.Pi / 180
+				velX := math.Cos(vx)
+				velY := math.Sin(vy)
+				//velX := emitter.Velocity_min + rand.Float64()*(emitter.Velocity_max-emitter.Velocity_min)
+				//velY := emitter.Velocity_min + rand.Float64()*(emitter.Velocity_max-emitter.Velocity_min)
+
+				lifetime := rand.Float64()*(float64(emitter.Lifetime_max)-float64(emitter.Lifetime_min)) + float64(emitter.Lifetime_min)
+
+				p := Particle{
+					color:    emitter.Color,
+					x:        transform.X,
+					y:        transform.Y,
+					vx:       velX,
+					vy:       velY,
+					lifetime: lifetime,
+				}
+
+				s.particles = append(s.particles, p)
+				emitter.Last_emitted = now
 			}
-
-			s.particles = append(s.particles, p)
 		}
 	}
 

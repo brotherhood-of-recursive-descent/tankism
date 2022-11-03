@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/components"
@@ -40,15 +41,16 @@ func (p *ParticleDemo) Init() error {
 
 	blueEmitter := p.EntityManager.NewEntity()
 	blueEmitter.AddComponent(&components.ParticleEmitter{
-		Color:        lib.ColorBlue,
-		Velocity_min: 0.1,
-		Velocity_max: 1.1,
-		Lifetime_min: 10,
-		Lifetime_max: 100,
-
-		Velocity:      1,
-		Direction_min: 0,
-		Direction_max: 360,
+		Color:          lib.ColorBlue,
+		Velocity_min:   0.1,
+		Velocity_max:   1.1,
+		Lifetime_min:   10,
+		Lifetime_max:   100,
+		Spawn_interval: 1000000000, // 1000 ms
+		Last_emitted:   time.Now(),
+		Velocity:       1,
+		Direction_min:  0,
+		Direction_max:  360,
 	})
 
 	blueEmitter.AddComponent(&components.Transform{X: 400, Y: 500})
@@ -56,30 +58,32 @@ func (p *ParticleDemo) Init() error {
 
 	greenEmitter := p.EntityManager.NewEntity()
 	greenEmitter.AddComponent(&components.ParticleEmitter{
-		Color:        lib.ColorGreen,
-		Velocity_min: 0.2,
-		Velocity_max: 2.1,
-		Lifetime_min: 10,
-		Lifetime_max: 100,
-
-		Velocity:      1,
-		Direction_min: 80,
-		Direction_max: 90,
+		Color:          lib.ColorGreen,
+		Velocity_min:   0.2,
+		Velocity_max:   2.1,
+		Lifetime_min:   10,
+		Lifetime_max:   100,
+		Spawn_interval: 10000000, // 100 ms
+		Last_emitted:   time.Now(),
+		Velocity:       1,
+		Direction_min:  80,
+		Direction_max:  90,
 	})
 	greenEmitter.AddComponent(&components.Transform{X: 600, Y: 500})
 	greenEmitter.AddComponent(&components.Debug{})
 
 	yellowEmitter := p.EntityManager.NewEntity()
 	yellowEmitter.AddComponent(&components.ParticleEmitter{
-		Color:        lib.ColorYellow,
-		Velocity_min: 0.1,
-		Velocity_max: 1.1,
-		Lifetime_min: 10,
-		Lifetime_max: 100,
-
-		Velocity:      1,
-		Direction_min: 110,
-		Direction_max: 180,
+		Color:          lib.ColorYellow,
+		Velocity_min:   0.1,
+		Velocity_max:   1.1,
+		Lifetime_min:   10,
+		Lifetime_max:   100,
+		Spawn_interval: 50000000, // 500 ms
+		Last_emitted:   time.Now(),
+		Velocity:       1,
+		Direction_min:  110,
+		Direction_max:  180,
 	})
 	yellowEmitter.AddComponent(&components.Transform{X: 600, Y: 800})
 	yellowEmitter.AddComponent(&components.Debug{})

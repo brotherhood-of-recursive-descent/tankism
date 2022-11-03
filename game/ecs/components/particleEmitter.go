@@ -2,6 +2,7 @@ package components
 
 import (
 	"image/color"
+	"time"
 
 	"github.com/co0p/tankism/lib/ecs"
 )
@@ -17,7 +18,9 @@ type ParticleEmitter struct {
 	Velocity_max float64
 	Lifetime_min int
 	Lifetime_max int
-	Spawnrate    int
+
+	Spawn_interval time.Duration
+	Last_emitted   time.Time
 
 	Velocity      float64
 	Direction_min int
