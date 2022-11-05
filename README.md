@@ -1,3 +1,5 @@
+[![tankism](https://github.com/co0p/tankism/actions/workflows/ci.yml/badge.svg)](https://github.com/co0p/tankism/actions/workflows/ci.yml)
+
 # tankism
 
 A top down panzer game written in Go.
