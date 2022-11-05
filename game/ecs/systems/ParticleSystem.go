@@ -35,9 +35,9 @@ func (s *ParticleSystem) Update() error {
 		emitter := e.GetComponent(components.ParticleEmitterType).(*components.ParticleEmitter)
 
 		now := time.Now()
-		elapsed := now.Sub(emitter.Last_emitted)
+		// now.Sub(emitter.Last_emitted) > emitter.Spawn_interval {
 
-		if elapsed > emitter.Spawn_interval {
+		if now.Add(-emitter.Spawn_interval).After(emitter.Last_emitted) {
 
 			// maybe change to a ringbuffer
 			if len(s.particles) < s.MaxParticles {
@@ -46,8 +46,6 @@ func (s *ParticleSystem) Update() error {
 				vy := float64(emitter.Direction_min+rand.Intn(emitter.Direction_max-emitter.Direction_min)) * math.Pi / 180
 				velX := math.Cos(vx)
 				velY := math.Sin(vy)
-				//velX := emitter.Velocity_min + rand.Float64()*(emitter.Velocity_max-emitter.Velocity_min)
-				//velY := emitter.Velocity_min + rand.Float64()*(emitter.Velocity_max-emitter.Velocity_min)
 
 				lifetime := rand.Float64()*(float64(emitter.Lifetime_max)-float64(emitter.Lifetime_min)) + float64(emitter.Lifetime_min)
 
@@ -66,6 +64,7 @@ func (s *ParticleSystem) Update() error {
 		}
 	}
 
+	// keep 'active' particles
 	ps := s.particles[:0]
 	for _, p := range s.particles {
 

@@ -46,8 +46,7 @@ func (p *ParticleDemo) Init() error {
 		Velocity_max:   1.1,
 		Lifetime_min:   10,
 		Lifetime_max:   100,
-		Spawn_interval: 1000000000, // 1000 ms
-		Last_emitted:   time.Now(),
+		Spawn_interval: time.Duration(1 * time.Second),
 		Velocity:       1,
 		Direction_min:  0,
 		Direction_max:  360,
@@ -63,8 +62,7 @@ func (p *ParticleDemo) Init() error {
 		Velocity_max:   2.1,
 		Lifetime_min:   10,
 		Lifetime_max:   100,
-		Spawn_interval: 10000000, // 100 ms
-		Last_emitted:   time.Now(),
+		Spawn_interval: time.Duration(100 * time.Nanosecond),
 		Velocity:       1,
 		Direction_min:  80,
 		Direction_max:  90,
@@ -79,7 +77,7 @@ func (p *ParticleDemo) Init() error {
 		Velocity_max:   1.1,
 		Lifetime_min:   10,
 		Lifetime_max:   100,
-		Spawn_interval: 50000000, // 500 ms
+		Spawn_interval: time.Duration(500 * time.Nanosecond),
 		Last_emitted:   time.Now(),
 		Velocity:       1,
 		Direction_min:  110,
