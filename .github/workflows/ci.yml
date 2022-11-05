@@ -1,8 +1,31 @@
-steps:
-  - uses: actions/checkout@v3
-  - uses: actions/setup-go@v3
-    with:
-      go-version-file: 'go.mod'
-      cache: true
-  - run: go test ./...
+name: CI
+
+on:
+  push: 
+    branches: [main]
+  
+jobs:
+
+  test:
+    name: "Execute Tests"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+      - run: go test ./...
+
+  build:
+    name: "Build Game"
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-go@v3
+        with:
+          go-version-file: 'go.mod'
+          cache: true
+      - run: go build app/tankism/main.go
+
+
+
   - run: go build app/tankism/main.go
