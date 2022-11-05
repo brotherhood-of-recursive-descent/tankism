@@ -1,31 +1,25 @@
-name: CI
+name: tankism
 
-on:
-  push: 
-    branches: [main]
-  
+on: [push]
+
 jobs:
-
-  test:
-    name: "Execute Tests"
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
-        with:
-          go-version-file: 'go.mod'
-          cache: true
-      - run: go test ./...
-
   build:
-    name: "Build Game"
+
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-go@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v3
         with:
           go-version-file: 'go.mod'
           cache: true
-      - run: go build app/tankism/main.go
 
+      - name: Install dependencies
+        run: go mod download
 
+      - name: Test
+        run: go test -v ./...
 
-  - run: go build app/tankism/main.go
+      - name: Build
+        run: go build -v app/tankism/main.go
