@@ -1,9 +1,8 @@
 package singleplayer
 
 import (
-	"image/color"
-
 	"github.com/co0p/tankism/game/ecs/components"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -56,7 +55,7 @@ func configureAmbientLight(e *ecs.Entity) {
 
 	ambientLight := &components.AmbientLight{
 		CompositeMode: ebiten.CompositeModeSourceOver,
-		Color:         color.RGBA{R: 60, G: 76, B: 128, A: 10},
+		Color:         lib.Color{R: 60, G: 76, B: 128, A: 10},
 	}
 	e.AddComponents(ambientLight)
 }

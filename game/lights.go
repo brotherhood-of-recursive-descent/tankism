@@ -1,9 +1,8 @@
 package game
 
 import (
-	"image/color"
-
 	"github.com/co0p/tankism/game/ecs/components"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/lib/resource"
 	"github.com/co0p/tankism/resources"
@@ -11,8 +10,8 @@ import (
 )
 
 var (
-	DEFAULT_COLOR = color.RGBA{255, 255, 255, 255} // white
-	MUTED_COLOR   = color.RGBA{128, 128, 128, 128} // gray
+	DEFAULT_COLOR = lib.Color{255, 255, 255, 255} // white
+	MUTED_COLOR   = lib.Color{128, 128, 128, 128} // gray
 )
 
 func NewAmbientLight(e *ecs.Entity) {
@@ -41,10 +40,10 @@ func NewPointLight(e *ecs.Entity, x, y float64) {
 }
 
 func NewCircleLight(e *ecs.Entity, x, y float64) {
-	NewCircleLightWithColor(e, x, y, color.White)
+	NewCircleLightWithColor(e, x, y, lib.ColorWhite)
 }
 
-func NewCircleLightWithColor(e *ecs.Entity, x, y float64, clr color.Color) {
+func NewCircleLightWithColor(e *ecs.Entity, x, y float64, clr lib.Color) {
 	i, err := resources.LoadImage(resources.LightCircle)
 	img := ebiten.NewImageFromImage(i)
 	if err != nil {

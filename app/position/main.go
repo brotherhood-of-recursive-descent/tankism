@@ -1,7 +1,6 @@
 package main
 
 import (
-	"image/color"
 	"log"
 
 	_ "embed"
@@ -64,7 +63,7 @@ func (s *PositionDemo) entities() {
 	ambientLight := s.EntityManager.NewEntity()
 	ambientLight.AddComponent(&components.AmbientLight{
 		CompositeMode: ebiten.CompositeModeSourceOver,
-		Color:         color.RGBA{R: 30, G: 30, B: 30, A: 100},
+		Color:         lib.Color{R: 30, G: 30, B: 30, A: 100},
 	})
 
 	// sun

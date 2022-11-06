@@ -1,6 +1,8 @@
 package ecs
 
-import "encoding/json"
+import (
+	"encoding/json"
+)
 
 type Entity struct {
 	components map[ComponentType]Component
@@ -45,13 +47,4 @@ type EntityDto map[ComponentType]Component
 func (b *Entity) MarshalJSON() ([]byte, error) {
 	e := EntityDto(b.components)
 	return json.Marshal(e)
-}
-
-func (b *Entity) UnarshalJSON(data []byte) error {
-	var e EntityDto
-	if err := json.Unmarshal(data, &e); err != nil {
-		return err
-	}
-	b.components = e
-	return nil
 }

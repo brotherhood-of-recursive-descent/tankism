@@ -1,7 +1,6 @@
 package main
 
 import (
-	"image/color"
 	"log"
 
 	"github.com/co0p/tankism/game"
@@ -15,24 +14,24 @@ import (
 type LightingDemo struct {
 	game.GameScene
 
-	ambientColors []color.Color
+	ambientColors []lib.Color
 	colorIdx      int
 }
 
 func (demo *LightingDemo) Init() error {
 
 	demo.ambientColors = append(demo.ambientColors,
-		color.RGBA{60, 76, 128, 10},
-		color.RGBA{60, 76, 128, 50},
-		color.RGBA{60, 76, 128, 10},
-		color.RGBA{60, 76, 128, 150},
-		color.RGBA{60, 76, 128, 200},
-		color.RGBA{255, 255, 255, 255},
-		color.RGBA{100, 100, 100, 100},
-		color.RGBA{150, 100, 100, 100},
-		color.RGBA{150, 150, 100, 100},
-		color.RGBA{150, 150, 150, 150},
-		color.RGBA{200, 200, 200, 200},
+		lib.Color{60, 76, 128, 10},
+		lib.Color{60, 76, 128, 50},
+		lib.Color{60, 76, 128, 10},
+		lib.Color{60, 76, 128, 150},
+		lib.Color{60, 76, 128, 200},
+		lib.Color{255, 255, 255, 255},
+		lib.Color{100, 100, 100, 100},
+		lib.Color{150, 100, 100, 100},
+		lib.Color{150, 150, 100, 100},
+		lib.Color{150, 150, 150, 150},
+		lib.Color{200, 200, 200, 200},
 	)
 
 	demo.Systems = append(demo.Systems,
