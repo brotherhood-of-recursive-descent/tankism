@@ -50,6 +50,10 @@ func (s *PositionDemo) entities() {
 	lightImage, _ := resources.LoadImage(resources.LightCircle)
 	lightSprite := ebiten.NewImageFromImage(lightImage)
 
+	// fps
+	performance := s.EntityManager.NewEntity()
+	game.FPSCounter(performance, 1024)
+
 	// background
 	backgroundImg, _ := resources.LoadImage(assetStars)
 	backgroundSprite := ebiten.NewImageFromImage(backgroundImg)
@@ -135,6 +139,8 @@ func (s *PositionDemo) systems() {
 		systems.NewLightingSystem(&s.EntityManager),
 		&systems.Controller{EntityManager: &s.EntityManager},
 		&systems.DebugRenderer{EntityManager: &s.EntityManager},
+		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
+		&systems.TextRenderer{EntityManager: &s.EntityManager},
 	)
 }
 

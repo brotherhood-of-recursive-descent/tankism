@@ -8,21 +8,20 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 )
 
-const goldenVelocityJson = `{"X":1,"Y":2,"Rotation":100,"IntertiaMax":200,"Intertia":300}`
+var goldenVelocityComponent = components.Velocity{
+	X:           1,
+	Y:           2,
+	Rotation:    100,
+	IntertiaMax: 200,
+	Intertia:    300,
+}
+
+var goldenVelocityJson = `{"X":1,"Y":2,"Rotation":100,"IntertiaMax":200,"Intertia":300}`
 
 func Test_Velocity_Serialize(t *testing.T) {
 
-	// given
-	velocity := components.Velocity{
-		X:           1,
-		Y:           2,
-		Rotation:    100,
-		IntertiaMax: 200,
-		Intertia:    300,
-	}
-
 	// when
-	bytez, err := json.Marshal(velocity)
+	bytez, err := json.Marshal(goldenVelocityComponent)
 
 	// then  we have no error
 	if err != nil {
@@ -50,15 +49,7 @@ func Test_Velocity_Deserialize(t *testing.T) {
 	}
 
 	// and export should match golden string
-	expected := components.Velocity{
-		X:           1,
-		Y:           2,
-		Rotation:    100,
-		IntertiaMax: 200,
-		Intertia:    300,
-	}
-
-	if !reflect.DeepEqual(expected, actual) {
-		t.Errorf("expected deserialzed to equal acutual.\ngot: %v\nwant:%v\n", actual, expected)
+	if !reflect.DeepEqual(goldenVelocityComponent, actual) {
+		t.Errorf("expected deserialzed to equal acutual.\ngot: %v\nwant:%v\n", actual, goldenVelocityComponent)
 	}
 }

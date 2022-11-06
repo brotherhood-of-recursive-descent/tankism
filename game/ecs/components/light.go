@@ -9,7 +9,7 @@ import (
 const LightType = "light"
 
 type Light struct {
-	Image *ebiten.Image
+	Image *ebiten.Image // #47 - how to load assets
 	Color lib.Color
 }
 

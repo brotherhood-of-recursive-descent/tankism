@@ -19,5 +19,11 @@ func FPSCounter(fps *ecs.Entity, width int) {
 		Scale:    1,
 		Rotation: 0.0,
 	})
-	fps.AddComponent(&components.FPS{})
+	fps.AddComponent(&components.Performance{
+		ShowFPS:         true,
+		ShowTPS:         true,
+		ShowEntityCount: true,
+		ShowGraph:       true,
+		HistoryLength:   250,
+	})
 }
