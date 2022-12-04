@@ -1,4 +1,5 @@
 [![tankism](https://github.com/co0p/tankism/actions/workflows/ci.yml/badge.svg)](https://github.com/co0p/tankism/actions/workflows/ci.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/co0p/tankism)](https://goreportcard.com/report/github.com/co0p/tankism)
 
 # tankism
 
