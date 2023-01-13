@@ -20,6 +20,7 @@ func (demo *CollisionDemo) Init() error {
 		&systems.TextRenderer{EntityManager: &demo.EntityManager},
 		&systems.Controller{EntityManager: &demo.EntityManager},
 		&systems.Shaker{EntityManager: &demo.EntityManager},
+		&systems.CollisionDetection{EntityManager: &demo.EntityManager},
 	)
 
 	fps := demo.EntityManager.NewEntity()

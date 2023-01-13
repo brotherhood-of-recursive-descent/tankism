@@ -11,6 +11,11 @@ func NewDrum(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.BarrelGray)
 	s := ebiten.NewImageFromImage(img)
+	w, h := s.Size()
+	bbox := &components.BoundingBox{
+		Width:  w,
+		Height: h,
+	}
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
@@ -20,14 +25,18 @@ func NewDrum(e *ecs.Entity, x, y float64) {
 		Rotation: 0,
 	}
 
-	e.AddComponents(sprite, translate)
+	e.AddComponents(sprite, translate, bbox)
 }
 
 func NewCrate(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.CrateWood)
 	s := ebiten.NewImageFromImage(img)
-
+	w, h := s.Size()
+	bbox := &components.BoundingBox{
+		Width:  w,
+		Height: h,
+	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
 		X:        x,
@@ -36,14 +45,18 @@ func NewCrate(e *ecs.Entity, x, y float64) {
 		Rotation: 0,
 	}
 
-	e.AddComponents(sprite, translate)
+	e.AddComponents(sprite, translate, bbox)
 }
 
 func NewTree(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.BigTreeImage)
 	s := ebiten.NewImageFromImage(img)
-
+	w, h := s.Size()
+	bbox := &components.BoundingBox{
+		Width:  w,
+		Height: h,
+	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
 		X:        x,
@@ -52,14 +65,18 @@ func NewTree(e *ecs.Entity, x, y float64) {
 		Rotation: 0,
 	}
 
-	e.AddComponents(sprite, translate)
+	e.AddComponents(sprite, translate, bbox)
 }
 
 func NewBullet(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.BulletSandOutline)
 	s := ebiten.NewImageFromImage(img)
-
+	w, h := s.Size()
+	bbox := &components.BoundingBox{
+		Width:  w,
+		Height: h,
+	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
 		X:        x,
@@ -68,14 +85,18 @@ func NewBullet(e *ecs.Entity, x, y float64) {
 		Rotation: 0,
 	}
 
-	e.AddComponents(sprite, translate)
+	e.AddComponents(sprite, translate, bbox)
 }
 
 func NewOilSpill(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.OilSpillLarge)
 	s := ebiten.NewImageFromImage(img)
-
+	w, h := s.Size()
+	bbox := &components.BoundingBox{
+		Width:  w,
+		Height: h,
+	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
 		X:        x,
@@ -84,14 +105,18 @@ func NewOilSpill(e *ecs.Entity, x, y float64) {
 		Rotation: 0,
 	}
 
-	e.AddComponents(sprite, translate)
+	e.AddComponents(sprite, translate, bbox)
 }
 
 func NewBarricade(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.Barricade)
 	s := ebiten.NewImageFromImage(img)
-
+	w, h := s.Size()
+	bbox := &components.BoundingBox{
+		Width:  w,
+		Height: h,
+	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
 		X:        x,
@@ -100,5 +125,5 @@ func NewBarricade(e *ecs.Entity, x, y float64) {
 		Rotation: 0,
 	}
 
-	e.AddComponents(sprite, translate)
+	e.AddComponents(sprite, translate, bbox)
 }

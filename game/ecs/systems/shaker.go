@@ -18,12 +18,17 @@ func (s *Shaker) Update() error {
 
 	entities := s.EntityManager.FindByComponents(components.ShakingType, components.TransformType)
 
-	val := rand.Intn(2)
-	xOrY := rand.Intn(2)
-	minus := rand.Intn(2)
-	dir := 0
-
 	for _, e := range entities {
+
+		if rand.Intn(50) > 15 {
+			continue
+		}
+
+		val := rand.Intn(2)
+		xOrY := rand.Intn(2)
+		minus := rand.Intn(2)
+		dir := 0
+
 		translate := e.GetComponent(components.TransformType).(*components.Transform)
 		if minus == 0 {
 			dir = 1
