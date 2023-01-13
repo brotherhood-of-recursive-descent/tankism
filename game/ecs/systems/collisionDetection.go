@@ -1,8 +1,6 @@
 package systems
 
 import (
-	"fmt"
-
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -28,6 +26,7 @@ func (s *CollisionDetection) Update() error {
 			y:      entityPos.Y,
 			width:  entityDim.Width * entityPos.Scale,
 			height: entityDim.Height * entityPos.Scale,
+			e:      entity,
 		}
 
 		boundingBoxes = append(boundingBoxes, entityBox)
@@ -42,7 +41,9 @@ func (s *CollisionDetection) Update() error {
 			rect2 := boundingBoxes[j]
 
 			if rect1.AABBCollision(rect2) {
-				fmt.Println("Collision detected!")
+
+				rect1.e.AddComponent(&components.Collision{Target: rect2.e})
+				rect2.e.AddComponent(&components.Collision{Target: rect1.e})
 			}
 		}
 	}
@@ -54,6 +55,7 @@ type boundingBox struct {
 	y      float64
 	width  float64
 	height float64
+	e      *ecs.Entity
 }
 
 func (rect1 *boundingBox) AABBCollision(rect2 boundingBox) bool {

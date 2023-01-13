@@ -22,6 +22,7 @@ func (demo *CollisionDemo) Init() error {
 		&systems.Controller{EntityManager: &demo.EntityManager},
 		&systems.Shaker{EntityManager: &demo.EntityManager},
 		&systems.CollisionDetection{EntityManager: &demo.EntityManager},
+		&systems.CollisionResolution{EntityManager: &demo.EntityManager},
 		&systems.DebugRenderer{EntityManager: &demo.EntityManager},
 	)
 
