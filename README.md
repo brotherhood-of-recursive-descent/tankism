@@ -8,6 +8,29 @@ A top down panzer game written in Go.
 
 ## devlog
 
+### 01/2023 basic collision detection and resolution
+> see 7e08f530efb0aae9367d4a122715c353ebed2f8e
+
+We have introduced collision detection and resolution systems.
+The former marks entities as having collided, using AABB 2d collision detection. 
+The latter system is responsible for resolving the collision. 
+At present we only look a velocity and make the colliding entity bounce back.
+
+```go
+	entities := s.EntityManager.FindByComponents(components.CollisionType)
+
+	for _, e := range entities {
+		collision := e.GetComponent(components.CollisionType).(*components.Collision)
+
+		if collision.Target.HasComponent(components.VelocityType) {
+			v := collision.Target.GetComponent(components.VelocityType).(*components.Velocity)
+			v.Intertia = -1   // bounce back
+		}
+		e.RemoveComponent(components.CollisionType)
+	}
+```
+
+![collision!](https://raw.githubusercontent.com/co0p/tankism/master/docs/collision.gif) 
 
 ### 10/2022 first visual effect - particles
 > see a5bc3050ed29510dca9ceca1f3b589e18385e414
