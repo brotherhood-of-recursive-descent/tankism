@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/co0p/tankism/game"
+	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -21,6 +22,7 @@ func (demo *CollisionDemo) Init() error {
 		&systems.Controller{EntityManager: &demo.EntityManager},
 		&systems.Shaker{EntityManager: &demo.EntityManager},
 		&systems.CollisionDetection{EntityManager: &demo.EntityManager},
+		&systems.DebugRenderer{EntityManager: &demo.EntityManager},
 	)
 
 	fps := demo.EntityManager.NewEntity()
@@ -34,9 +36,11 @@ func (demo *CollisionDemo) Init() error {
 
 	tank := demo.EntityManager.NewEntity()
 	game.NewTank(tank)
+	tank.AddComponent(&components.Debug{})
 
 	tree := demo.EntityManager.NewEntity()
 	game.NewTree(tree, 500, 300)
+	tree.AddComponent(&components.Debug{})
 
 	bullet := demo.EntityManager.NewEntity()
 	game.NewBullet(bullet, 700, 300)

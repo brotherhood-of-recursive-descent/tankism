@@ -13,8 +13,8 @@ func NewTank(tank *ecs.Entity) {
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
-		Width:  w,
-		Height: h,
+		Width:  float64(w),
+		Height: float64(h),
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	velocity := &components.Velocity{
@@ -42,8 +42,8 @@ func NewBigTank(tank *ecs.Entity, x float64, y float64) {
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
-		Width:  w,
-		Height: h,
+		Width:  float64(w),
+		Height: float64(h),
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	shaking := &components.Shaking{}

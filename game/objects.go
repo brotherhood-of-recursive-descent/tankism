@@ -13,8 +13,8 @@ func NewDrum(e *ecs.Entity, x, y float64) {
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
-		Width:  w,
-		Height: h,
+		Width:  float64(w),
+		Height: float64(h),
 	}
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
@@ -34,8 +34,8 @@ func NewCrate(e *ecs.Entity, x, y float64) {
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
-		Width:  w,
-		Height: h,
+		Width:  float64(w),
+		Height: float64(h),
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
@@ -54,8 +54,8 @@ func NewTree(e *ecs.Entity, x, y float64) {
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
-		Width:  w,
-		Height: h,
+		Width:  float64(w),
+		Height: float64(h),
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
@@ -74,8 +74,8 @@ func NewBullet(e *ecs.Entity, x, y float64) {
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
-		Width:  w,
-		Height: h,
+		Width:  float64(w),
+		Height: float64(h),
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
@@ -94,8 +94,8 @@ func NewOilSpill(e *ecs.Entity, x, y float64) {
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
-		Width:  w,
-		Height: h,
+		Width:  float64(w),
+		Height: float64(h),
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
@@ -114,8 +114,8 @@ func NewBarricade(e *ecs.Entity, x, y float64) {
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
-		Width:  w,
-		Height: h,
+		Width:  float64(w),
+		Height: float64(h),
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{

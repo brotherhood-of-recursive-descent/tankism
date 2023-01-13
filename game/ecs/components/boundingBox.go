@@ -8,8 +8,8 @@ const BoundingBoxType = "BoundingBox"
 
 // BoundingBox, component for collision detection
 type BoundingBox struct {
-	Width  int
-	Height int
+	Width  float64
+	Height float64
 }
 
 func (t BoundingBox) Type() ecs.ComponentType {
