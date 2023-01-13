@@ -19,12 +19,12 @@ func (demo *CollisionDemo) Init() error {
 		&systems.PerformanceMonitor{EntityManager: &demo.EntityManager},
 		&systems.TextRenderer{EntityManager: &demo.EntityManager},
 		&systems.Controller{EntityManager: &demo.EntityManager},
+		&systems.Shaker{EntityManager: &demo.EntityManager},
 	)
 
 	fps := demo.EntityManager.NewEntity()
 	game.FPSCounter(fps, 1024)
 
-	// add some items
 	barrel := demo.EntityManager.NewEntity()
 	game.NewDrum(barrel, 300, 300)
 
@@ -33,6 +33,21 @@ func (demo *CollisionDemo) Init() error {
 
 	tank := demo.EntityManager.NewEntity()
 	game.NewTank(tank)
+
+	tree := demo.EntityManager.NewEntity()
+	game.NewTree(tree, 500, 300)
+
+	bullet := demo.EntityManager.NewEntity()
+	game.NewBullet(bullet, 700, 300)
+
+	bigTank := demo.EntityManager.NewEntity()
+	game.NewBigTank(bigTank, 900, 300)
+
+	oilSpill := demo.EntityManager.NewEntity()
+	game.NewOilSpill(oilSpill, 300, 600)
+
+	barricade := demo.EntityManager.NewEntity()
+	game.NewBarricade(barricade, 600, 600)
 
 	return nil
 }
