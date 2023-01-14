@@ -1,6 +1,8 @@
 package systems
 
 import (
+	"fmt"
+
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -18,12 +20,20 @@ func (s *CollisionResolution) Update() error {
 
 	for _, e := range entities {
 		collision := e.GetComponent(components.CollisionType).(*components.Collision)
+
+		// collision with goal
+		if collision.Target.HasComponent(components.GoalType) {
+			fmt.Println("you won!")
+			collision.Target.AddComponent(components.Cleanup{})
+		}
+
 		// bounce back -- basic resolution for all
 		// TODO resolve based on other types e.g. Health
 		if collision.Target.HasComponent(components.VelocityType) {
 			v := collision.Target.GetComponent(components.VelocityType).(*components.Velocity)
 			v.Intertia = -1
 		}
+
 		e.RemoveComponent(components.CollisionType)
 	}
 

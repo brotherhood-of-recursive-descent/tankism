@@ -48,9 +48,9 @@ func NewCrate(e *ecs.Entity, x, y float64) {
 	e.AddComponents(sprite, translate, bbox)
 }
 
-func NewTree(e *ecs.Entity, x, y float64) {
+func NewCrateMetal(e *ecs.Entity, x, y float64) {
 
-	img, _ := resources.LoadImage(resources.BigTreeImage)
+	img, _ := resources.LoadImage(resources.CrateMetal)
 	s := ebiten.NewImageFromImage(img)
 	w, h := s.Size()
 	bbox := &components.BoundingBox{
@@ -64,8 +64,24 @@ func NewTree(e *ecs.Entity, x, y float64) {
 		Scale:    1,
 		Rotation: 0,
 	}
+	goal := &components.Goal{}
 
-	e.AddComponents(sprite, translate, bbox)
+	e.AddComponents(sprite, translate, bbox, goal)
+}
+
+func NewTree(e *ecs.Entity, x, y float64) {
+
+	img, _ := resources.LoadImage(resources.BigTreeImage)
+	s := ebiten.NewImageFromImage(img)
+	sprite := &components.Sprite{Image: s, ZIndex: 100}
+	translate := &components.Transform{
+		X:        x,
+		Y:        y,
+		Scale:    1,
+		Rotation: 0,
+	}
+
+	e.AddComponents(sprite, translate)
 }
 
 func NewBullet(e *ecs.Entity, x, y float64) {

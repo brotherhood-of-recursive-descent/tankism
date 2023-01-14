@@ -8,6 +8,10 @@ import (
 )
 
 func NewTank(tank *ecs.Entity) {
+	NewTankWithPosition(tank, 200, 200)
+}
+
+func NewTankWithPosition(tank *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.TankImage)
 	s := ebiten.NewImageFromImage(img)
@@ -24,8 +28,8 @@ func NewTank(tank *ecs.Entity) {
 	shaking := &components.Shaking{}
 	controller := &components.Controller{}
 	translate := &components.Transform{
-		X:        200.0,
-		Y:        200.0,
+		X:        x,
+		Y:        y,
 		Scale:    1,
 		Rotation: 0,
 	}
@@ -46,7 +50,6 @@ func NewBigTank(tank *ecs.Entity, x float64, y float64) {
 		Height: float64(h),
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
-	shaking := &components.Shaking{}
 	translate := &components.Transform{
 		X:        x,
 		Y:        y,
@@ -54,5 +57,5 @@ func NewBigTank(tank *ecs.Entity, x float64, y float64) {
 		Rotation: 0,
 	}
 
-	tank.AddComponents(sprite, translate, shaking, bbox)
+	tank.AddComponents(sprite, translate, bbox)
 }

@@ -22,3 +22,15 @@ var OilSpillLarge []byte
 
 //go:embed objects/barricadeMetal.png
 var Barricade []byte
+
+//go:embed objects/fenceRed.png
+var FenceRed []byte
+
+//go:embed objects/barrelRust_top.png
+var BarrelGray []byte
+
+//go:embed objects/crateWood.png
+var CrateWood []byte
+
+//go:embed objects/crateMetal.png
+var CrateMetal []byte

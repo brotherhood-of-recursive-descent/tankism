@@ -58,6 +58,7 @@ type boundingBox struct {
 	e      *ecs.Entity
 }
 
+// TODO: replace with Separating Axis Theorem to accomodate for rotation of rectangles
 func (rect1 *boundingBox) AABBCollision(rect2 boundingBox) bool {
 	return rect1.x < rect2.x+rect2.width &&
 		rect1.x+rect1.width > rect2.x &&
