@@ -16,11 +16,11 @@ func (s *AISystem) Draw(screen *ebiten.Image) {}
 
 func (s *AISystem) Update() error {
 
-	aiEntities := s.EntityManager.FindByComponents(components.AIType, components.TransformType)
+	aiEntities := s.EntityManager.FindByComponents(components.AIType, components.AimingType, components.TransformType)
 	targetEntities := s.EntityManager.FindByComponents(components.TargetType, components.TransformType)
 
 	for _, aie := range aiEntities {
-		ai := aie.GetComponent(components.AIType).(*components.AI)
+		ai := aie.GetComponent(components.AimingType).(*components.Aiming)
 		aiTranslate := aie.GetComponent(components.TransformType).(*components.Transform)
 
 		for _, e := range targetEntities {
@@ -37,7 +37,15 @@ func (s *AISystem) Update() error {
 				aiTranslate.Rotation = targetRad
 			}
 		}
+	}
 
+	shootingAIEntities := s.EntityManager.FindByComponents(components.AIType, components.ShootingType)
+	for _, aie := range shootingAIEntities {
+		shooting := aie.GetComponent(components.ShootingType).(*components.Shooting)
+
+		if shooting.Cooldown <= 0 {
+			shooting.Active = true
+		}
 	}
 
 	return nil

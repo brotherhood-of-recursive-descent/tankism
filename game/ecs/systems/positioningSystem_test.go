@@ -11,7 +11,7 @@ import (
 func TestPositioningSystem(t *testing.T) {
 
 	em := ecs.EntityManager{}
-	system := systems.PositioningSysystem{EntityManager: &em}
+	system := systems.PositioningSystem{EntityManager: &em}
 
 	parent := em.NewEntity()
 	parentTransform := components.Transform{X: 111.11, Y: 222.22}
@@ -43,7 +43,7 @@ func TestPositioningSystem_multiple_level(t *testing.T) {
 	   D   E
 	*/
 	em := ecs.EntityManager{}
-	system := systems.PositioningSysystem{EntityManager: &em}
+	system := systems.PositioningSystem{EntityManager: &em}
 
 	a := em.NewEntity()
 	aTransform := components.Transform{X: 1}

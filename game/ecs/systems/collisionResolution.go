@@ -24,7 +24,21 @@ func (s *CollisionResolution) Update() error {
 		// collision with goal
 		if collision.Target.HasComponent(components.GoalType) {
 			fmt.Println("you won!")
-			collision.Target.AddComponent(components.Cleanup{})
+			collision.Target.AddComponent(&components.Cleanup{})
+		}
+
+		// damage giver collided with destructable entity
+		if e.HasComponent(components.DamageType) && collision.Target.HasComponent(components.HealthType) {
+			damage := e.GetComponent(components.DamageType).(*components.Damage)
+			health := collision.Target.GetComponent(components.HealthType).(*components.Health)
+
+			health.Value = health.Value - damage.Value
+
+			if health.Value <= 0 {
+				collision.Target.AddComponent(&components.Cleanup{})
+			}
+
+			e.AddComponent(&components.Cleanup{})
 		}
 
 		// bounce back -- basic resolution for all
@@ -34,6 +48,7 @@ func (s *CollisionResolution) Update() error {
 			v.Intertia = -1
 		}
 
+		// collission resolved
 		e.RemoveComponent(components.CollisionType)
 	}
 

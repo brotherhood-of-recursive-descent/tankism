@@ -8,7 +8,7 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 )
 
-var goldenAIComponent = components.AI{TargetGroup: 42}
+var goldenAIComponent = components.Aiming{TargetGroup: 42}
 var goldenAIJson = `{"TargetGroup":42}`
 
 func Test_AI_Serialize(t *testing.T) {
@@ -30,7 +30,7 @@ func Test_AI_Deserialize(t *testing.T) {
 	input := []byte(goldenAIJson)
 
 	// when
-	var actual components.AI
+	var actual components.Aiming
 	err := json.Unmarshal(input, &actual)
 
 	// then we have no error

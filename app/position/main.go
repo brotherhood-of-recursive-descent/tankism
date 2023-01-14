@@ -135,7 +135,7 @@ func (s *PositionDemo) systems() {
 	s.Systems = append(s.Systems,
 		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
 		&systems.MovementSystem{EntityManager: &s.EntityManager},
-		&systems.PositioningSysystem{EntityManager: &s.EntityManager},
+		&systems.PositioningSystem{EntityManager: &s.EntityManager},
 		systems.NewLightingSystem(&s.EntityManager),
 		&systems.Controller{EntityManager: &s.EntityManager},
 		&systems.DebugRenderer{EntityManager: &s.EntityManager},

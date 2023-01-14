@@ -25,11 +25,13 @@ func (demo *TowerDefenseDemo) Init() error {
 		&systems.PerformanceMonitor{EntityManager: &demo.EntityManager},
 		&systems.TextRenderer{EntityManager: &demo.EntityManager},
 		&systems.Controller{EntityManager: &demo.EntityManager},
+		&systems.MovementSystem{EntityManager: &demo.EntityManager},
 		&systems.Shaker{EntityManager: &demo.EntityManager},
 		&systems.AISystem{EntityManager: &demo.EntityManager},
-		&systems.CleanupSystem{EntityManager: &demo.EntityManager},
+		&systems.ShootingSystem{EntityManager: &demo.EntityManager},
 		&systems.CollisionDetection{EntityManager: &demo.EntityManager},
 		&systems.CollisionResolution{EntityManager: &demo.EntityManager},
+		&systems.CleanupSystem{EntityManager: &demo.EntityManager},
 	)
 
 	fps := demo.EntityManager.NewEntity()
@@ -41,14 +43,20 @@ func (demo *TowerDefenseDemo) Init() error {
 	tank := demo.EntityManager.NewEntity()
 	game.NewTankWithPosition(tank, 100, 400)
 	tank.AddComponent(&components.Target{GroupId: 1})
+	tank.AddComponent(&components.Shooting{CooldownMin: 100, CooldownMax: 100})
 
 	bigTank := demo.EntityManager.NewEntity()
 	game.NewBigTank(bigTank, 700, 100)
-	bigTank.AddComponent(&components.AI{TargetGroup: 1})
+	bigTank.AddComponent(&components.AI{})
+	bigTank.AddComponent(&components.Aiming{TargetGroup: 1})
+	bigTank.AddComponent(&components.Shooting{CooldownMin: 100, CooldownMax: 200, Cooldown: 100})
+	bigTank.AddComponent(&components.Health{Value: 120})
 
 	bigTank2 := demo.EntityManager.NewEntity()
 	game.NewBigTank(bigTank2, 750, 800)
-	bigTank2.AddComponent(&components.AI{TargetGroup: 1})
+	bigTank2.AddComponent(&components.AI{})
+	bigTank2.AddComponent(&components.Aiming{TargetGroup: 1})
+	bigTank2.AddComponent(&components.Health{Value: 100})
 
 	goal := demo.EntityManager.NewEntity()
 	game.NewCrateMetal(goal, 900, 500)

@@ -73,7 +73,7 @@ func NewTree(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.BigTreeImage)
 	s := ebiten.NewImageFromImage(img)
-	sprite := &components.Sprite{Image: s, ZIndex: 100}
+	sprite := &components.Sprite{Image: s, ZIndex: 200}
 	translate := &components.Transform{
 		X:        x,
 		Y:        y,

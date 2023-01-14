@@ -50,6 +50,15 @@ func (s *Controller) Update() error {
 
 	}
 
+	shooters := s.EntityManager.FindByComponents(components.ControllerType, components.TransformType, components.ShootingType)
+	for _, e := range shooters {
+		shooting := e.GetComponent(components.ShootingType).(*components.Shooting)
+
+		if shooting.Cooldown < 0 && ebiten.IsKeyPressed(ebiten.KeySpace) {
+			shooting.Active = true
+		}
+	}
+
 	if inpututil.IsKeyJustPressed(ebiten.KeyL) {
 		entities := s.EntityManager.FindByComponents(components.AmbientLightType)
 		if len(entities) == 1 {

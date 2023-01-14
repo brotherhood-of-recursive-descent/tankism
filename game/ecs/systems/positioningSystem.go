@@ -6,11 +6,11 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
-type PositioningSysystem struct {
+type PositioningSystem struct {
 	EntityManager *ecs.EntityManager
 }
 
-func (s *PositioningSysystem) Update() error {
+func (s *PositioningSystem) Update() error {
 	entities := s.EntityManager.FindByComponents(components.TransformType)
 
 	for _, e := range entities {
@@ -41,4 +41,4 @@ func applyPosition(p *components.Transform, cs []*components.Transform) {
 
 }
 
-func (s *PositioningSysystem) Draw(screen *ebiten.Image) {}
+func (s *PositioningSystem) Draw(screen *ebiten.Image) {}

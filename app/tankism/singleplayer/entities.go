@@ -44,7 +44,7 @@ func configureAITank(e *ecs.Entity) {
 		Y:     700.0,
 		Scale: 1,
 	}
-	ai := &components.AI{
+	ai := &components.Aiming{
 		TargetGroup: 1,
 	}
 

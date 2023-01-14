@@ -18,7 +18,7 @@ func (s *MovementSystem) Update() error {
 		translate := e.GetComponent(components.TransformType).(*components.Transform)
 		translate.X = translate.X + velocity.X
 		translate.Y = translate.Y + velocity.Y
-		translate.Rotation = translate.Rotation + velocity.Rotation
+		// translate.Rotation = translate.Rotation + velocity.Rotation // why ?
 	}
 
 	return nil
