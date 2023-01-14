@@ -59,6 +59,8 @@ type boundingBox struct {
 }
 
 // TODO: replace with Separating Axis Theorem to accomodate for rotation of rectangles
+// TODO: easier to grok: https://stackoverflow.com/questions/563198/how-do-you-detect-where-two-line-segments-intersect and do this
+// for each line of a rectacle vs all lines of the other
 func (rect1 *boundingBox) AABBCollision(rect2 boundingBox) bool {
 	return rect1.x < rect2.x+rect2.width &&
 		rect1.x+rect1.width > rect2.x &&
