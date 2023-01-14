@@ -1,6 +1,6 @@
 module github.com/co0p/tankism
 
-go 1.17
+go 1.18
 
 require (
 	github.com/hajimehoshi/ebiten/v2 v2.4.15
