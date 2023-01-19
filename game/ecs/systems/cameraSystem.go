@@ -2,9 +2,7 @@ package systems
 
 import (
 	"errors"
-	"fmt"
 	"image"
-	"image/color"
 	"log"
 
 	"github.com/co0p/tankism/game/ecs/components"
@@ -14,38 +12,32 @@ import (
 
 type CameraSystem struct {
 	EntityManager *ecs.EntityManager
-	image         *ebiten.Image
+	view          *ebiten.Image
 }
 
 func (s *CameraSystem) Draw(screen *ebiten.Image) {
-	entities := s.EntityManager.FindByComponents(components.TransformType, components.CameraType)
+	entities := s.EntityManager.FindByComponents(components.CameraType, components.TransformType)
 
-	if len(entities) == 0 {
-		return
-	}
-
-	if len(entities) > 1 {
-		log.Fatalf("expected max of 1 entity with camera attached")
+	if len(entities) != 1 {
+		log.Fatalf("expected exactly 1 entity with camera attached")
 		return
 	}
 
 	camera := entities[0].GetComponent(components.CameraType).(*components.Camera)
 
 	// lazy load
-	if s.image == nil {
-		s.image = ebiten.NewImageFromImage(screen)
+	if s.view == nil {
+		s.view = ebiten.NewImageFromImage(screen)
 	}
 
 	// TODO - convert world coords to camera coords
-	w, h := s.image.Size()
+	w, h := s.view.Size()
 	window := image.Rectangle{
 		Min: image.Point{int(camera.X), int(camera.Y)},
 		Max: image.Point{int(camera.X) + w, int(camera.Y) + h},
 	}
-	fmt.Printf("window: %v\n", window)
 
 	view := ebiten.NewImageFromImage(screen).SubImage(window).(*ebiten.Image)
-	view.Fill(color.Black)
 	screen.DrawImage(view, &ebiten.DrawImageOptions{})
 }
 
@@ -62,10 +54,31 @@ func (s *CameraSystem) Update() error {
 	}
 
 	camera := entities[0].GetComponent(components.CameraType).(*components.Camera)
-	transform := entities[0].GetComponent(components.TransformType).(*components.Transform)
 
-	camera.X = transform.X
-	camera.Y = transform.Y
+	// world coordinates
+	transformTarget := entities[0].GetComponent(components.TransformType).(*components.Transform)
+
+	// bounce checks for map, ignore for now
+	// target x < view width / 2
+	// do not adjust camera x
+
+	// target x + view width / 2 > view width
+	// do not adjust camera x
+
+	// target y < view height / 2
+	// do not adjust camera y
+
+	// target y + view height / 2 > view height
+	// do not adjust camera y
+
+	// avoid race condition when view has not been initialized by first update call
+	if s.view == nil {
+		return nil
+	}
+
+	width, height := s.view.Size()
+	camera.X = transformTarget.X - float64(width/2)
+	camera.Y = transformTarget.Y - float64(height/2)
 
 	return nil
 }

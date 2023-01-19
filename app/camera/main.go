@@ -37,18 +37,6 @@ func (s *CameraDemo) Init() error {
 	return nil
 }
 
-func (s *CameraDemo) HandleInput() {
-	x, y := ebiten.CursorPosition()
-	entities := s.EntityManager.FindByComponents(components.CameraType)
-	if len(entities) != 1 {
-		log.Fatalf("expected to have camera in scene")
-	}
-
-	camera := entities[0].GetComponent(components.CameraType).(*components.Camera)
-	camera.X = float64(x)
-	camera.Y = float64(y)
-}
-
 func main() {
 
 	game := game.NewGame()

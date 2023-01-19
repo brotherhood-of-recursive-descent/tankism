@@ -22,6 +22,7 @@ func (s *GameScene) Init() error {
 }
 
 func (s *GameScene) Draw(screen *ebiten.Image) {
+
 	for _, v := range s.Systems {
 		v.Draw(screen)
 	}
