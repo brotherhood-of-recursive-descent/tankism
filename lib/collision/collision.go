@@ -7,7 +7,7 @@ type BoundingBox struct {
 	Y      float64
 	Width  float64
 	Height float64
-	E      *ecs.Entity
+	E      *ecs.Entity // #38 - TODO remove, collision should work with primitives and not know about about ecs*
 }
 
 // TODO: replace with Separating Axis Theorem to accomodate for rotation of rectangles
