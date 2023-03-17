@@ -41,7 +41,7 @@ func (s *CollisionDetection) Update() error {
 
 			rect2 := boundingBoxes[j]
 
-			if rect1.AABBCollision(rect2) {
+			if collision.AABBCollision(rect1, rect2) {
 
 				rect1.E.AddComponent(&components.Collision{Target: rect2.E})
 				rect2.E.AddComponent(&components.Collision{Target: rect1.E})
