@@ -7,11 +7,7 @@ import (
 	"github.com/co0p/tankism/lib/ecs"
 )
 
-type Point struct {
-	X, Y float64
-}
-
-type Edges [4]Point
+type Edges [4]Vec2d
 
 func (e1 *Edges) Equal(e2 Edges) bool {
 	same := true
@@ -39,7 +35,7 @@ type BoundingBox struct {
 	Width  float64
 	Height float64
 
-	p1, p2, p3, p4 Point
+	p1, p2, p3, p4 Vec2d
 
 	E *ecs.Entity // #38 - TODO remove, collision should work with primitives and not know about about ecs*
 }
@@ -49,10 +45,10 @@ type BoundingBox struct {
 func (b *BoundingBox) Rotate(theta float64) BoundingBox {
 
 	// ebiten has y value pointing down, aka lefthanded
-	b.p1 = Point{X: b.X, Y: b.Y}
-	b.p2 = Point{X: b.X + b.Width, Y: b.Y}
-	b.p3 = Point{X: b.X + b.Width, Y: b.Y + b.Height}
-	b.p4 = Point{X: b.X, Y: b.Y + b.Height}
+	b.p1 = Vec2d{X: b.X, Y: b.Y}
+	b.p2 = Vec2d{X: b.X + b.Width, Y: b.Y}
+	b.p3 = Vec2d{X: b.X + b.Width, Y: b.Y + b.Height}
+	b.p4 = Vec2d{X: b.X, Y: b.Y + b.Height}
 
 	/*
 		================================== X >
@@ -71,7 +67,7 @@ func (b *BoundingBox) Rotate(theta float64) BoundingBox {
 	}
 
 	sin, cos := math.Sincos(theta)
-	points := []*Point{&b.p1, &b.p2, &b.p3, &b.p4}
+	points := []*Vec2d{&b.p1, &b.p2, &b.p3, &b.p4}
 	for k, _ := range points {
 		v := points[k]
 		/* rotate x,y by deg.
