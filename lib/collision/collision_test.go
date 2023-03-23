@@ -29,8 +29,7 @@ func Test_CollisionAABB_no_collision(t *testing.T) {
 	}
 }
 
-// TODO: #38 - somehow rotation does not work, maybe ceil, floor and absolute needs to be applied ?
-func DEFUNC_Test_Rotate(t *testing.T) {
+func Test_Rotate(t *testing.T) {
 
 	cases := []struct {
 		desc     string
@@ -38,21 +37,26 @@ func DEFUNC_Test_Rotate(t *testing.T) {
 		theta    float64
 		expected collision.Edges
 	}{
-		{"0deg rotation",
+		{"0° rotation",
 			collision.BoundingBox{X: 0, Y: 0, Width: 40, Height: 20},
 			0,
 			collision.Edges{{0, 0}, {40, 0}, {40, 20}, {0, 20}}},
-		{"90deg rotation",
+		{"90° rotation",
 			collision.BoundingBox{X: 0, Y: 0, Width: 40, Height: 20},
-			math.Pi / 2,
+			0.5 * math.Pi,
 			collision.Edges{{0, 0}, {0, 40}, {-20, 40}, {-20, 0}}},
-		{"180deg rotation",
+		{"180° rotation",
 			collision.BoundingBox{X: 0, Y: 0, Width: 40, Height: 20},
-			math.Pi,
+			1 * math.Pi,
 			collision.Edges{{0, 0}, {-40, 0}, {-40, -20}, {0, -20}}},
-		{"360deg rotation",
-			collision.BoundingBox{X: 0, Y: 0, Width: 40, Height: 20}, math.Pi * 2,
-			collision.Edges{{0, 0}, {0, 40}, {40, 20}, {0, 20}}},
+		{"270° rotation",
+			collision.BoundingBox{X: 0, Y: 0, Width: 40, Height: 20},
+			1.5 * math.Pi,
+			collision.Edges{{0, 0}, {0, -40}, {20, -40}, {20, 0}}},
+		{"360° rotation",
+			collision.BoundingBox{X: 0, Y: 0, Width: 40, Height: 20},
+			2 * math.Pi,
+			collision.Edges{{0, 0}, {40, 0}, {40, 20}, {0, 20}}},
 	}
 
 	for _, tc := range cases {

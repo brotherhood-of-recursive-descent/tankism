@@ -51,22 +51,35 @@ func (b *BoundingBox) Rotate(theta float64) BoundingBox {
 	// ebiten has y value pointing down, aka lefthanded
 	b.p1 = Point{X: b.X, Y: b.Y}
 	b.p2 = Point{X: b.X + b.Width, Y: b.Y}
-	b.p3 = Point{X: b.X, Y: b.Y + b.Height}
-	b.p4 = Point{X: b.X + b.Width, Y: (b.Y + b.Height)}
+	b.p3 = Point{X: b.X + b.Width, Y: b.Y + b.Height}
+	b.p4 = Point{X: b.X, Y: b.Y + b.Height}
 
-	if theta == 0 {
+	/*
+		================================== X >
+		=	-p1--------------------p2-
+		=	|						|
+		=	|						|
+		=	-p4--------------------p3-
+		=
+		Y
+		^
+
+	*/
+
+	if int(theta)%360 == 0 {
 		return *b
 	}
 
-	sin, cos := math.Sincos(-theta)
+	sin, cos := math.Sincos(theta)
 	points := []*Point{&b.p1, &b.p2, &b.p3, &b.p4}
-	for _, v := range points {
+	for k, _ := range points {
+		v := points[k]
 		/* rotate x,y by deg.
-		|cos, -sin| * |X|		=	|cos*X + -sin*Y|
-		|sin, cos|    |Y|			|sin*X* + cos*Y|
+		|cos, sin| * |X|		=	|cos*X + sin*Y|
+		|-sin, cos|   |Y|			|-sin*X* + cos*Y|
 		*/
-		v.X = cos*v.X + -sin*v.Y
-		v.Y = sin*v.X + cos*v.Y
+		v.X = math.Round(cos*v.X + sin*v.Y)
+		v.Y = math.Round(-sin*v.X + cos*v.Y)
 	}
 
 	return *b
