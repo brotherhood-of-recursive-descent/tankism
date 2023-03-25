@@ -1,33 +1,8 @@
 package collision
 
 import (
-	"fmt"
-	"math"
-
 	"github.com/co0p/tankism/lib/ecs"
 )
-
-type Edges [4]Vec2d
-
-func (e1 *Edges) Equal(e2 Edges) bool {
-	same := true
-
-	for k, _ := range e1 {
-		a := e1[k]
-		b := e2[k]
-
-		if a.X != b.X || a.Y != b.Y {
-			same = false
-		}
-	}
-
-	return same
-}
-
-func (e *Edges) String() string {
-	return fmt.Sprintf("[[%f, %f], [%f, %f], [%f, %f], [%f, %f]]",
-		e[0].X, e[0].Y, e[1].X, e[1].Y, e[2].X, e[2].Y, e[3].X, e[3].Y)
-}
 
 type BoundingBox struct {
 	X      float64
@@ -44,45 +19,23 @@ type BoundingBox struct {
 // multipliying with rotation matrix. See https://ebitengine.org/en/documents/matrix.html
 func (b *BoundingBox) Rotate(theta float64) BoundingBox {
 
-	// ebiten has y value pointing down, aka lefthanded
-	b.p1 = Vec2d{X: b.X, Y: b.Y}
-	b.p2 = Vec2d{X: b.X + b.Width, Y: b.Y}
-	b.p3 = Vec2d{X: b.X + b.Width, Y: b.Y + b.Height}
-	b.p4 = Vec2d{X: b.X, Y: b.Y + b.Height}
+	// set
+	b.p1 = Vec2d{b.X, b.Y}
+	b.p2 = Vec2d{b.X + b.Width, b.Y}
+	b.p3 = Vec2d{b.X + b.Width, b.Y + b.Height}
+	b.p4 = Vec2d{b.X, b.Y + b.Height}
 
-	/*
-		================================== X >
-		=	-p1--------------------p2-
-		=	|						|
-		=	|						|
-		=	-p4--------------------p3-
-		=
-		Y
-		^
-
-	*/
-
-	if int(theta)%360 == 0 {
-		return *b
-	}
-
-	sin, cos := math.Sincos(theta)
-	points := []*Vec2d{&b.p1, &b.p2, &b.p3, &b.p4}
-	for k, _ := range points {
-		v := points[k]
-		/* rotate x,y by deg.
-		|cos, sin| * |X|		=	|cos*X + sin*Y|
-		|-sin, cos|   |Y|			|-sin*X* + cos*Y|
-		*/
-		v.X = math.Round(cos*v.X + sin*v.Y)
-		v.Y = math.Round(-sin*v.X + cos*v.Y)
-	}
+	// rotate
+	b.p1.Rotate(theta)
+	b.p2.Rotate(theta)
+	b.p3.Rotate(theta)
+	b.p4.Rotate(theta)
 
 	return *b
 }
 
-func (b *BoundingBox) Edges() Edges {
-	return Edges{b.p1, b.p2, b.p3, b.p4}
+func (b *BoundingBox) Edges() [4]Vec2d {
+	return [4]Vec2d{b.p1, b.p2, b.p3, b.p4}
 }
 
 // TODO: replace with Separating Axis Theorem to accomodate for rotation of rectangles

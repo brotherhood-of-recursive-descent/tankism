@@ -28,7 +28,7 @@ func Test_Vec2d_Rotate(t *testing.T) {
 		{"180° rotation",
 			collision.Vec2d{1, 1},
 			1 * math.Pi,
-			collision.Vec2d{1, -1},
+			collision.Vec2d{-1, -1},
 		},
 		{"270° rotation",
 			collision.Vec2d{1, 1},

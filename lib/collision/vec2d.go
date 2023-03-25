@@ -11,12 +11,14 @@ func (v *Vec2d) Rotate(theta float64) Vec2d {
 		return *v
 	}
 
-	sin, cos := math.Sincos(theta)
-	/* rotate x,y
-	| cos, sin| * |X|		=	| cos*X + sin*Y|
-	|-sin, cos|   |Y|			|-sin*X + cos*Y|
+	/* rotate x,y, see https://ebitengine.org/en/documents/matrix.html#Rotating
+	|cos,-sin| * |X|	=	|cos*X - sin*Y|
+	|sin, cos|   |Y|		|sin*X + cos*Y|
 	*/
-	v.X = math.Round(cos*v.X + sin*v.Y)
-	v.Y = math.Round(-sin*v.X + cos*v.Y)
+
+	sin, cos := math.Sincos(theta)
+	v.X = math.Round(cos*v.X - sin*v.Y)
+	v.Y = math.Round(sin*v.X + cos*v.Y)
+
 	return *v
 }
