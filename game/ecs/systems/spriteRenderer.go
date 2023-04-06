@@ -33,18 +33,22 @@ func (s *SpriteRenderer) Draw(screen *ebiten.Image) {
 			continue
 		}
 
-		rect := img.Bounds()
-		width := float64(rect.Dx())
-		height := float64(rect.Dy())
+		//rect := img.Bounds()
+		//width := float64(rect.Dx())
+		//height := float64(rect.Dy())
 		translate := e.GetComponent(components.TransformType).(*components.Transform)
 
 		// we understand rotation along the center of the image,
 		// therefore we move the image, rotate, move back and then reposition it.
 		// This deviates from the normal way which is scale, rotate and then translate
 		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(-width/2, -height/2)
+		//op.GeoM.Translate(-width/2, -height/2)
+		//op.GeoM.Rotate(translate.Rotation)
+		//op.GeoM.Translate(width/2, height/2)
+		//op.GeoM.Translate(translate.Point.X, translate.Point.Y)
+
+		op.GeoM.Scale(translate.Scale, translate.Scale)
 		op.GeoM.Rotate(translate.Rotation)
-		op.GeoM.Translate(width/2, height/2)
 		op.GeoM.Translate(translate.Point.X, translate.Point.Y)
 
 		screen.DrawImage(img, op)

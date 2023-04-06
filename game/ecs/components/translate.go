@@ -32,5 +32,4 @@ func (t *Transform) addChild(c *Transform) {
 
 func (t Transform) Type() ecs.ComponentType {
 	return TransformType
-
 }
