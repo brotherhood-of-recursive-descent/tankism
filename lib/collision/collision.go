@@ -23,10 +23,7 @@ type BoundingBox struct {
 func (b *BoundingBox) Rotate(theta float64) BoundingBox {
 
 	// set
-	b.p1 = vector.Vec2d{b.X, b.Y}
-	b.p2 = vector.Vec2d{b.X + b.Width, b.Y}
-	b.p3 = vector.Vec2d{b.X + b.Width, b.Y + b.Height}
-	b.p4 = vector.Vec2d{b.X, b.Y + b.Height}
+	b.Edges()
 
 	// rotate
 	b.p1 = b.p1.Rotate(theta)
@@ -38,6 +35,11 @@ func (b *BoundingBox) Rotate(theta float64) BoundingBox {
 }
 
 func (b *BoundingBox) Edges() [4]vector.Vec2d {
+	b.p1 = vector.Vec2d{b.X, b.Y}
+	b.p2 = vector.Vec2d{b.X + b.Width, b.Y}
+	b.p3 = vector.Vec2d{b.X + b.Width, b.Y + b.Height}
+	b.p4 = vector.Vec2d{b.X, b.Y + b.Height}
+
 	return [4]vector.Vec2d{b.p1, b.p2, b.p3, b.p4}
 }
 
@@ -45,9 +47,11 @@ func (b *BoundingBox) Edges() [4]vector.Vec2d {
 // see https://i.stack.imgur.com/ExZl3.png
 func (b *BoundingBox) MinArea() BoundingBox {
 
+	b.Edges()
+
 	minX := b.p1.X
-	minY := b.p1.Y
 	maxX := b.p1.X
+	minY := b.p1.Y
 	maxY := b.p1.Y
 	for _, v := range [4]vector.Vec2d{b.p1, b.p2, b.p3, b.p4} {
 		if v.X < minX {

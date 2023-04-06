@@ -48,8 +48,8 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		img.Fill(SpriteColor)
 
 		transform := e.GetComponent(components.TransformType).(*components.Transform)
-		x := transform.X
-		y := transform.Y
+		x := transform.Point.X
+		y := transform.Point.Y
 		rotation := transform.Rotation
 
 		op := &ebiten.DrawImageOptions{}
@@ -74,8 +74,8 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		img.Fill(LightColor)
 
 		transform := e.GetComponent(components.TransformType).(*components.Transform)
-		x := transform.X
-		y := transform.Y
+		x := transform.Point.X
+		y := transform.Point.Y
 		rotation := transform.Rotation
 
 		op := &ebiten.DrawImageOptions{}
@@ -90,7 +90,8 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 	emitter := s.EntityManager.FindByComponents(components.DebugType, components.ParticleEmitterType, components.TransformType)
 	for _, e := range emitter {
 		transform := e.GetComponent(components.TransformType).(*components.Transform)
-		ebitenutil.DrawCircle(screen, transform.X, transform.Y, 25.0, EmitterColor)
+		magicNumber := 25.0 // TODO: replace with something meaninful
+		ebitenutil.DrawCircle(screen, transform.Point.X, transform.Point.Y, magicNumber, EmitterColor)
 	}
 
 	boundingBoxEntities := s.EntityManager.FindByComponents(components.DebugType, components.BoundingBoxType, components.TransformType)
@@ -102,8 +103,8 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		img.Fill(BoundingBoxColor)
 
 		transform := e.GetComponent(components.TransformType).(*components.Transform)
-		x := transform.X
-		y := transform.Y
+		x := transform.Point.X
+		y := transform.Point.Y
 		rotation := transform.Rotation
 
 		op := &ebiten.DrawImageOptions{}

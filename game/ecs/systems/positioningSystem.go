@@ -31,8 +31,8 @@ func isRoot(n *components.Transform) bool {
 
 func applyPosition(p *components.Transform, cs []*components.Transform) {
 	for _, child := range cs {
-		child.X = p.X + child.OffsetX
-		child.Y = p.Y + child.OffsetY
+		child.Point.X = p.Point.X + child.OffsetX
+		child.Point.Y = p.Point.Y + child.OffsetY
 
 		if len(child.Children) > 0 {
 			applyPosition(child, child.Children)

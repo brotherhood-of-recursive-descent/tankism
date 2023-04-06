@@ -37,9 +37,9 @@ func (s *Shaker) Update() error {
 		}
 
 		if xOrY == 0 {
-			translate.X = translate.X + float64(val*dir)
+			translate.Point.X = translate.Point.X + float64(val*dir)
 		} else {
-			translate.Y = translate.Y + float64(val*dir)
+			translate.Point.Y = translate.Point.Y + float64(val*dir)
 		}
 	}
 

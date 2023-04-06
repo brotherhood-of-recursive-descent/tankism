@@ -5,6 +5,7 @@ import (
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/lib/resource"
+	"github.com/co0p/tankism/lib/vector"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -30,8 +31,10 @@ func NewPointLight(e *ecs.Entity, x, y float64) {
 
 	light := &components.Light{Image: img, Color: DEFAULT_COLOR}
 	translate := &components.Transform{
-		X:        x,
-		Y:        y,
+		Point: vector.Vec2d{
+			X: x,
+			Y: y,
+		},
 		Scale:    2,
 		Rotation: 0,
 	}
@@ -52,8 +55,10 @@ func NewCircleLightWithColor(e *ecs.Entity, x, y float64, clr lib.Color) {
 
 	light := &components.Light{Image: img, Color: clr}
 	translate := &components.Transform{
-		X:        x,
-		Y:        y,
+		Point: vector.Vec2d{
+			X: x,
+			Y: y,
+		},
 		Scale:    2,
 		Rotation: 0,
 	}

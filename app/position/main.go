@@ -9,6 +9,7 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
 	"github.com/co0p/tankism/lib"
+	"github.com/co0p/tankism/lib/vector"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -76,7 +77,13 @@ func (s *PositionDemo) entities() {
 	sunWidth, sunHeight := sunSprite.Size()
 
 	sun := s.EntityManager.NewEntity()
-	sunTransform := components.Transform{X: centerW - float64(sunWidth/2), Y: centerH - float64(sunHeight/2)}
+	sunTransform := components.Transform{
+		Point: vector.Vec2d{
+			X: centerW - float64(sunWidth/2),
+			Y: centerH - float64(sunHeight/2),
+		},
+	}
+
 	sun.AddComponents(
 		&sunTransform,
 		&components.Sprite{Image: sunSprite, ZIndex: 2},

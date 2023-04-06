@@ -20,13 +20,14 @@ func (s *CollisionDetection) Update() error {
 
 	for _, entity := range entities {
 
-		entityPos := entity.GetComponent(components.TransformType).(*components.Transform)
-		entityDim := entity.GetComponent(components.BoundingBoxType).(*components.BoundingBox)
+		translate := entity.GetComponent(components.TransformType).(*components.Transform)
+		bb := entity.GetComponent(components.BoundingBoxType).(*components.BoundingBox)
+
 		entityBox := collision.BoundingBox{
-			X:      entityPos.X,
-			Y:      entityPos.Y,
-			Width:  entityDim.Width * entityPos.Scale,
-			Height: entityDim.Height * entityPos.Scale,
+			X:      translate.Point.X,
+			Y:      translate.Point.Y,
+			Width:  bb.Width * translate.Scale,
+			Height: bb.Height * translate.Scale,
 			E:      entity,
 		}
 

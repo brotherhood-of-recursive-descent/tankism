@@ -29,8 +29,8 @@ func (s *AISystem) Update() error {
 
 			if ai.TargetGroup == target.GroupId {
 
-				dx := aiTranslate.X - targetTranslate.X
-				dy := aiTranslate.Y - targetTranslate.Y
+				dx := aiTranslate.Point.X - targetTranslate.Point.X
+				dy := aiTranslate.Point.Y - targetTranslate.Point.Y
 
 				// -dy because y increases 'downwards'
 				targetRad := math.Atan2(dx, -dy)

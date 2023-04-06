@@ -16,8 +16,8 @@ func (s *MovementSystem) Update() error {
 	for _, e := range entities {
 		velocity := e.GetComponent(components.VelocityType).(*components.Velocity)
 		translate := e.GetComponent(components.TransformType).(*components.Transform)
-		translate.X = translate.X + velocity.X
-		translate.Y = translate.Y + velocity.Y
+		translate.Point.X = translate.Point.X + velocity.X
+		translate.Point.Y = translate.Point.Y + velocity.Y
 		// translate.Rotation = translate.Rotation + velocity.Rotation // why ?
 	}
 

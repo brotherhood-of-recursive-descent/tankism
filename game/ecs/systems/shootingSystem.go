@@ -7,6 +7,7 @@ import (
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
+	"github.com/co0p/tankism/lib/vector"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -28,8 +29,10 @@ func (s *ShootingSystem) Update() error {
 			bullet := s.EntityManager.NewEntity()
 			game.NewBullet(bullet, 0, 0)
 			bullet.AddComponent(&components.Transform{
-				X:        transform.X + 10,
-				Y:        transform.Y + 10,
+				Point: vector.Vec2d{
+					X: transform.Point.X + 10,
+					Y: transform.Point.Y + 10,
+				},
 				Rotation: transform.Rotation + 2*math.Pi,
 			})
 			bullet.AddComponent(&components.Velocity{

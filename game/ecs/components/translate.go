@@ -1,13 +1,15 @@
 package components
 
-import "github.com/co0p/tankism/lib/ecs"
+import (
+	"github.com/co0p/tankism/lib/ecs"
+	"github.com/co0p/tankism/lib/vector"
+)
 
 const TransformType = "transform"
 
 // Transform holds all information needed to position the entity in the world
 type Transform struct {
-	X float64
-	Y float64
+	Point vector.Vec2d
 
 	Scale    float64
 	Rotation float64

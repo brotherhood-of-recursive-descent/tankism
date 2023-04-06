@@ -4,6 +4,7 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
+	"github.com/co0p/tankism/lib/vector"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -21,8 +22,10 @@ func configureTank(tank *ecs.Entity) {
 	shaking := &components.Shaking{}
 	controller := &components.Controller{}
 	translate := &components.Transform{
-		X:        200.0,
-		Y:        200.0,
+		Point: vector.Vec2d{
+			X: 200.0,
+			Y: 200.0,
+		},
 		Scale:    1,
 		Rotation: 0,
 	}
@@ -40,8 +43,10 @@ func configureAITank(e *ecs.Entity) {
 
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
-		X:     700.0,
-		Y:     700.0,
+		Point: vector.Vec2d{
+			X: 700.0,
+			Y: 700.0,
+		},
 		Scale: 1,
 	}
 	ai := &components.Aiming{

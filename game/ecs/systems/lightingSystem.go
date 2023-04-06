@@ -55,11 +55,12 @@ func (s *LightingSystem) Draw(screen *ebiten.Image) {
 		img := light.Image
 		rect := img.Bounds()
 
-		x := translate.X
-		y := translate.Y
+		x := translate.Point.X
+		y := translate.Point.Y
 		scale := translate.Scale
 
 		op := &ebiten.DrawImageOptions{}
+		// TODO: replace with scale, rotate, translate
 		op.GeoM.Translate(-float64(rect.Dx())/2, -float64(rect.Dy())/2)
 		op.GeoM.Scale(scale, scale)
 		op.GeoM.Translate(float64(rect.Dx())/2, float64(rect.Dy())/2)

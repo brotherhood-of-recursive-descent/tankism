@@ -77,8 +77,8 @@ func (s *CameraSystem) Update() error {
 	}
 
 	width, height := s.view.Size()
-	camera.X = transformTarget.X - float64(width/2)
-	camera.Y = transformTarget.Y - float64(height/2)
+	camera.X = transformTarget.Point.X - float64(width/2)
+	camera.Y = transformTarget.Point.Y - float64(height/2)
 
 	return nil
 }

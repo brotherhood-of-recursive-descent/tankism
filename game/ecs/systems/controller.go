@@ -28,18 +28,21 @@ func (s *Controller) Update() error {
 		newRotation := translate.Rotation
 
 		if ebiten.IsKeyPressed(ebiten.KeyArrowDown) {
-			translate.X -= velocity.Intertia * (math.Sin(newRotation-math.Pi) * 2)
-			translate.Y += velocity.Intertia * (math.Cos(newRotation-math.Pi) * 2)
+			translate.Point.X -= velocity.Intertia * (math.Sin(newRotation-math.Pi) * 2)
+			translate.Point.Y += velocity.Intertia * (math.Cos(newRotation-math.Pi) * 2)
 			velocity.IncreaseInertia()
 		}
 		if ebiten.IsKeyPressed(ebiten.KeyArrowUp) {
-			translate.X += velocity.Intertia * (math.Sin(newRotation-math.Pi) * 2)
-			translate.Y -= velocity.Intertia * (math.Cos(newRotation-math.Pi) * 2)
+			translate.Point.X += velocity.Intertia * (math.Sin(newRotation-math.Pi) * 2)
+			translate.Point.Y -= velocity.Intertia * (math.Cos(newRotation-math.Pi) * 2)
 			velocity.IncreaseInertia()
 		}
+		// TODO: replace with modifying PointRotationComponent
 		if ebiten.IsKeyPressed(ebiten.KeyArrowRight) {
 			translate.Rotation += velocity.Rotation
 		}
+
+		// TODO: replace with modifying PointRotationComponent
 		if ebiten.IsKeyPressed(ebiten.KeyArrowLeft) {
 			translate.Rotation -= velocity.Rotation
 		}

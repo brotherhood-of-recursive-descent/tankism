@@ -8,6 +8,7 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
 	"github.com/co0p/tankism/lib"
+	"github.com/co0p/tankism/lib/vector"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -36,7 +37,7 @@ func (p *ParticleDemo) Init() error {
 		Direction_min: 0,
 		Direction_max: 90,
 	})
-	redEmitter.AddComponent(&components.Transform{X: 300, Y: 300})
+	redEmitter.AddComponent(&components.Transform{Point: vector.Vec2d{X: 300, Y: 300}})
 	redEmitter.AddComponent(&components.Debug{})
 
 	blueEmitter := p.EntityManager.NewEntity()
@@ -52,7 +53,7 @@ func (p *ParticleDemo) Init() error {
 		Direction_max:  360,
 	})
 
-	blueEmitter.AddComponent(&components.Transform{X: 400, Y: 500})
+	blueEmitter.AddComponent(&components.Transform{Point: vector.Vec2d{X: 400, Y: 500}})
 	blueEmitter.AddComponent(&components.Debug{})
 
 	greenEmitter := p.EntityManager.NewEntity()
@@ -67,7 +68,7 @@ func (p *ParticleDemo) Init() error {
 		Direction_min:  80,
 		Direction_max:  90,
 	})
-	greenEmitter.AddComponent(&components.Transform{X: 600, Y: 500})
+	greenEmitter.AddComponent(&components.Transform{Point: vector.Vec2d{X: 600, Y: 500}})
 	greenEmitter.AddComponent(&components.Debug{})
 
 	yellowEmitter := p.EntityManager.NewEntity()
@@ -83,7 +84,7 @@ func (p *ParticleDemo) Init() error {
 		Direction_min:  110,
 		Direction_max:  180,
 	})
-	yellowEmitter.AddComponent(&components.Transform{X: 600, Y: 800})
+	yellowEmitter.AddComponent(&components.Transform{Point: vector.Vec2d{X: 600, Y: 800}})
 	yellowEmitter.AddComponent(&components.Debug{})
 
 	// add systems

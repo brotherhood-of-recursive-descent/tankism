@@ -7,6 +7,7 @@ import (
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/lib/resource"
+	"github.com/co0p/tankism/lib/vector"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -43,8 +44,10 @@ func NewExplosion(e *ecs.Entity, s resource.SpriteSheet, l resource.SpriteSheet,
 	}
 
 	translate := components.Transform{
-		X:        float64(x),
-		Y:        float64(y),
+		Point: vector.Vec2d{
+			X: float64(x),
+			Y: float64(y),
+		},
 		Scale:    1,
 		Rotation: 0,
 	}

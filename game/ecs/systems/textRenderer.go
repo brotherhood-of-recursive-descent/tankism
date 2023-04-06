@@ -24,8 +24,8 @@ func (s *TextRenderer) Draw(screen *ebiten.Image) {
 		op := &ebiten.DrawImageOptions{}
 
 		translate := e.GetComponent(components.TransformType).(*components.Transform)
-		x := translate.X
-		y := translate.Y
+		x := translate.Point.X
+		y := translate.Point.Y
 		scale := translate.Scale
 
 		op.GeoM.Scale(scale, scale)

@@ -3,6 +3,7 @@ package game
 import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib/ecs"
+	"github.com/co0p/tankism/lib/vector"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -28,8 +29,10 @@ func NewTankWithPosition(tank *ecs.Entity, x, y float64) {
 	shaking := &components.Shaking{}
 	controller := &components.Controller{}
 	translate := &components.Transform{
-		X:        x,
-		Y:        y,
+		Point: vector.Vec2d{
+			X: x,
+			Y: y,
+		},
 		Scale:    1,
 		Rotation: 0,
 	}
@@ -51,8 +54,10 @@ func NewBigTank(tank *ecs.Entity, x float64, y float64) {
 	}
 	sprite := &components.Sprite{Image: s, ZIndex: 100}
 	translate := &components.Transform{
-		X:        x,
-		Y:        y,
+		Point: vector.Vec2d{
+			X: x,
+			Y: y,
+		},
 		Scale:    1,
 		Rotation: 0,
 	}

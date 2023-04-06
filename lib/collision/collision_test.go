@@ -28,22 +28,37 @@ func Test_CollisionAABB_no_collision(t *testing.T) {
 	}
 }
 
+func Test_Collision_MinArea_Same(t *testing.T) {
+
+	// given
+	bbA := collision.BoundingBox{X: 10, Y: 10, Width: 10, Height: 10}
+
+	// when
+	coverBox := bbA.MinArea()
+
+	// then ... TODO
+	if coverBox.X != bbA.X || coverBox.Y != bbA.Y ||
+		coverBox.Width != bbA.Width || coverBox.Height != bbA.Height {
+		t.Errorf("expected minArea to be %v, got %v\n", bbA, coverBox)
+	}
+
+}
+
 // TODO MinArea should describe the convex hull of the rectangle ignoring rotation
 func Test_Collision_MinArea(t *testing.T) {
 
 	// given
-	bbA := collision.BoundingBox{X: 10, Y: 10, Width: 10, Height: 10}
-	rotated := bbA.Rotate(math.Pi)
+	bbA := collision.BoundingBox{X: 10, Y: 20, Width: 20, Height: 10}
+	rotated := bbA.Rotate(1 / 4 * math.Pi) // 45°
 
 	// when
 	coverBox := rotated.MinArea()
+	edges := coverBox.Edges()
 
 	// then ... TODO
-	if coverBox.X != 10 {
-		t.Errorf("%v", coverBox)
-
+	if edges[0].X != 1 {
+		t.Errorf("%v", edges)
 	}
-
 }
 
 func givenTwoCollidingRectangles() (collision.BoundingBox, collision.BoundingBox) {

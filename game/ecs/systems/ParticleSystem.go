@@ -51,8 +51,8 @@ func (s *ParticleSystem) Update() error {
 
 				p := Particle{
 					color:    emitter.Color,
-					x:        transform.X,
-					y:        transform.Y,
+					x:        transform.Point.X,
+					y:        transform.Point.Y,
 					vx:       velX,
 					vy:       velY,
 					lifetime: lifetime,

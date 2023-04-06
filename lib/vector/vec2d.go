@@ -20,6 +20,11 @@ func (v *Vec2d) Rotate(theta float64) Vec2d {
 	return Vec2d{x, y}
 }
 
+// XY returns the X, Y values as a pair of vector
+func (v *Vec2d) XY() (float64, float64) {
+	return v.X, v.Y
+}
+
 // MidPoint returns the midpoint as a vector of the given two vectors
 func MidPoint(v1 Vec2d, v2 Vec2d) Vec2d {
 	mx := v1.X + v2.X
