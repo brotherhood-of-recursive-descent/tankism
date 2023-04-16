@@ -31,3 +31,19 @@ func MidPoint(v1 Vec2d, v2 Vec2d) Vec2d {
 	my := v1.Y + v2.Y
 	return Vec2d{mx / 2, my / 2}
 }
+
+// Subtract subtracts vector other from v
+func (v *Vec2d) Subtract(other Vec2d) Vec2d {
+	return Vec2d{
+		X: v.X - other.X,
+		Y: v.Y - other.Y,
+	}
+}
+
+// Add adds vector other from v
+func (v *Vec2d) Add(other Vec2d) Vec2d {
+	return Vec2d{
+		X: v.X + other.X,
+		Y: v.Y + other.Y,
+	}
+}

@@ -12,7 +12,6 @@ import (
 func Test_RotationSystem_identity(t *testing.T) {
 
 	// given
-
 	givenTransform := components.Transform{
 		Point: vector.Vec2d{
 			X: 100,
@@ -20,26 +19,19 @@ func Test_RotationSystem_identity(t *testing.T) {
 		},
 		Rotation: 100,
 	}
-	nullRotation := components.Rotation{
-		Point: vector.Vec2d{
-			X: 0, Y: 0,
-		},
-		Rotation: 0,
-	}
+	nullRotation := components.Rotation{}
+
 	em := ecs.NewEntityManager(nil)
 	s := systems.RotationSystem{EntityManager: em}
 
 	e1 := em.NewEntity()
-	e1.AddComponents(
-		givenTransform,
-		nullRotation,
-	)
+	e1.AddComponents(&givenTransform, &nullRotation)
 
 	// when
 	s.Update()
 
 	// then
-	actualTransform := e1.GetComponent(components.TransformType).(components.Transform)
+	actualTransform := e1.GetComponent(components.TransformType).(*components.Transform)
 
 	if actualTransform.Point.X != givenTransform.Point.X ||
 		actualTransform.Point.Y != givenTransform.Point.Y ||
