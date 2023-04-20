@@ -6,6 +6,7 @@ import (
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/vector"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -33,7 +34,7 @@ func (s *RotationGame) Init() error {
 	withRotation := s.EntityManager.NewEntity()
 	game.NewTankWithPosition(withRotation, 400, 200)
 	sprite := withRotation.GetComponent(components.SpriteType).(*components.Sprite)
-	w, h := sprite.Image.Size()
+	w, h := lib.WidthHeight(sprite.Image)
 
 	rotation := components.Rotation{
 		Point: vector.Vec2d{

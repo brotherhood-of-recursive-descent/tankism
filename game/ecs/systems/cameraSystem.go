@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/co0p/tankism/game/ecs/components"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
 )
@@ -31,7 +32,7 @@ func (s *CameraSystem) Draw(screen *ebiten.Image) {
 	}
 
 	// TODO - convert world coords to camera coords
-	w, h := s.view.Size()
+	w, h := lib.WidthHeight(s.view)
 	window := image.Rectangle{
 		Min: image.Point{int(camera.X), int(camera.Y)},
 		Max: image.Point{int(camera.X) + w, int(camera.Y) + h},
@@ -76,7 +77,7 @@ func (s *CameraSystem) Update() error {
 		return nil
 	}
 
-	width, height := s.view.Size()
+	width, height := lib.WidthHeight(s.view)
 	camera.X = transformTarget.Point.X - float64(width/2)
 	camera.Y = transformTarget.Point.Y - float64(height/2)
 

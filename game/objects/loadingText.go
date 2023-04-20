@@ -31,7 +31,7 @@ func NewLoadingText() *LoadingText {
 }
 
 func (l *LoadingText) Draw(screen *ebiten.Image) {
-	w, h := screen.Size()
+	w, h := lib.WidthHeight(screen)
 	text.Draw(screen, l.text, l.font, w-300, h-100, l.primaryColor)
 }
 

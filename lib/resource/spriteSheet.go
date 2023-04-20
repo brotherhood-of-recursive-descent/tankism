@@ -36,7 +36,7 @@ func NewSpriteSheet(data []byte, strideX, strideY int) (SpriteSheet, error) {
 	}
 
 	bounds := ssImg.Bounds()
-	ssW, ssH := bounds.Size().X, bounds.Size().Y
+	ssW, ssH := bounds.Dx(), bounds.Dy()
 	// image width is less than width
 	if ssW < strideX {
 		return res, fmt.Errorf("spritesheet width: %d is less than width: %d", ssW, strideX)

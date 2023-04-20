@@ -4,6 +4,7 @@ import (
 	"math/rand"
 
 	"github.com/co0p/tankism/game/ecs/components"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/resources"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -17,7 +18,7 @@ func NewMap(e *ecs.Entity, tilemap Tilemap, w int, h int) {
 	tileImage1 := ebiten.NewImageFromImage(t1)
 	t2, _ := resources.LoadImage(resources.TileGrassImage2)
 	tileImage2 := ebiten.NewImageFromImage(t2)
-	tileW, tileH := tileImage1.Size()
+	tileW, tileH := lib.WidthHeight(tileImage1)
 
 	for y := 0; y < h; y += tileH {
 		for x := 0; x < w; x += tileW {

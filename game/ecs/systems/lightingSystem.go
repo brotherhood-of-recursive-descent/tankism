@@ -5,6 +5,7 @@ import (
 
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/shaders"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/colorm"
@@ -74,7 +75,7 @@ func (s *LightingSystem) Draw(screen *ebiten.Image) {
 
 	// send to shader
 	// see shader: https://github.com/hajimehoshi/ebiten/blob/21207f827c062deb451088f2a8c4e32b041a5793/examples/shader/lighting.go
-	w, h := screen.Size()
+	w, h := lib.WidthHeight(screen)
 	op := &ebiten.DrawRectShaderOptions{}
 	op.CompositeMode = ebiten.CompositeModeMultiply
 	op.Uniforms = map[string]interface{}{

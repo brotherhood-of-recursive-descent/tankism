@@ -74,7 +74,7 @@ func (s *PositionDemo) entities() {
 	// sun
 	sunImg, _ := resources.LoadImage(assetSun)
 	sunSprite := ebiten.NewImageFromImage(sunImg)
-	sunWidth, sunHeight := sunSprite.Size()
+	sunWidth, sunHeight := lib.WidthHeight(sunSprite)
 
 	sun := s.EntityManager.NewEntity()
 	sunTransform := components.Transform{
@@ -101,7 +101,7 @@ func (s *PositionDemo) entities() {
 	// earth
 	earthImg, _ := resources.LoadImage(assetEarth)
 	earthSprite := ebiten.NewImageFromImage(earthImg)
-	earthWidth, earthHeight := sunSprite.Size()
+	earthWidth, earthHeight := lib.WidthHeight(sunSprite)
 
 	earth := s.EntityManager.NewEntity()
 	earthTransform := components.Transform{OffsetX: 300, OffsetY: 0}
@@ -121,7 +121,7 @@ func (s *PositionDemo) entities() {
 	// moon
 	moonImg, _ := resources.LoadImage(assetMoon)
 	moonSprite := ebiten.NewImageFromImage(moonImg)
-	moonWidth, moonHeight := moonSprite.Size()
+	moonWidth, moonHeight := lib.WidthHeight(moonSprite)
 	moon := s.EntityManager.NewEntity()
 	moonTransform := components.Transform{OffsetX: 150, OffsetY: 150}
 	moonTransform.AddParent(&earthTransform)

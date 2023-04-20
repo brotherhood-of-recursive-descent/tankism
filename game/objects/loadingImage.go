@@ -37,9 +37,9 @@ func (l *LoadingImage) Draw(screen *ebiten.Image) {
 	op := &ebiten.DrawImageOptions{}
 
 	scaleX, scaleY := 0.75, 0.75
-	imageWidth, imageHeight := l.image.Size()
+	imageWidth, imageHeight := lib.WidthHeight(l.image)
 
-	w, h := screen.Size()
+	w, h := lib.WidthHeight(screen)
 	x := float64(w)*0.5 - (float64(imageWidth) * 0.5 * scaleX)
 	y := float64(h)*0.5 - (float64(imageHeight) * 0.5 * scaleY)
 

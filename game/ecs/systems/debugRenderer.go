@@ -4,6 +4,7 @@ import (
 	"image/color"
 
 	"github.com/co0p/tankism/game/ecs/components"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
@@ -43,7 +44,7 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		if originalImg == nil {
 			continue
 		}
-		w, h := originalImg.Size()
+		w, h := lib.WidthHeight(originalImg)
 		img := ebiten.NewImage(w, h)
 		img.Fill(SpriteColor)
 
@@ -69,7 +70,7 @@ func (s *DebugRenderer) Draw(screen *ebiten.Image) {
 		if originalImg == nil {
 			continue
 		}
-		w, h := originalImg.Size()
+		w, h := lib.WidthHeight(originalImg)
 		img := ebiten.NewImage(w, h)
 		img.Fill(LightColor)
 

@@ -2,6 +2,7 @@ package game
 
 import (
 	"github.com/co0p/tankism/game/ecs/components"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/lib/vector"
 	"github.com/co0p/tankism/resources"
@@ -12,7 +13,7 @@ func NewDrum(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.BarrelGray)
 	s := ebiten.NewImageFromImage(img)
-	w, h := s.Size()
+	w, h := lib.WidthHeight(s)
 	bbox := &components.BoundingBox{
 		Width:  float64(w),
 		Height: float64(h),
@@ -35,7 +36,7 @@ func NewCrate(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.CrateWood)
 	s := ebiten.NewImageFromImage(img)
-	w, h := s.Size()
+	w, h := lib.WidthHeight(s)
 	bbox := &components.BoundingBox{
 		Width:  float64(w),
 		Height: float64(h),
@@ -57,7 +58,7 @@ func NewCrateMetal(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.CrateMetal)
 	s := ebiten.NewImageFromImage(img)
-	w, h := s.Size()
+	w, h := lib.WidthHeight(s)
 	bbox := &components.BoundingBox{
 		Width:  float64(w),
 		Height: float64(h),
@@ -97,7 +98,7 @@ func NewBullet(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.BulletSandOutline)
 	s := ebiten.NewImageFromImage(img)
-	w, h := s.Size()
+	w, h := lib.WidthHeight(s)
 	bbox := &components.BoundingBox{
 		Width:  float64(w),
 		Height: float64(h),
@@ -119,7 +120,7 @@ func NewOilSpill(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.OilSpillLarge)
 	s := ebiten.NewImageFromImage(img)
-	w, h := s.Size()
+	w, h := lib.WidthHeight(s)
 	bbox := &components.BoundingBox{
 		Width:  float64(w),
 		Height: float64(h),
@@ -141,7 +142,7 @@ func NewBarricade(e *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.Barricade)
 	s := ebiten.NewImageFromImage(img)
-	w, h := s.Size()
+	w, h := lib.WidthHeight(s)
 	bbox := &components.BoundingBox{
 		Width:  float64(w),
 		Height: float64(h),

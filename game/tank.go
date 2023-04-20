@@ -2,6 +2,7 @@ package game
 
 import (
 	"github.com/co0p/tankism/game/ecs/components"
+	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/lib/vector"
 	"github.com/co0p/tankism/resources"
@@ -16,7 +17,7 @@ func NewTankWithPosition(tank *ecs.Entity, x, y float64) {
 
 	img, _ := resources.LoadImage(resources.TankImage)
 	s := ebiten.NewImageFromImage(img)
-	w, h := s.Size()
+	w, h := lib.WidthHeight(s)
 	bbox := &components.BoundingBox{
 		Width:  float64(w),
 		Height: float64(h),
@@ -47,7 +48,7 @@ func NewBigTank(tank *ecs.Entity, x float64, y float64) {
 
 	img, _ := resources.LoadImage(resources.BigTankImage)
 	s := ebiten.NewImageFromImage(img)
-	w, h := s.Size()
+	w, h := lib.WidthHeight(s)
 	bbox := &components.BoundingBox{
 		Width:  float64(w),
 		Height: float64(h),
