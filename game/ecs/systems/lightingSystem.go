@@ -5,9 +5,9 @@ import (
 
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/shaders"
-	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/colorm"
 )
 
 type LightingSystem struct {
@@ -59,16 +59,17 @@ func (s *LightingSystem) Draw(screen *ebiten.Image) {
 		y := translate.Point.Y
 		scale := translate.Scale
 
-		op := &ebiten.DrawImageOptions{}
+		op := &colorm.DrawImageOptions{}
 		// TODO: replace with scale, rotate, translate
 		op.GeoM.Translate(-float64(rect.Dx())/2, -float64(rect.Dy())/2)
 		op.GeoM.Scale(scale, scale)
 		op.GeoM.Translate(float64(rect.Dx())/2, float64(rect.Dy())/2)
 		op.GeoM.Translate(x, y)
 
-		r, g, b, a := lib.GetRGBA64(light.Color)
-		op.ColorM.Scale(r, g, b, a)
-		s.lightingTexture.DrawImage(img, op)
+		cm := colorm.ColorM{}
+		cm.ScaleWithColor(light.Color)
+
+		colorm.DrawImage(s.lightingTexture, img, cm, op)
 	}
 
 	// send to shader

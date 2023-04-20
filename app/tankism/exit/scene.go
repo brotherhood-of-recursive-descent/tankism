@@ -33,9 +33,9 @@ func (s *ExitScene) Draw(screen *ebiten.Image) {
 	if s.prevImage == nil {
 		s.prevImage = ebiten.NewImageFromImage(screen)
 	}
-	op := &ebiten.DrawImageOptions{}
-	op.ColorM.ChangeHSV(1, 1, s.currentAlpha)
-	screen.DrawImage(s.prevImage, op)
+	op := ebiten.DrawImageOptions{}
+	op.ColorScale.ScaleAlpha(float32(s.currentAlpha))
+	screen.DrawImage(s.prevImage, &op)
 }
 
 func (s *ExitScene) Update() error {

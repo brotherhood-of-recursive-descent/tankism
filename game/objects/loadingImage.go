@@ -45,7 +45,7 @@ func (l *LoadingImage) Draw(screen *ebiten.Image) {
 
 	op.GeoM.Scale(scaleX, scaleY)
 	op.GeoM.Translate(x, y)
-	op.ColorM.ChangeHSV(1, 1, l.currentAlpha)
+	op.ColorScale.ScaleAlpha(float32(l.currentAlpha))
 
 	screen.Fill(lib.ColorBlack)
 	screen.DrawImage(l.image, op)
