@@ -19,34 +19,36 @@ func (s *PerformanceMonitor) Draw(screen *ebiten.Image) {
 	entities := s.EntityManager.FindByComponents(components.PerformanceType)
 	for _, e := range entities {
 		perf := e.GetComponent(components.PerformanceType).(*components.Performance)
+		if !perf.ShowGraph {
+			return
+		}
+
 		clrFps := lib.ColorGreen
 		clrFps.A = 150
 
 		clrGraph := lib.ColorRed
 		clrGraph.A = 150
 		graphHeight := 50.0
-		if perf.ShowGraph {
-			offsetX := 100.0
-			offsetY := 40.0
+		offsetX := 100.0
+		offsetY := 40.0
 
-			// draw values
-			maxFps := max(&perf.PastFPS)
-			for k, v := range perf.PastFPS {
-				normalized := (v) / (maxFps) * graphHeight
-				ebitenutil.DrawLine(
-					screen,
-					offsetX+float64(k),
-					offsetY+graphHeight,
-					offsetX+float64(k),
-					normalized,
-					clrFps)
-			}
-
-			// draw Graph
-			ebitenutil.DrawLine(screen, offsetX, offsetY, offsetX, offsetY+graphHeight, clrGraph)
-			ebitenutil.DrawLine(screen, offsetX, offsetY+graphHeight, offsetX+float64(perf.HistoryLength), offsetY+graphHeight, clrGraph)
-
+		// draw values
+		maxFps := max(&perf.PastFPS)
+		for k, v := range perf.PastFPS {
+			normalized := (v) / (maxFps) * graphHeight
+			ebitenutil.DrawLine(
+				screen,
+				offsetX+float64(k),
+				offsetY+graphHeight,
+				offsetX+float64(k),
+				normalized,
+				clrFps)
 		}
+
+		// draw Graph
+		ebitenutil.DrawLine(screen, offsetX, offsetY, offsetX, offsetY+graphHeight, clrGraph)
+		ebitenutil.DrawLine(screen, offsetX, offsetY+graphHeight, offsetX+float64(perf.HistoryLength), offsetY+graphHeight, clrGraph)
+
 	}
 
 }

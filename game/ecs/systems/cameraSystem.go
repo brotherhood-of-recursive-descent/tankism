@@ -2,21 +2,35 @@ package systems
 
 import (
 	"errors"
-	"image"
+	"fmt"
 	"log"
 
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/lib"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
 type CameraSystem struct {
 	EntityManager *ecs.EntityManager
-	view          *ebiten.Image
+	surface       *ebiten.Image
+}
+
+func NewCameraSystem(em *ecs.EntityManager, w, h int) *CameraSystem {
+
+	return &CameraSystem{
+		EntityManager: em,
+		surface:       ebiten.NewImage(w, h),
+	}
 }
 
 func (s *CameraSystem) Draw(screen *ebiten.Image) {
+
+	if s.surface == nil {
+		panic("CameraSystem not initialized, use NewCameraSystem()")
+	}
+
 	entities := s.EntityManager.FindByComponents(components.CameraType, components.TransformType)
 
 	if len(entities) != 1 {
@@ -26,20 +40,16 @@ func (s *CameraSystem) Draw(screen *ebiten.Image) {
 
 	camera := entities[0].GetComponent(components.CameraType).(*components.Camera)
 
-	// lazy load
-	if s.view == nil {
-		s.view = ebiten.NewImageFromImage(screen)
-	}
+	_, h := lib.WidthHeight(screen)
+	x, y := camera.Point.XY()
 
-	// TODO - convert world coords to camera coords
-	w, h := lib.WidthHeight(s.view)
-	window := image.Rectangle{
-		Min: image.Point{int(camera.X), int(camera.Y)},
-		Max: image.Point{int(camera.X) + w, int(camera.Y) + h},
-	}
+	s.surface.Clear()
+	op := &ebiten.DrawImageOptions{}
+	op.GeoM.Translate(x, y)
+	s.surface.DrawImage(screen, op)
 
-	view := ebiten.NewImageFromImage(screen).SubImage(window).(*ebiten.Image)
-	screen.DrawImage(view, &ebiten.DrawImageOptions{})
+	screen.DrawImage(s.surface, &ebiten.DrawImageOptions{})
+	ebitenutil.DebugPrintAt(screen, fmt.Sprintf("x:%v, y:%v", x, y), 100, h-100)
 }
 
 func (s *CameraSystem) Update() error {
@@ -73,13 +83,11 @@ func (s *CameraSystem) Update() error {
 	// do not adjust camera y
 
 	// avoid race condition when view has not been initialized by first update call
-	if s.view == nil {
+	if s.surface == nil {
 		return nil
 	}
 
-	width, height := lib.WidthHeight(s.view)
-	camera.X = transformTarget.Point.X - float64(width/2)
-	camera.Y = transformTarget.Point.Y - float64(height/2)
+	camera.Point = transformTarget.Point
 
 	return nil
 }

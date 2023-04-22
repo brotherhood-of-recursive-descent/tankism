@@ -11,17 +11,19 @@ import (
 
 type CameraDemo struct {
 	game.GameScene
+	game *game.Game
 }
 
 func (s *CameraDemo) Init() error {
 
 	s.Systems = append(s.Systems,
 		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
-		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
-		&systems.TextRenderer{EntityManager: &s.EntityManager},
 		&systems.Controller{EntityManager: &s.EntityManager},
 		&systems.MovementSystem{EntityManager: &s.EntityManager},
-		&systems.CameraSystem{EntityManager: &s.EntityManager},
+
+		systems.NewCameraSystem(&s.EntityManager, s.game.ScreenWidth, s.game.ScreenHeight),
+		&systems.TextRenderer{EntityManager: &s.EntityManager},
+		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
 	)
 
 	fps := s.EntityManager.NewEntity()
@@ -29,10 +31,19 @@ func (s *CameraDemo) Init() error {
 
 	tank := s.EntityManager.NewEntity()
 	game.NewTankWithPosition(tank, 400, 400)
-	tank.AddComponent(&components.Camera{X: 400, Y: 400})
+	tank.AddComponent(&components.Camera{})
 
-	tileMap := s.EntityManager.NewEntity()
-	game.NewMap(tileMap, game.Tilemap{}, 1024, 1024)
+	barrel := s.EntityManager.NewEntity()
+	game.NewDrum(barrel, 100, 100)
+
+	barrel2 := s.EntityManager.NewEntity()
+	game.NewDrum(barrel2, 1000, 100)
+
+	barrel3 := s.EntityManager.NewEntity()
+	game.NewDrum(barrel3, 100, 1000)
+
+	barrel4 := s.EntityManager.NewEntity()
+	game.NewDrum(barrel4, 1000, 1000)
 
 	return nil
 }
@@ -40,7 +51,7 @@ func (s *CameraDemo) Init() error {
 func main() {
 
 	game := game.NewGame()
-	demo := CameraDemo{}
+	demo := CameraDemo{game: game}
 
 	game.AddScene("Demo", &demo)
 	game.SetScene("Demo")
