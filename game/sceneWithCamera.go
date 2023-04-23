@@ -21,6 +21,7 @@ func (s *GameSceneWithCamera) Init() error {
 func (s *GameSceneWithCamera) Draw(screen *ebiten.Image) {
 
 	s.Camera.Surface.Clear()
+
 	for _, v := range s.Systems {
 		v.Draw(s.Camera.Surface)
 	}

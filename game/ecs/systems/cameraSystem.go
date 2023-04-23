@@ -9,6 +9,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+// CameraSystem controls the camera by reading cameraComponent and setting values on the actual camera
 type CameraSystem struct {
 	EntityManager *ecs.EntityManager
 	camera        *camera.Camera
@@ -26,7 +27,8 @@ func (s *CameraSystem) Draw(screen *ebiten.Image) {}
 
 func (s *CameraSystem) Update() error {
 
-	entities := s.EntityManager.FindByComponents(components.TransformType, components.CameraType)
+	// find the entity with the camera attached and positioned in the world
+	entities := s.EntityManager.FindByComponents(components.CameraType, components.TransformType)
 
 	if len(entities) != 1 {
 		return errors.New("expected exactly 1 entity with camera attached")
