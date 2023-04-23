@@ -7,23 +7,30 @@ import (
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
 	"github.com/hajimehoshi/ebiten/v2"
+	"github.com/hajimehoshi/ebiten/v2/inpututil"
+	camera "github.com/melonfunction/ebiten-camera"
 )
 
 type CameraDemo struct {
-	game.GameScene
+	game.GameSceneWithCamera
 	game *game.Game
+
+	cameraComponent *components.Camera
 }
 
 func (s *CameraDemo) Init() error {
+
+	w, h := s.game.WindowSize()
+	s.Camera = *camera.NewCamera(w, h, 0, 0, 0, 1)
+	s.cameraComponent = &components.Camera{Zoom: 1}
 
 	s.Systems = append(s.Systems,
 		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
 		&systems.Controller{EntityManager: &s.EntityManager},
 		&systems.MovementSystem{EntityManager: &s.EntityManager},
-
-		systems.NewCameraSystem(&s.EntityManager, s.game.ScreenWidth, s.game.ScreenHeight),
 		&systems.TextRenderer{EntityManager: &s.EntityManager},
 		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
+		systems.NewCameraSystem(&s.EntityManager, &s.Camera),
 	)
 
 	fps := s.EntityManager.NewEntity()
@@ -31,7 +38,7 @@ func (s *CameraDemo) Init() error {
 
 	tank := s.EntityManager.NewEntity()
 	game.NewTankWithPosition(tank, 400, 400)
-	tank.AddComponent(&components.Camera{})
+	tank.AddComponent(s.cameraComponent)
 
 	barrel := s.EntityManager.NewEntity()
 	game.NewDrum(barrel, 100, 100)
@@ -46,6 +53,20 @@ func (s *CameraDemo) Init() error {
 	game.NewDrum(barrel4, 1000, 1000)
 
 	return nil
+}
+
+func (s *CameraDemo) HandleInput() {
+	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonLeft) {
+		s.cameraComponent.Zoom += 0.01
+	}
+
+	if inpututil.IsMouseButtonJustPressed(ebiten.MouseButtonRight) {
+		s.cameraComponent.Zoom -= 0.01
+	}
+
+	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
+		s.cameraComponent.Zoom = 1
+	}
 }
 
 func main() {

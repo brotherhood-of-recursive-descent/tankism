@@ -53,8 +53,8 @@ func (g *Game) Update() error {
 
 	// lazy initialization
 	if !g.initialized {
-		for _, i := range g.scenes {
-			if err := i.Init(); err != nil {
+		for _, scene := range g.scenes {
+			if err := scene.Init(); err != nil {
 				return err
 			}
 		}
