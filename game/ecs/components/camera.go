@@ -1,20 +1,15 @@
 package components
 
 import (
+	"github.com/co0p/tankism/lib/camera"
 	"github.com/co0p/tankism/lib/ecs"
 )
 
 const CameraType = "Camera"
 
-type CameraMode int
-
-const (
-	CameraModeDefault = iota
-	CameraModeCenter
-)
-
+// Camera is a component to control the camera
 type Camera struct {
-	CameraMode CameraMode
+	CameraMode camera.CameraMode
 	Zoom       float64
 }
 

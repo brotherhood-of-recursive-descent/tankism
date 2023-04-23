@@ -6,9 +6,9 @@ import (
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
+	"github.com/co0p/tankism/lib/camera"
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
-	camera "github.com/melonfunction/ebiten-camera"
 )
 
 type CameraDemo struct {
@@ -21,8 +21,8 @@ type CameraDemo struct {
 func (s *CameraDemo) Init() error {
 
 	w, h := s.game.WindowSize()
-	s.Camera = *camera.NewCamera(w, h, 0, 0, 0, 1)
-	s.cameraComponent = &components.Camera{Zoom: 1}
+	s.Camera = *camera.NewCamera(w, h)
+	s.cameraComponent = &components.Camera{Zoom: 1, CameraMode: camera.CameraModeCenter}
 
 	s.Systems = append(s.Systems,
 		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
