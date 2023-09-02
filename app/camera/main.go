@@ -12,20 +12,17 @@ import (
 )
 
 type CameraDemo struct {
-	game.GameSceneWithCamera // type embedding
+	game.GameSceneWithCamera
+	game *game.Game
 
-	game            *game.Game
-	cameraComponent *components.Camera // to control the camera
+	cameraComponent *components.Camera
 }
 
 func (s *CameraDemo) Init() error {
 
 	w, h := s.game.WindowSize()
 	s.Camera = *camera.NewCamera(w, h)
-	s.cameraComponent = &components.Camera{
-		Zoom:       1.0,
-		CameraMode: camera.CameraModeDefault,
-	}
+	s.cameraComponent = &components.Camera{Zoom: 1, CameraMode: camera.CameraModeCenter}
 
 	s.Systems = append(s.Systems,
 		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
@@ -33,11 +30,9 @@ func (s *CameraDemo) Init() error {
 		&systems.MovementSystem{EntityManager: &s.EntityManager},
 		&systems.TextRenderer{EntityManager: &s.EntityManager},
 		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
-
 		systems.NewCameraSystem(&s.EntityManager, &s.Camera),
 	)
 
-	// the objects int the world
 	fps := s.EntityManager.NewEntity()
 	game.FPSCounter(fps, 1024)
 
@@ -82,8 +77,7 @@ func main() {
 	game.AddScene("Demo", &demo)
 	game.SetScene("Demo")
 
-	ebiten.SetFullscreen(false)
-	ebiten.SetWindowSize(800, 600)
+	ebiten.SetFullscreen(true)
 
 	if err := ebiten.RunGame(game); err != nil {
 		log.Fatalf("failed to start game: %s", err)
