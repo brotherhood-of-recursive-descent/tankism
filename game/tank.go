@@ -28,13 +28,13 @@ func NewTankWithPosition(tank *ecs.Entity, x, y float64) {
 		Rotation:    0.05,
 	}
 	shaking := &components.Shaking{}
-	controller := &components.Controller{}
+	controller := components.NewMotionControl()
 	translate := &components.Transform{
 		Point: vector.Vec2d{
 			X: x,
 			Y: y,
 		},
-		Scale:    1,
+		Scale:    1.5,
 		Rotation: 0,
 	}
 	target := &components.Target{

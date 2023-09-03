@@ -6,8 +6,6 @@ import (
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/components"
 	"github.com/co0p/tankism/game/ecs/systems"
-	"github.com/co0p/tankism/lib"
-	"github.com/co0p/tankism/lib/vector"
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
@@ -20,29 +18,17 @@ func (s *RotationGame) Init() error {
 	s.Systems = append(s.Systems,
 		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
 		&systems.TextRenderer{EntityManager: &s.EntityManager},
-		&systems.Controller{EntityManager: &s.EntityManager},
-		&systems.RotationSystem{EntityManager: &s.EntityManager},
+		&systems.MotionControlSystem{EntityManager: &s.EntityManager},
+		&systems.MotionSystem{EntityManager: &s.EntityManager},
 		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
 	)
 
 	fps := s.EntityManager.NewEntity()
+	tank := s.EntityManager.NewEntity()
+	game.NewTankWithPosition(tank, 200, 200)
+	tank.AddComponent(components.NewMotionControl())
+
 	game.FPSCounter(fps, 1024)
-
-	withoutRotation := s.EntityManager.NewEntity()
-	game.NewTankWithPosition(withoutRotation, 200, 200)
-
-	withRotation := s.EntityManager.NewEntity()
-	game.NewTankWithPosition(withRotation, 400, 200)
-	sprite := withRotation.GetComponent(components.SpriteType).(*components.Sprite)
-	w, h := lib.WidthHeight(sprite.Image)
-
-	rotation := components.Rotation{
-		Point: vector.Vec2d{
-			X: float64(w / 2),
-			Y: float64(h / 2),
-		},
-	}
-	withRotation.AddComponent(&rotation)
 
 	return nil
 }

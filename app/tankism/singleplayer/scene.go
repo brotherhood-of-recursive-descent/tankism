@@ -26,6 +26,7 @@ func (s *SinglePlayerScene) Init() error {
 		&systems.TextRenderer{EntityManager: &s.EntityManager},
 		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
 		&systems.Controller{EntityManager: &s.EntityManager},
+		&systems.MotionControlSystem{EntityManager: &s.EntityManager},
 		&systems.AISystem{EntityManager: &s.EntityManager},
 	)
 

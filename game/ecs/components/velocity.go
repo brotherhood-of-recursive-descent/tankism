@@ -8,6 +8,7 @@ const VelocityType = "velocity"
 
 const increaseFactor = 0.05
 
+// Deprecated: please use the Motion component instead.
 type Velocity struct {
 	X float64
 	Y float64

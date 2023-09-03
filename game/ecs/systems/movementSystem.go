@@ -6,6 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 )
 
+// Deprecated: Please use the MotionSystem instead
 type MovementSystem struct {
 	EntityManager *ecs.EntityManager
 }
@@ -16,9 +17,10 @@ func (s *MovementSystem) Update() error {
 	for _, e := range entities {
 		velocity := e.GetComponent(components.VelocityType).(*components.Velocity)
 		translate := e.GetComponent(components.TransformType).(*components.Transform)
+
 		translate.Point.X = translate.Point.X + velocity.X
 		translate.Point.Y = translate.Point.Y + velocity.Y
-		// translate.Rotation = translate.Rotation + velocity.Rotation // why ?
+		translate.Rotation = translate.Rotation + velocity.Rotation
 	}
 
 	return nil

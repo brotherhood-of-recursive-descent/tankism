@@ -27,6 +27,7 @@ func (s *CameraDemo) Init() error {
 	s.Systems = append(s.Systems,
 		&systems.SpriteRenderer{EntityManager: &s.EntityManager},
 		&systems.Controller{EntityManager: &s.EntityManager},
+		&systems.MotionControlSystem{EntityManager: &s.EntityManager},
 		&systems.MovementSystem{EntityManager: &s.EntityManager},
 		&systems.TextRenderer{EntityManager: &s.EntityManager},
 		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},

@@ -20,7 +20,7 @@ func configureTank(tank *ecs.Entity) {
 		Rotation:    0.05,
 	}
 	shaking := &components.Shaking{}
-	controller := &components.Controller{}
+	controller := components.NewMotionControl()
 	translate := &components.Transform{
 		Point: vector.Vec2d{
 			X: 200.0,

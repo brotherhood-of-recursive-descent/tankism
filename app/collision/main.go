@@ -20,6 +20,7 @@ func (demo *CollisionDemo) Init() error {
 		&systems.PerformanceMonitor{EntityManager: &demo.EntityManager},
 		&systems.TextRenderer{EntityManager: &demo.EntityManager},
 		&systems.Controller{EntityManager: &demo.EntityManager},
+		&systems.MotionControlSystem{EntityManager: &demo.EntityManager},
 		&systems.Shaker{EntityManager: &demo.EntityManager},
 		&systems.CollisionDetection{EntityManager: &demo.EntityManager},
 		&systems.CollisionResolution{EntityManager: &demo.EntityManager},

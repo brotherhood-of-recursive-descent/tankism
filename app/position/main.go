@@ -87,7 +87,7 @@ func (s *PositionDemo) entities() {
 	sun.AddComponents(
 		&sunTransform,
 		&components.Sprite{Image: sunSprite, ZIndex: 2},
-		&components.Controller{},
+		components.NewMotionControl(),
 		&components.Velocity{},
 		&components.Debug{},
 	)
@@ -145,6 +145,7 @@ func (s *PositionDemo) systems() {
 		&systems.PositioningSystem{EntityManager: &s.EntityManager},
 		systems.NewLightingSystem(&s.EntityManager),
 		&systems.Controller{EntityManager: &s.EntityManager},
+		&systems.MotionControlSystem{EntityManager: &s.EntityManager},
 		&systems.DebugRenderer{EntityManager: &s.EntityManager},
 		&systems.PerformanceMonitor{EntityManager: &s.EntityManager},
 		&systems.TextRenderer{EntityManager: &s.EntityManager},

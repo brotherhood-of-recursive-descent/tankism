@@ -39,6 +39,7 @@ func (demo *LightingDemo) Init() error {
 		&systems.PerformanceMonitor{EntityManager: &demo.EntityManager},
 		&systems.TextRenderer{EntityManager: &demo.EntityManager},
 		&systems.Controller{EntityManager: &demo.EntityManager},
+		&systems.MotionControlSystem{EntityManager: &demo.EntityManager},
 		systems.NewLightingSystem(&demo.EntityManager),
 	)
 

@@ -25,6 +25,7 @@ func (demo *TowerDefenseDemo) Init() error {
 		&systems.PerformanceMonitor{EntityManager: &demo.EntityManager},
 		&systems.TextRenderer{EntityManager: &demo.EntityManager},
 		&systems.Controller{EntityManager: &demo.EntityManager},
+		&systems.MotionControlSystem{EntityManager: &demo.EntityManager},
 		&systems.MovementSystem{EntityManager: &demo.EntityManager},
 		&systems.Shaker{EntityManager: &demo.EntityManager},
 		&systems.AISystem{EntityManager: &demo.EntityManager},
