@@ -1,15 +1,17 @@
 package ecs
 
 import (
-	"encoding/json"
+	"github.com/co0p/tankism/lib/uuid"
 )
 
 type Entity struct {
+	ID         string
 	components map[ComponentType]Component
 }
 
 func newEntity() *Entity {
 	return &Entity{
+		ID:         uuid.New(),
 		components: make(map[ComponentType]Component),
 	}
 }
@@ -39,12 +41,4 @@ func (e *Entity) GetComponent(c ComponentType) Component {
 		return e.components[c]
 	}
 	panic("failed to get component " + c)
-}
-
-// json marshalling
-type EntityDto map[ComponentType]Component
-
-func (b *Entity) MarshalJSON() ([]byte, error) {
-	e := EntityDto(b.components)
-	return json.Marshal(e)
 }

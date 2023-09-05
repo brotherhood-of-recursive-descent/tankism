@@ -1,4 +1,4 @@
-package game
+package state
 
 import (
 	"encoding/json"
@@ -11,9 +11,10 @@ type State struct {
 	Name       string
 	ModifiedAt time.Time
 	Entities   []ecs.Entity
+	Systems    []ecs.System
 }
 
-func NewState(data []byte) (State, error) {
+func New(data []byte) (State, error) {
 
 	var state State
 	err := json.Unmarshal(data, &state)

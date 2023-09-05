@@ -5,6 +5,7 @@ import (
 
 	"github.com/co0p/tankism/game"
 	"github.com/co0p/tankism/game/ecs/systems"
+	"github.com/co0p/tankism/game/state"
 	"github.com/co0p/tankism/lib/ecs"
 	"github.com/co0p/tankism/test"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -17,7 +18,7 @@ type LoadingDemo struct {
 func NewLoadingDemo() *LoadingDemo {
 	demo := LoadingDemo{}
 
-	state, _ := game.NewState(test.GameState_Valid)
+	state, _ := state.New(test.GameState_Valid)
 	demo.EntityManager = *ecs.NewEntityManager(state.Entities)
 
 	demo.Systems = append(demo.Systems,
